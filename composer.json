@@ -1,0 +1,21 @@
+{
+    "name": "railken/search-query",
+    "keywords": ["api"],
+    "license": "MIT",
+    "require": {
+        "php": ">=7.0.0",
+        "railken/bag": "^1.2",
+        "illuminate/support": "^5.5"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~6.0"
+    },
+    "autoload": {
+        "psr-4" : {
+            "Railken\\SQ\\" : "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": { "Railken\\SQ\\Tests\\": "tests/" }
+    }
+}
