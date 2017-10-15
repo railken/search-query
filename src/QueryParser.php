@@ -4,7 +4,7 @@ namespace Railken\SQ;
 
 use Railken\SQ\Exceptions as Exceptions;
 
-class Query
+class QueryParser
 {
 
     /**
@@ -21,7 +21,7 @@ class Query
      *
      * @return Object
      */
-    public function convert($query)
+    public function parse($query)
     {
         return (new QueryConverter($query))->convert();
     }
