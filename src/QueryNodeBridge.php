@@ -88,6 +88,8 @@ class QueryNodeBridge
      */
     public function groupNodes($node, $subs)
     {
+        $last_operator = 'and';
+
         foreach ($this->weights as $operator => $weight) {
             $positions = array_keys($subs, $operator, true);
 
