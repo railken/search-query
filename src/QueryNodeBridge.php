@@ -37,12 +37,12 @@ class QueryNodeBridge
             if ($part instanceof QuerySupportNode) {
                 $subs[] = $this->newBySupportNode($part);
             } else {
-                if (in_array($part, ['or', 'and'])) {
+                if (in_array($part, [Token::TOKEN_OPERATOR_OR, Token::TOKEN_OPERATOR_AND])) {
                     $current_key = null;
                     $current_value = null;
                     $current_operator = null;
                     $subs[] = $part;
-                } elseif (in_array($part, ['eq', 'gt', 'lt', 'in', 'contains'])) {
+                } elseif (in_array($part, [Token::TOKEN_OPERATOR_EQ, Token::TOKEN_OPERATOR_GT, Token::TOKEN_OPERATOR_LT, Token::TOKEN_OPERATOR_IN, Token::TOKEN_OPERATOR_CONTAINS])) {
                     if ($current_key !== null) {
                         $current_operator = $part;
                     }
@@ -64,7 +64,7 @@ class QueryNodeBridge
                     }
 
                     # Explode into array if operator "in"
-                    if ($current_operator == "in") {
+                    if ($current_operator == Token::TOKEN_OPERATOR_IN) {
                         $current_value = explode(",", $current_value);
                     }
 
@@ -88,7 +88,7 @@ class QueryNodeBridge
      */
     public function groupNodes($node, $subs)
     {
-        $last_operator = 'and';
+        $last_operator = Token::TOKEN_OPERATOR_AND;
 
         foreach ($this->weights as $operator => $weight) {
             $positions = array_keys($subs, $operator, true);
