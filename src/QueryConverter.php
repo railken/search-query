@@ -2,6 +2,8 @@
 
 namespace Railken\SQ;
 
+use Railken\SQ\Exceptions;
+
 class QueryConverter
 {
 
@@ -24,7 +26,7 @@ class QueryConverter
      *
      * @var bool
      */
-    protected $in_string = false;
+    protected $in_phrase = false;
     
     /**
      * This char has been escaped?
@@ -83,8 +85,8 @@ class QueryConverter
 
             return (new QueryNodeBridge())->newBySupportNode($this->node->parts[0]);
         } catch (\Exception $e) {
-            throw $e;
-            //throw new Exceptions\FilterSyntaxException($this->query);
+            // throw $e;
+            throw new Exceptions\QuerySyntaxException($this->query);
         }
     }
 

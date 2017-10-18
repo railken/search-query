@@ -1,6 +1,6 @@
 <?php
 
-namespace Railken\ApiHelpers\Exceptions;
+namespace Railken\SQ\Exceptions;
 
 use Exception;
 

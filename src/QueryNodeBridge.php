@@ -2,6 +2,8 @@
 
 namespace Railken\SQ;
 
+use Railken\SQ\Exceptions;
+
 class QueryNodeBridge
 {
 
@@ -72,6 +74,10 @@ class QueryNodeBridge
                 }
             }
         }
+
+        # No Subs? Throw exception.
+        if (count($subs) == 0)
+            throw new Exceptions\QuerySyntaxException("Parts ".implode($support_node));
 
         $node = $this->groupNodes($node, $subs);
 
