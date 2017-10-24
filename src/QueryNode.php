@@ -28,6 +28,13 @@ class QueryNode
     public $value;
 
     /**
+     * Filters applied
+     *
+     * @var mixed
+     */
+    public $filters;
+
+    /**
      * Construct
      *
      * @param string $key
@@ -47,9 +54,20 @@ class QueryNode
      */
     public function setKey($key)
     {
+        
         $this->key = $key;
 
         return $this;
+    }
+
+    /**
+     * Get key
+     *
+     * @return string
+     */
+    public function getKey()
+    {
+        return $this->key;
     }
 
     /**
@@ -67,6 +85,17 @@ class QueryNode
     }
 
     /**
+     * Get value
+     *
+     * @return mixed
+     */
+    public function getValue()
+    {
+        return $this->value;
+    }
+
+
+    /**
      * Set Operator
      *
      * @param string $operator
@@ -81,26 +110,6 @@ class QueryNode
     }
 
     /**
-     * Get key
-     *
-     * @return string
-     */
-    public function getKey()
-    {
-        return $this->key;
-    }
-
-    /**
-     * Get value
-     *
-     * @return mixed
-     */
-    public function getValue()
-    {
-        return $this->value;
-    }
-
-    /**
      * Get operator
      *
      * @return string
@@ -108,5 +117,29 @@ class QueryNode
     public function getOperator()
     {
         return $this->operator;
+    }
+
+    /**
+     * Set filters
+     *
+     * @param mixed $filters
+     *
+     * @return $this
+     */
+    public function setFilters($filters)
+    {
+        $this->filters = $filters;
+
+        return $this;
+    }
+
+    /**
+     * Get filters
+     *
+     * @return mixed
+     */
+    public function getFilters()
+    {
+        return $this->filters;
     }
 }

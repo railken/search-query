@@ -29,6 +29,7 @@ class QueryNodeBridge
         $current_operator = null;
         $current_key = null;
         $current_value = null;
+        $current_filters = [];
  
         $subs = [];
 
@@ -43,11 +44,14 @@ class QueryNodeBridge
                     $current_key = null;
                     $current_value = null;
                     $current_operator = null;
+                    $current_filters = [];
                     $subs[] = $part;
                 } elseif (in_array($part, [Token::TOKEN_OPERATOR_EQ, Token::TOKEN_OPERATOR_GT, Token::TOKEN_OPERATOR_LT, Token::TOKEN_OPERATOR_IN, Token::TOKEN_OPERATOR_CONTAINS])) {
                     if ($current_key !== null) {
                         $current_operator = $part;
                     }
+                } elseif ($part[0] === Token::TOKEN_FILTER_DELIMETER) {
+                    $current_filters[] = substr($part, 1);
                 } else {
                     if ($current_key !== null && $current_value == null) {
                         $current_value = $part;
@@ -57,6 +61,8 @@ class QueryNodeBridge
                         $current_key = $part;
                     }
                 }
+
+
 
                 if ($current_key !== null && $current_operator !== null && $current_value !== null) {
 
@@ -70,7 +76,7 @@ class QueryNodeBridge
                         $current_value = explode(",", $current_value);
                     }
 
-                    $subs[] = (new QueryNode())->setKey($current_key)->setOperator($current_operator)->setValue($current_value);
+                    $subs[] = (new QueryNode())->setKey($current_key)->setOperator($current_operator)->setValue($current_value)->setFilters($current_filters);
                 }
             }
         }
@@ -96,7 +102,7 @@ class QueryNodeBridge
     {
         if (count($subs) == 1) 
             return $subs;
-        
+
         $last_operator = Token::TOKEN_OPERATOR_AND;
 
         foreach ($this->weights as $operator => $weight) {

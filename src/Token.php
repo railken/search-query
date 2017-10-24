@@ -8,6 +8,7 @@ class Token
     const TOKEN_WHITESPACE = ' ';
     const TOKEN_PHRASE_DELIMETER = '"';
     const TOKEN_ESCAPE = '\\';
+    const TOKEN_FILTER_DELIMETER = '|';
     const TOKEN_OPENING_PARENTHESIS = '(';
     const TOKEN_CLOSING_PARENTHESIS = ')';
 
