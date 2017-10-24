@@ -13,8 +13,8 @@ class QueryNodeBridge
      * @var array
      */
     protected $weights = [
-        'and' => 2,
-        'or' => 1
+        Token::TOKEN_OPERATOR_AND => 2,
+        Token::TOKEN_OPERATOR_OR => 1
     ];
     
     /**
