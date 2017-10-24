@@ -26,14 +26,11 @@ class QueryNodeBridge
      */
     public function newBySupportNode($support_node)
     {
-        $current_operator = null;
-        $current_key = null;
-        $current_value = null;
-        $current_filters = [];
  
         $subs = [];
 
         $node = new QueryNode();
+        $sub = (new QueryNode());
 
 
         foreach ($support_node->parts as $part) {
@@ -41,46 +38,42 @@ class QueryNodeBridge
                 $subs[] = $this->newBySupportNode($part);
             } else {
                 if (in_array($part, [Token::TOKEN_OPERATOR_OR, Token::TOKEN_OPERATOR_AND])) {
-                    $current_key = null;
-                    $current_value = null;
-                    $current_operator = null;
-                    $current_filters = [];
+                    $sub = (new QueryNode());
                     $subs[] = $part;
                 } elseif (in_array($part, [Token::TOKEN_OPERATOR_EQ, Token::TOKEN_OPERATOR_GT, Token::TOKEN_OPERATOR_LT, Token::TOKEN_OPERATOR_IN, Token::TOKEN_OPERATOR_CONTAINS])) {
-                    if ($current_key !== null) {
-                        $current_operator = $part;
+                    if ($sub->getKey() !== null) {
+                        $sub->setOperator($part);
                     }
                 } elseif ($part[0] === Token::TOKEN_FILTER_DELIMETER) {
-                    $current_filters[] = substr($part, 1);
+                    $sub->addFilter(substr($part, 1));
                 } else {
-                    if ($current_key !== null && $current_value == null) {
-                        $current_value = $part;
+                    if ($sub->getKey() !== null && $sub->getValue() == null) {
+                        $sub->setValue($part);
                     }
 
-                    if ($current_key == null) {
-                        $current_key = $part;
+                    if ($sub->getKey() == null) {
+                        $sub->setKey($part);
                     }
                 }
 
 
 
-                if ($current_key !== null && $current_operator !== null && $current_value !== null) {
+                if ($sub->getKey() !== null && $sub->getValue() !== null && $sub->getOperator() !== null) {
 
                     # Remove '"' if present
-                    if ($current_value[0] == "\"") {
-                        $current_value = substr($current_value, 1, -1);
+                    if ($sub->getValue()[0] == "\"") {
+                        $sub->setValue(substr($sub->getValue(), 1, -1));
                     }
 
                     # Explode into array if operator "in"
-                    if ($current_operator == Token::TOKEN_OPERATOR_IN) {
-                        $current_value = explode(",", $current_value);
+                    if ($sub->getOperator() == Token::TOKEN_OPERATOR_IN) {
+                        $sub->setValue(explode(",", $sub->getValue()));
                     }
 
-                    $subs[] = (new QueryNode())->setKey($current_key)->setOperator($current_operator)->setValue($current_value)->setFilters($current_filters);
+                    $subs[] = $sub;
                 }
             }
         }
-
         # No Subs? Throw exception.
         if (count($subs) == 0)
             throw new Exceptions\QuerySyntaxException("Parts ".implode($support_node));
