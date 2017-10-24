@@ -32,7 +32,7 @@ class QueryNode
      *
      * @var mixed
      */
-    public $filters;
+    public $filters = [];
 
     /**
      * Construct
@@ -54,7 +54,7 @@ class QueryNode
      */
     public function setKey($key)
     {
-        
+
         $this->key = $key;
 
         return $this;
@@ -141,5 +141,17 @@ class QueryNode
     public function getFilters()
     {
         return $this->filters;
+    } 
+
+    /**
+     * Add filter
+     *
+     * @return mixed
+     */
+    public function addFilter($filter)
+    {
+        $this->filters[] = $filter;
+
+        return $this;
     }
 }
