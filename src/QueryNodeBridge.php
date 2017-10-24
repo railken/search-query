@@ -94,6 +94,9 @@ class QueryNodeBridge
      */
     public function groupNodes($node, $subs)
     {
+        if (count($subs) == 1) 
+            return $subs;
+        
         $last_operator = Token::TOKEN_OPERATOR_AND;
 
         foreach ($this->weights as $operator => $weight) {
@@ -133,6 +136,7 @@ class QueryNodeBridge
                 }
             }
         }
+
 
         foreach ($subs as $k => $v) {
             if (is_string($v) || $v === null) {
