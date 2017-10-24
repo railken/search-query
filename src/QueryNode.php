@@ -2,6 +2,9 @@
 
 namespace Railken\SQ;
 
+use Railken\SQ\StringHelper;
+
+
 class QueryNode
 {
 
@@ -150,7 +153,13 @@ class QueryNode
      */
     public function addFilter($filter)
     {
-        $this->filters[] = $filter;
+
+        preg_match('#(.*?)\((.*?)\)#', $filter, $r);
+
+        $helper = new StringHelper();
+        $parameters = $helper->divideBy($r[2], ",");
+        
+        $this->filters[] = ['name' => $r[1], 'parameters' => $parameters];
 
         return $this;
     }
