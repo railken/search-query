@@ -91,7 +91,6 @@ class QueryConverter
 
                 !$this->in_filter && !in_array($char, [Token::TOKEN_OPENING_PARENTHESIS, Token::TOKEN_CLOSING_PARENTHESIS, Token::TOKEN_WHITESPACE]) && $this->concatBufferString($char);
 
-                # Concat always when "in_filter"
 
                 $this->in_phrase && $char === Token::TOKEN_WHITESPACE && $this->concatBufferString($char);
 
@@ -111,7 +110,8 @@ class QueryConverter
 
                 }
                 
-                $this->in_filter && $this->concatBufferString($char);
+                # Concat always when "in_filter"
+                $this->in_filter && $char !== Token::TOKEN_WHITESPACE && $this->concatBufferString($char);
 
                 $char !== Token::TOKEN_ESCAPE && $this->escape = false;
             }
