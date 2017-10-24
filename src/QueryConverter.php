@@ -128,7 +128,6 @@ class QueryConverter
 
             return (new QueryNodeBridge())->newBySupportNode($this->node->parts[0]);
         } catch (\Exception $e) {
-            // throw $e;
             throw new Exceptions\QuerySyntaxException($this->query);
         }
     }
