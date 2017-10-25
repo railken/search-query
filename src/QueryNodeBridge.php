@@ -29,8 +29,8 @@ class QueryNodeBridge
  
         $subs = [];
 
-        $node = new QueryNode();
-        $sub = (new QueryNode());
+        $node = new QueryLogicNode();
+        $sub = (new QueryKeyNode());
 
 
         foreach ($support_node->parts as $part) {
@@ -38,7 +38,7 @@ class QueryNodeBridge
                 $subs[] = $this->newBySupportNode($part);
             } else {
                 if (in_array($part, [Token::TOKEN_OPERATOR_OR, Token::TOKEN_OPERATOR_AND])) {
-                    $sub = (new QueryNode());
+                    $sub = (new QueryKeyNode());
                     $subs[] = $part;
                 } elseif (in_array($part, [Token::TOKEN_OPERATOR_EQ, Token::TOKEN_OPERATOR_GT, Token::TOKEN_OPERATOR_LT, Token::TOKEN_OPERATOR_IN, Token::TOKEN_OPERATOR_CONTAINS])) {
                     if ($sub->getKey() !== null) {
@@ -55,8 +55,6 @@ class QueryNodeBridge
                         $sub->setKey($part);
                     }
                 }
-
-
 
                 if ($sub->getKey() !== null && $sub->getValue() !== null && $sub->getOperator() !== null) {
 
@@ -123,14 +121,14 @@ class QueryNodeBridge
                         $group = [];
 
                         for ($i = $position[0]-1; $i <= end($position)+1; $i++) {
-                            if ($subs[$i] instanceof QueryNode) {
+                            if ($subs[$i] instanceof QueryBaseNode) {
                                 $group[] = $subs[$i];
                             }
 
                             $subs[$i] = null;
                         }
 
-                        $subs[$position[0]-1] = (new QueryNode())->setValue($group)->setOperator($operator);
+                        $subs[$position[0]-1] = (new QueryLogicNode())->setValue($group)->setOperator($operator);
                     };
                 }
             }

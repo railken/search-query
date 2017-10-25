@@ -5,9 +5,8 @@ namespace Railken\SQ;
 use Railken\SQ\StringHelper;
 
 
-class QueryNode
+class QueryKeyNode extends QueryBaseNode
 {
-
 
     /**
      * Key/Attribute
@@ -17,36 +16,11 @@ class QueryNode
     public $key;
 
     /**
-     * Operator of node
-     *
-     * @var string
-     */
-    public $operator;
-
-    /**
-     * Value/Values of node
-     *
-     * @var mixed
-     */
-    public $value;
-
-    /**
      * Filters applied
      *
      * @var mixed
      */
     public $filters = [];
-
-    /**
-     * Construct
-     *
-     * @param string $key
-     * @param string $operator
-     * @param mixed $value
-     */
-    public function __construct()
-    {
-    }
 
     /**
      * Set key
@@ -71,55 +45,6 @@ class QueryNode
     public function getKey()
     {
         return $this->key;
-    }
-
-    /**
-     * Set value
-     *
-     * @param mixed $value
-     *
-     * @return $this
-     */
-    public function setValue($value)
-    {
-        $this->value = $value;
-
-        return $this;
-    }
-
-    /**
-     * Get value
-     *
-     * @return mixed
-     */
-    public function getValue()
-    {
-        return $this->value;
-    }
-
-
-    /**
-     * Set Operator
-     *
-     * @param string $operator
-     *
-     * @return $this
-     */
-    public function setOperator($operator)
-    {
-        $this->operator = $operator;
-
-        return $this;
-    }
-
-    /**
-     * Get operator
-     *
-     * @return string
-     */
-    public function getOperator()
-    {
-        return $this->operator;
     }
 
     /**
