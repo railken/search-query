@@ -19,7 +19,7 @@ class Token
     const TOKEN_OPERATOR_GTE = ['gte', '>='];
     const TOKEN_OPERATOR_LT = ['lt', '<'];
     const TOKEN_OPERATOR_LTE = ['lte', '<='];
-    const TOKEN_OPERATOR_IN = ['in', '()='];
+    const TOKEN_OPERATOR_IN = ['in', '[]='];
     const TOKEN_OPERATOR_CONTAINS = ['ct', '*='];
     const TOKEN_OPERATOR_START_WITH = ['sw', '^='];
     const TOKEN_OPERATOR_END_WITH = ['ew', '$='];

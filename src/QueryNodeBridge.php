@@ -31,6 +31,8 @@ class QueryNodeBridge
         Token::TOKEN_OPERATOR_START_WITH[1] => Nodes\StartWithNode::class,
         Token::TOKEN_OPERATOR_END_WITH[0] => Nodes\EndWithNode::class,
         Token::TOKEN_OPERATOR_END_WITH[1] => Nodes\EndWithNode::class,
+        Token::TOKEN_OPERATOR_IN[0] => Nodes\InNode::class,
+        Token::TOKEN_OPERATOR_IN[1] => Nodes\InNode::class,
 
     ];
 
@@ -128,16 +130,6 @@ class QueryNodeBridge
                 }
 
                 if ($sub->getKey() !== null && $sub->getValue() !== null && $sub->getOperator() !== null) {
-
-                    # Remove '"' if present
-                    if ($sub->getValue()[0] == "\"") {
-                        $sub->setValue(substr($sub->getValue(), 1, -1));
-                    }
-
-                    # Explode into array if operator "in"
-                    if ($sub->getOperator() == Token::TOKEN_OPERATOR_IN) {
-                        $sub->setValue(explode(",", $sub->getValue()));
-                    }
 
                     $subs[] = $sub;
                 }
