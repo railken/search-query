@@ -2,12 +2,12 @@
 
 namespace Railken\SQ\Nodes;
 
-class ContainsNode extends KeyNode
+class EndWithNode extends KeyNode
 {
 	/**
 	 * Operator
 	 *
 	 * @var string
 	 */
-	public $operator = 'ct';
+	public $operator = 'ew';
 }

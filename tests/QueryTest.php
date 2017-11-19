@@ -84,6 +84,30 @@ class QueryTest extends TestCase
         $this->assertEquals(json_decode('[{"key":"x","filters":[],"operator":"lte","value":"1"}]'), json_decode(json_encode($query->parse('x <= 1'))));
     }
 
+    public function testCt()
+    {   
+        $query = new QueryParser();
+
+        $this->assertEquals(json_decode('[{"key":"x","filters":[],"operator":"ct","value":"1"}]'), json_decode(json_encode($query->parse('x ct 1'))));
+        $this->assertEquals(json_decode('[{"key":"x","filters":[],"operator":"ct","value":"1"}]'), json_decode(json_encode($query->parse('x *= 1'))));
+    }
+
+    public function testSw()
+    {   
+        $query = new QueryParser();
+
+        $this->assertEquals(json_decode('[{"key":"x","filters":[],"operator":"sw","value":"1"}]'), json_decode(json_encode($query->parse('x sw 1'))));
+        $this->assertEquals(json_decode('[{"key":"x","filters":[],"operator":"sw","value":"1"}]'), json_decode(json_encode($query->parse('x ^= 1'))));
+    }
+
+    public function testEw()
+    {   
+        $query = new QueryParser();
+
+        $this->assertEquals(json_decode('[{"key":"x","filters":[],"operator":"ew","value":"1"}]'), json_decode(json_encode($query->parse('x ew 1'))));
+        $this->assertEquals(json_decode('[{"key":"x","filters":[],"operator":"ew","value":"1"}]'), json_decode(json_encode($query->parse('x $= 1'))));
+    }
+    
     public function testBasic()
     {   
         $query = new QueryParser();

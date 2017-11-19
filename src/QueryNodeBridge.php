@@ -25,7 +25,12 @@ class QueryNodeBridge
         Token::TOKEN_OPERATOR_LT[1] => Nodes\LtNode::class,
         Token::TOKEN_OPERATOR_LTE[0] => Nodes\LteNode::class,
         Token::TOKEN_OPERATOR_LTE[1] => Nodes\LteNode::class,
+        Token::TOKEN_OPERATOR_CONTAINS[0] => Nodes\ContainsNode::class,
         Token::TOKEN_OPERATOR_CONTAINS[1] => Nodes\ContainsNode::class,
+        Token::TOKEN_OPERATOR_START_WITH[0] => Nodes\StartWithNode::class,
+        Token::TOKEN_OPERATOR_START_WITH[1] => Nodes\StartWithNode::class,
+        Token::TOKEN_OPERATOR_END_WITH[0] => Nodes\EndWithNode::class,
+        Token::TOKEN_OPERATOR_END_WITH[1] => Nodes\EndWithNode::class,
 
     ];
 
@@ -70,7 +75,9 @@ class QueryNodeBridge
             Token::TOKEN_OPERATOR_LT, 
             Token::TOKEN_OPERATOR_LTE, 
             Token::TOKEN_OPERATOR_IN, 
-            Token::TOKEN_OPERATOR_CONTAINS
+            Token::TOKEN_OPERATOR_CONTAINS,
+            Token::TOKEN_OPERATOR_START_WITH,
+            Token::TOKEN_OPERATOR_END_WITH
         ));
     }
 
