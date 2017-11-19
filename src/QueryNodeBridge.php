@@ -99,7 +99,6 @@ class QueryNodeBridge
                         $old_generic_sub = $sub;
 
                         $sub = new $this->operators[$part];
-                        $sub->setOperator($part);
                         $sub->setFilters($old_generic_sub->getFilters());
                         $sub->setKey($old_generic_sub->getKey());
                     }
@@ -188,7 +187,7 @@ class QueryNodeBridge
                             $subs[$i] = null;
                         }
 
-                        $subs[$position[0]-1] = (new $this->operators[$operator])->setValue($group)->setOperator($operator);
+                        $subs[$position[0]-1] = (new $this->operators[$operator])->setValue($group);
                     };
                 }
             }
@@ -202,7 +201,6 @@ class QueryNodeBridge
         }
         $node = (new $this->operators[$last_operator]);           
         $node->value = array_values($subs);
-        $node->operator = $last_operator;
 
         return $node;
     }
