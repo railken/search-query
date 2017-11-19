@@ -19,8 +19,12 @@ class QueryNodeBridge
         Token::TOKEN_OPERATOR_EQ[1] => Nodes\EqNode::class,
         Token::TOKEN_OPERATOR_GT[0] => Nodes\GtNode::class,
         Token::TOKEN_OPERATOR_GT[1] => Nodes\GtNode::class,
+        Token::TOKEN_OPERATOR_GTE[0] => Nodes\GteNode::class,
+        Token::TOKEN_OPERATOR_GTE[1] => Nodes\GteNode::class,
         Token::TOKEN_OPERATOR_LT[0] => Nodes\LtNode::class,
         Token::TOKEN_OPERATOR_LT[1] => Nodes\LtNode::class,
+        Token::TOKEN_OPERATOR_LTE[0] => Nodes\LteNode::class,
+        Token::TOKEN_OPERATOR_LTE[1] => Nodes\LteNode::class,
         Token::TOKEN_OPERATOR_CONTAINS[1] => Nodes\ContainsNode::class,
 
     ];
