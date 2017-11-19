@@ -66,7 +66,9 @@ class QueryNodeBridge
         return in_array($token, array_merge(
             Token::TOKEN_OPERATOR_EQ, 
             Token::TOKEN_OPERATOR_GT, 
+            Token::TOKEN_OPERATOR_GTE, 
             Token::TOKEN_OPERATOR_LT, 
+            Token::TOKEN_OPERATOR_LTE, 
             Token::TOKEN_OPERATOR_IN, 
             Token::TOKEN_OPERATOR_CONTAINS
         ));
