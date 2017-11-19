@@ -3,9 +3,27 @@
 namespace Railken\SQ;
 
 use Railken\SQ\Exceptions;
+use Railken\SQ\Nodes as Nodes;
 
 class QueryNodeBridge
 {
+
+    protected $operators = [
+        Token::TOKEN_OPERATOR_OR[0] => Nodes\OrNode::class,
+        Token::TOKEN_OPERATOR_OR[1] => Nodes\OrNode::class,
+
+        Token::TOKEN_OPERATOR_AND[0] => Nodes\AndNode::class,
+        Token::TOKEN_OPERATOR_AND[1] => Nodes\AndNode::class,
+
+        Token::TOKEN_OPERATOR_EQ[0] => Nodes\EqNode::class,
+        Token::TOKEN_OPERATOR_EQ[1] => Nodes\EqNode::class,
+        Token::TOKEN_OPERATOR_GT[0] => Nodes\GtNode::class,
+        Token::TOKEN_OPERATOR_GT[1] => Nodes\GtNode::class,
+        Token::TOKEN_OPERATOR_LT[0] => Nodes\LtNode::class,
+        Token::TOKEN_OPERATOR_LT[1] => Nodes\LtNode::class,
+        Token::TOKEN_OPERATOR_CONTAINS[1] => Nodes\ContainsNode::class,
+
+    ];
 
     /**
      * List of weights
@@ -13,10 +31,43 @@ class QueryNodeBridge
      * @var array
      */
     protected $weights = [
-        Token::TOKEN_OPERATOR_AND => 2,
-        Token::TOKEN_OPERATOR_OR => 1
+        Token::TOKEN_OPERATOR_AND[0] => 2,
+        Token::TOKEN_OPERATOR_OR[0] => 1
     ];
-    
+        
+    /**
+     * Return if token is logic operator
+     *
+     * @param string $token
+     *
+     * @return boolean
+     */
+    public function isTokenLogic($token)
+    {
+        return in_array($token, array_merge(
+            Token::TOKEN_OPERATOR_OR, 
+            Token::TOKEN_OPERATOR_AND
+        ));
+    }
+
+    /**
+     * Return if token is operator
+     *
+     * @param string $token
+     *
+     * @return boolean
+     */
+    public function isTokenOperator($token)
+    {
+        return in_array($token, array_merge(
+            Token::TOKEN_OPERATOR_EQ, 
+            Token::TOKEN_OPERATOR_GT, 
+            Token::TOKEN_OPERATOR_LT, 
+            Token::TOKEN_OPERATOR_IN, 
+            Token::TOKEN_OPERATOR_CONTAINS
+        ));
+    }
+
     /**
      * Create a new node from support node
      *
@@ -37,12 +88,20 @@ class QueryNodeBridge
             if ($part instanceof QuerySupportNode) {
                 $subs[] = $this->newBySupportNode($part);
             } else {
-                if (in_array($part, [Token::TOKEN_OPERATOR_OR, Token::TOKEN_OPERATOR_AND])) {
-                    $sub = (new QueryKeyNode());
+
+                if ($this->isTokenLogic($part)) {
+                    
+                    $sub = new $this->operators[$part];
+
                     $subs[] = $part;
-                } elseif (in_array($part, [Token::TOKEN_OPERATOR_EQ, Token::TOKEN_OPERATOR_GT, Token::TOKEN_OPERATOR_LT, Token::TOKEN_OPERATOR_IN, Token::TOKEN_OPERATOR_CONTAINS])) {
+                } elseif ($this->isTokenOperator($part)) {
                     if ($sub->getKey() !== null) {
+                        $old_generic_sub = $sub;
+
+                        $sub = new $this->operators[$part];
                         $sub->setOperator($part);
+                        $sub->setFilters($old_generic_sub->getFilters());
+                        $sub->setKey($old_generic_sub->getKey());
                     }
                 } elseif ($part[0] === Token::TOKEN_FILTER_DELIMETER) {
                     $sub->addFilter(substr($part, 1));
@@ -72,9 +131,10 @@ class QueryNodeBridge
                 }
             }
         }
+
         # No Subs? Throw exception.
         if (count($subs) == 0)
-            throw new Exceptions\QuerySyntaxException("Parts ".implode($support_node));
+            throw new Exceptions\QuerySyntaxException("Parts ".json_encode($support_node));
 
         $node = $this->groupNodes($node, $subs);
 
@@ -128,7 +188,7 @@ class QueryNodeBridge
                             $subs[$i] = null;
                         }
 
-                        $subs[$position[0]-1] = (new QueryLogicNode())->setValue($group)->setOperator($operator);
+                        $subs[$position[0]-1] = (new $this->operators[$operator])->setValue($group)->setOperator($operator);
                     };
                 }
             }
@@ -140,7 +200,7 @@ class QueryNodeBridge
                 unset($subs[$k]);
             }
         }
-                    
+        $node = (new $this->operators[$last_operator]);           
         $node->value = array_values($subs);
         $node->operator = $last_operator;
 
