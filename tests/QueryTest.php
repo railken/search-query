@@ -50,6 +50,38 @@ class QueryTest extends TestCase
 
         $this->assertEquals(json_decode('[{"key":"x","filters":[],"operator":"eq","value":"1"}]'), json_decode(json_encode($query->parse('x eq 1'))));
         $this->assertEquals(json_decode('[{"key":"x","filters":[],"operator":"eq","value":"1"}]'), json_decode(json_encode($query->parse('x = 1'))));
+    } 
+
+    public function testGt()
+    {   
+        $query = new QueryParser();
+
+        $this->assertEquals(json_decode('[{"key":"x","filters":[],"operator":"gt","value":"1"}]'), json_decode(json_encode($query->parse('x gt 1'))));
+        $this->assertEquals(json_decode('[{"key":"x","filters":[],"operator":"gt","value":"1"}]'), json_decode(json_encode($query->parse('x > 1'))));
+    }
+
+    public function testGte()
+    {   
+        $query = new QueryParser();
+
+        $this->assertEquals(json_decode('[{"key":"x","filters":[],"operator":"gte","value":"1"}]'), json_decode(json_encode($query->parse('x gte 1'))));
+        $this->assertEquals(json_decode('[{"key":"x","filters":[],"operator":"gte","value":"1"}]'), json_decode(json_encode($query->parse('x >= 1'))));
+    }
+
+    public function testLt()
+    {   
+        $query = new QueryParser();
+
+        $this->assertEquals(json_decode('[{"key":"x","filters":[],"operator":"lt","value":"1"}]'), json_decode(json_encode($query->parse('x lt 1'))));
+        $this->assertEquals(json_decode('[{"key":"x","filters":[],"operator":"lt","value":"1"}]'), json_decode(json_encode($query->parse('x < 1'))));
+    }
+
+    public function testLte()
+    {   
+        $query = new QueryParser();
+
+        $this->assertEquals(json_decode('[{"key":"x","filters":[],"operator":"lte","value":"1"}]'), json_decode(json_encode($query->parse('x lte 1'))));
+        $this->assertEquals(json_decode('[{"key":"x","filters":[],"operator":"lte","value":"1"}]'), json_decode(json_encode($query->parse('x <= 1'))));
     }
 
     public function testBasic()
