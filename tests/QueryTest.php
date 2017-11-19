@@ -44,6 +44,13 @@ class QueryTest extends TestCase
        $query->parse('x|date( eq 1');
     }
 
+    public function testEq()
+    {   
+        $query = new QueryParser();
+
+        $this->assertEquals(json_decode('[{"key":"x","filters":[],"operator":"eq","value":"1"}]'), json_decode(json_encode($query->parse('x eq 1'))));
+        $this->assertEquals(json_decode('[{"key":"x","filters":[],"operator":"eq","value":"1"}]'), json_decode(json_encode($query->parse('x = 1'))));
+    }
 
     public function testBasic()
     {   
