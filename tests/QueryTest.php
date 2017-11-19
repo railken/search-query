@@ -90,8 +90,6 @@ class QueryTest extends TestCase
 
         $this->assertEquals(json_decode('[{"key":"x","filters":[{"name":"date_modify","parameters":["\"+1  days\"","false"]},{"name":"date","parameters":["\"d\""]}],"operator":"eq","value":"1"}]'), json_decode(json_encode($query->parse('x|date_modify("+1  days", false)|date("d") eq 1'))));
 
-        $this->assertEquals(json_decode('[{"key":"x","filters":[],"operator":"eq","value":"1"}]'), json_decode(json_encode($query->parse('x eq 1'))));
-
         $this->assertEquals(json_decode('{"key":null,"filters":[],"operator":"or","value":[{"key":"x","filters":[],"operator":"eq","value":"1"},{"key":null,"filters":[],"operator":"and","value":[{"key":"y","filters":[],"operator":"eq","value":"1"},{"key":"x","filters":[],"operator":"eq","value":"2"},{"key":"x","filters":[],"operator":"eq","value":"4"}]},{"key":null,"filters":[],"operator":"and","value":[{"key":"x","filters":[],"operator":"eq","value":"1"},{"key":"x","filters":[],"operator":"eq","value":"1"}]}]}
 '), json_decode(json_encode($query->parse('x eq 1 or y eq 1 and x eq 2 and x eq 4 or x eq 1 and x eq 1'))));
 
