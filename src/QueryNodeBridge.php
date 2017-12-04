@@ -140,6 +140,7 @@ class QueryNodeBridge
         if (count($subs) == 0)
             throw new Exceptions\QuerySyntaxException("Parts ".json_encode($support_node));
 
+
         $node = $this->groupNodes($node, $subs);
 
         return $node;
@@ -181,6 +182,7 @@ class QueryNodeBridge
                         $last_position = $position;
                     }
 
+
                     foreach ($group_positions as $position) {
                         $group = [];
 
@@ -204,8 +206,14 @@ class QueryNodeBridge
                 unset($subs[$k]);
             }
         }
+
+        if (count($subs) == 1) 
+            return $subs[0];
+
         $node = (new $this->operators[$last_operator]);           
         $node->value = array_values($subs);
+
+
 
         return $node;
     }
