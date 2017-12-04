@@ -116,7 +116,6 @@ class QueryTest extends TestCase
         $this->assertEquals(json_decode('[{"key":"x","filters":[],"operator":"in","value":["1"]}]'), json_decode(json_encode($query->parse('x []= 1'))));
     }
 
-
     public function testAnd()
     {   
         $query = new QueryParser();
@@ -127,7 +126,15 @@ class QueryTest extends TestCase
 
     }
 
+    public function testOr()
+    {   
+        $query = new QueryParser();
+        
+        $this->assertEquals(json_decode('{"operator":"or","key":null,"filters":[],"value":[{"operator":"eq","key":"x","filters":[],"value":"1"},{"operator":"eq","key":"x","filters":[],"value":"2"}]}'), json_decode(json_encode($query->parse('x = 1 or x = 2'))));
 
+        $this->assertEquals(json_decode('{"operator":"or","key":null,"filters":[],"value":[{"operator":"eq","key":"x","filters":[],"value":"1"},{"operator":"eq","key":"x","filters":[],"value":"2"}]}'), json_decode(json_encode($query->parse('x = 1 || x = 2'))));
+
+    }
 
     public function testBasic()
     {   
