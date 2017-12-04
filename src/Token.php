@@ -14,6 +14,7 @@ class Token
     const TOKEN_OPERATOR_AND = ['and', '&&'];
     const TOKEN_OPERATOR_OR = ['or', '||'];
     const TOKEN_OPERATOR_EQ = ['eq', '='];
+    const TOKEN_OPERATOR_NOT_EQ = ['not_eq', 'neq', '!eq', '<>', '!='];
     const TOKEN_OPERATOR_GT = ['gt', '>'];
     const TOKEN_OPERATOR_GTE = ['gte', '>='];
     const TOKEN_OPERATOR_LT = ['lt', '<'];

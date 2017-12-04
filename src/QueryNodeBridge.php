@@ -16,6 +16,11 @@ class QueryNodeBridge
 
         Token::TOKEN_OPERATOR_EQ[0] => Nodes\EqNode::class,
         Token::TOKEN_OPERATOR_EQ[1] => Nodes\EqNode::class,
+        Token::TOKEN_OPERATOR_NOT_EQ[0] => Nodes\NotEqNode::class,
+        Token::TOKEN_OPERATOR_NOT_EQ[1] => Nodes\NotEqNode::class,
+        Token::TOKEN_OPERATOR_NOT_EQ[2] => Nodes\NotEqNode::class,
+        Token::TOKEN_OPERATOR_NOT_EQ[3] => Nodes\NotEqNode::class,
+        Token::TOKEN_OPERATOR_NOT_EQ[4] => Nodes\NotEqNode::class,
         Token::TOKEN_OPERATOR_GT[0] => Nodes\GtNode::class,
         Token::TOKEN_OPERATOR_GT[1] => Nodes\GtNode::class,
         Token::TOKEN_OPERATOR_GTE[0] => Nodes\GteNode::class,
@@ -34,6 +39,8 @@ class QueryNodeBridge
         Token::TOKEN_OPERATOR_IN[1] => Nodes\InNode::class,
         Token::TOKEN_OPERATOR_NOT_IN[0] => Nodes\NotInNode::class,
         Token::TOKEN_OPERATOR_NOT_IN[1] => Nodes\NotInNode::class,
+        Token::TOKEN_OPERATOR_NOT_IN[2] => Nodes\NotInNode::class,
+        Token::TOKEN_OPERATOR_NOT_IN[3] => Nodes\NotInNode::class,
 
     ];
 
@@ -91,6 +98,7 @@ class QueryNodeBridge
     {
         return in_array($token, array_merge(
             Token::TOKEN_OPERATOR_EQ,
+            Token::TOKEN_OPERATOR_NOT_EQ,
             Token::TOKEN_OPERATOR_GT,
             Token::TOKEN_OPERATOR_GTE,
             Token::TOKEN_OPERATOR_LT,
