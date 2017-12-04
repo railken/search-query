@@ -158,7 +158,7 @@ class QueryNodeBridge
         if (count($subs) == 1) 
             return $subs;
 
-        $last_operator = Token::TOKEN_OPERATOR_AND;
+        $last_operator = Token::TOKEN_OPERATOR_AND[0];
 
         foreach ($this->weights as $operator => $weight) {
             $positions = array_keys($subs, $operator, true);
