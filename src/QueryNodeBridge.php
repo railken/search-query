@@ -61,6 +61,24 @@ class QueryNodeBridge
     }
 
     /**
+     * Parse logic operator
+     *
+     * @param string $token
+     *
+     * @return boolean
+     */
+    public function parseTokenLogic($token)
+    {
+        if (in_array($token, Token::TOKEN_OPERATOR_OR)) {
+            return Token::TOKEN_OPERATOR_OR[0];
+        }
+
+        if (in_array($token, Token::TOKEN_OPERATOR_AND)) {
+            return Token::TOKEN_OPERATOR_AND[0];
+        }
+    }
+
+    /**
      * Return if token is operator
      *
      * @param string $token
@@ -95,8 +113,7 @@ class QueryNodeBridge
 
         $node = new QueryLogicNode();
         $sub = (new QueryKeyNode());
-
-
+        
         foreach ($support_node->parts as $part) {
             if ($part instanceof QuerySupportNode) {
                 $subs[] = $this->newBySupportNode($part);
@@ -104,7 +121,7 @@ class QueryNodeBridge
                 if ($this->isTokenLogic($part)) {
                     $sub = new $this->operators[$part];
 
-                    $subs[] = $part;
+                    $subs[] = $this->parseTokenLogic($part);
                 } elseif ($this->isTokenOperator($part)) {
                     if ($sub->getKey() !== null) {
                         $old_generic_sub = $sub;

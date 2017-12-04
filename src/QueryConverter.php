@@ -91,7 +91,7 @@ class QueryConverter
 
                 $char === Token::TOKEN_WHITESPACE && $this->in_filter && !$this->in_phrase && !$this->in_filter_parameters && $this->in_filter = false;
 
-                $char === Token::TOKEN_FILTER_DELIMETER && !$this->in_phrase && $this->parseWhiteSpace();
+                $char === Token::TOKEN_FILTER_DELIMETER && $this->in_filter && !$this->in_phrase && $this->parseWhiteSpace();
 
 
                 !$this->in_filter && !$this->in_phrase && $char === Token::TOKEN_OPENING_PARENTHESIS && $this->parseOpeningBracket($char);
