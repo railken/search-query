@@ -122,7 +122,7 @@ class QueryTest extends TestCase
         $query = new QueryParser();
 
         $this->assertEquals(json_decode('[{"key":"x","filters":[],"operator":"not_in","value":["1"]}]'), json_decode(json_encode($query->parse('x not_in 1'))));
-        $this->assertEquals(json_decode('[{"key":"x","filters":[],"operator":"not_in","value":["1"]}]'), json_decode(json_encode($query->parse('x []!= 1'))));
+        $this->assertEquals(json_decode('[{"key":"x","filters":[],"operator":"not_in","value":["1"]}]'), json_decode(json_encode($query->parse('x !=[] 1'))));
     }
 
     public function testIn()
@@ -130,7 +130,7 @@ class QueryTest extends TestCase
         $query = new QueryParser();
 
         $this->assertEquals(json_decode('[{"key":"x","filters":[],"operator":"in","value":["1"]}]'), json_decode(json_encode($query->parse('x in 1'))));
-        $this->assertEquals(json_decode('[{"key":"x","filters":[],"operator":"in","value":["1"]}]'), json_decode(json_encode($query->parse('x []= 1'))));
+        $this->assertEquals(json_decode('[{"key":"x","filters":[],"operator":"in","value":["1"]}]'), json_decode(json_encode($query->parse('x =[] 1'))));
     }
 
     public function testAnd()
