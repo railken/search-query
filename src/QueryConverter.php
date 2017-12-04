@@ -22,6 +22,13 @@ class QueryConverter
     protected $buffer = '';
     
     /**
+     * Previous char
+     *
+     * @var bool
+     */
+    protected $prev_char = null;
+    
+    /**
      * Is the current char in a string?
      *
      * @var bool
@@ -73,6 +80,7 @@ class QueryConverter
      */
     public function convert()
     {
+
         try {
             $this->node = new QuerySupportNode();
 
@@ -80,6 +88,8 @@ class QueryConverter
                 $char === Token::TOKEN_ESCAPE && $this->parseStatusEscaping($char);
                 $char === Token::TOKEN_PHRASE_DELIMETER && $this->parseStatusPhrase($char);
                 $char === Token::TOKEN_FILTER_DELIMETER && !$this->in_phrase && $this->in_filter = true;
+                $char === Token::TOKEN_FILTER_DELIMETER && $this->prev_char == Token::TOKEN_FILTER_DELIMETER && !$this->in_phrase && $this->in_filter && $this->in_filter = false;
+
                 $char === Token::TOKEN_WHITESPACE && $this->in_filter && !$this->in_phrase && !$this->in_filter_parameters && $this->in_filter = false;
 
                 $char === Token::TOKEN_FILTER_DELIMETER && !$this->in_phrase && $this->parseWhiteSpace();
@@ -112,6 +122,7 @@ class QueryConverter
                 
                 # Concat always when "in_filter"
                 $this->in_filter && $char !== Token::TOKEN_WHITESPACE && $this->concatBufferString($char);
+                $this->prev_char = $char;
 
                 $char !== Token::TOKEN_ESCAPE && $this->escape = false;
             }
