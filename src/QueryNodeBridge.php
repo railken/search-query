@@ -32,6 +32,8 @@ class QueryNodeBridge
         Token::TOKEN_OPERATOR_END_WITH[1] => Nodes\EndWithNode::class,
         Token::TOKEN_OPERATOR_IN[0] => Nodes\InNode::class,
         Token::TOKEN_OPERATOR_IN[1] => Nodes\InNode::class,
+        Token::TOKEN_OPERATOR_NOT_IN[0] => Nodes\NotInNode::class,
+        Token::TOKEN_OPERATOR_NOT_IN[1] => Nodes\NotInNode::class,
 
     ];
 
@@ -93,10 +95,11 @@ class QueryNodeBridge
             Token::TOKEN_OPERATOR_GTE,
             Token::TOKEN_OPERATOR_LT,
             Token::TOKEN_OPERATOR_LTE,
-            Token::TOKEN_OPERATOR_IN,
             Token::TOKEN_OPERATOR_CONTAINS,
             Token::TOKEN_OPERATOR_START_WITH,
-            Token::TOKEN_OPERATOR_END_WITH
+            Token::TOKEN_OPERATOR_END_WITH,
+            Token::TOKEN_OPERATOR_IN,
+            Token::TOKEN_OPERATOR_NOT_IN
         ));
     }
 

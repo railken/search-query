@@ -108,6 +108,14 @@ class QueryTest extends TestCase
         $this->assertEquals(json_decode('[{"key":"x","filters":[],"operator":"ew","value":"1"}]'), json_decode(json_encode($query->parse('x $= 1'))));
     }
 
+    public function testNotIn()
+    {   
+        $query = new QueryParser();
+
+        $this->assertEquals(json_decode('[{"key":"x","filters":[],"operator":"not_in","value":["1"]}]'), json_decode(json_encode($query->parse('x not_in 1'))));
+        $this->assertEquals(json_decode('[{"key":"x","filters":[],"operator":"not_in","value":["1"]}]'), json_decode(json_encode($query->parse('x []!= 1'))));
+    }
+
     public function testIn()
     {   
         $query = new QueryParser();
