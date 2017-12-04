@@ -7,7 +7,6 @@ use Railken\SQ\Nodes as Nodes;
 
 class QueryNodeBridge
 {
-
     protected $operators = [
         Token::TOKEN_OPERATOR_OR[0] => Nodes\OrNode::class,
         Token::TOKEN_OPERATOR_OR[1] => Nodes\OrNode::class,
@@ -56,7 +55,7 @@ class QueryNodeBridge
     public function isTokenLogic($token)
     {
         return in_array($token, array_merge(
-            Token::TOKEN_OPERATOR_OR, 
+            Token::TOKEN_OPERATOR_OR,
             Token::TOKEN_OPERATOR_AND
         ));
     }
@@ -71,12 +70,12 @@ class QueryNodeBridge
     public function isTokenOperator($token)
     {
         return in_array($token, array_merge(
-            Token::TOKEN_OPERATOR_EQ, 
-            Token::TOKEN_OPERATOR_GT, 
-            Token::TOKEN_OPERATOR_GTE, 
-            Token::TOKEN_OPERATOR_LT, 
-            Token::TOKEN_OPERATOR_LTE, 
-            Token::TOKEN_OPERATOR_IN, 
+            Token::TOKEN_OPERATOR_EQ,
+            Token::TOKEN_OPERATOR_GT,
+            Token::TOKEN_OPERATOR_GTE,
+            Token::TOKEN_OPERATOR_LT,
+            Token::TOKEN_OPERATOR_LTE,
+            Token::TOKEN_OPERATOR_IN,
             Token::TOKEN_OPERATOR_CONTAINS,
             Token::TOKEN_OPERATOR_START_WITH,
             Token::TOKEN_OPERATOR_END_WITH
@@ -92,7 +91,6 @@ class QueryNodeBridge
      */
     public function newBySupportNode($support_node)
     {
- 
         $subs = [];
 
         $node = new QueryLogicNode();
@@ -103,9 +101,7 @@ class QueryNodeBridge
             if ($part instanceof QuerySupportNode) {
                 $subs[] = $this->newBySupportNode($part);
             } else {
-
                 if ($this->isTokenLogic($part)) {
-                    
                     $sub = new $this->operators[$part];
 
                     $subs[] = $part;
@@ -130,15 +126,15 @@ class QueryNodeBridge
                 }
 
                 if ($sub->getKey() !== null && $sub->getValue() !== null && $sub->getOperator() !== null) {
-
                     $subs[] = $sub;
                 }
             }
         }
 
         # No Subs? Throw exception.
-        if (count($subs) == 0)
+        if (count($subs) == 0) {
             throw new Exceptions\QuerySyntaxException("Parts ".json_encode($support_node));
+        }
 
 
         $node = $this->groupNodes($node, $subs);
@@ -156,8 +152,9 @@ class QueryNodeBridge
      */
     public function groupNodes($node, $subs)
     {
-        if (count($subs) == 1) 
+        if (count($subs) == 1) {
             return $subs;
+        }
 
         $last_operator = Token::TOKEN_OPERATOR_AND[0];
 
@@ -207,10 +204,11 @@ class QueryNodeBridge
             }
         }
 
-        if (count($subs) == 1) 
+        if (count($subs) == 1) {
             return $subs[0];
+        }
 
-        $node = (new $this->operators[$last_operator]);           
+        $node = (new $this->operators[$last_operator]);
         $node->value = array_values($subs);
 
 

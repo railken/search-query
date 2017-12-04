@@ -80,7 +80,6 @@ class QueryConverter
      */
     public function convert()
     {
-
         try {
             $this->node = new QuerySupportNode();
 
@@ -117,7 +116,6 @@ class QueryConverter
 
                     $char === Token::TOKEN_OPENING_PARENTHESIS && $this->in_filter_parameters = true;
                     $char === Token::TOKEN_CLOSING_PARENTHESIS && $this->in_filter_parameters = false;
-
                 }
                 
                 # Concat always when "in_filter"

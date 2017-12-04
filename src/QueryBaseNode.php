@@ -4,7 +4,6 @@ namespace Railken\SQ;
 
 use Railken\SQ\StringHelper;
 
-
 class QueryBaseNode
 {
 
@@ -28,7 +27,6 @@ class QueryBaseNode
      */
     public function __construct()
     {
-
     }
 
     /**
@@ -79,5 +77,4 @@ class QueryBaseNode
     {
         return $this->operator;
     }
-
 }

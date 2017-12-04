@@ -4,7 +4,6 @@ namespace Railken\SQ;
 
 use Railken\SQ\StringHelper;
 
-
 class QueryKeyNode extends QueryBaseNode
 {
 
@@ -31,7 +30,6 @@ class QueryKeyNode extends QueryBaseNode
      */
     public function setKey($key)
     {
-
         $this->key = $key;
 
         return $this;
@@ -69,7 +67,7 @@ class QueryKeyNode extends QueryBaseNode
     public function getFilters()
     {
         return $this->filters;
-    } 
+    }
 
     /**
      * Add filter
@@ -78,7 +76,6 @@ class QueryKeyNode extends QueryBaseNode
      */
     public function addFilter($filter)
     {
-
         preg_match('#(.*?)\((.*?)\)#', $filter, $r);
 
         $helper = new StringHelper();

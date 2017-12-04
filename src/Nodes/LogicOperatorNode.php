@@ -6,5 +6,4 @@ use Railken\SQ\QueryKeyNode;
 
 class LogicOperatorNode extends QueryKeyNode
 {
-
 }

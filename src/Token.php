@@ -4,7 +4,6 @@ namespace Railken\SQ;
 
 class Token
 {
-
     const TOKEN_WHITESPACE = ' ';
     const TOKEN_PHRASE_DELIMETER = '"';
     const TOKEN_ESCAPE = '\\';
@@ -23,6 +22,4 @@ class Token
     const TOKEN_OPERATOR_CONTAINS = ['ct', '*='];
     const TOKEN_OPERATOR_START_WITH = ['sw', '^='];
     const TOKEN_OPERATOR_END_WITH = ['ew', '$='];
-
-
 }
