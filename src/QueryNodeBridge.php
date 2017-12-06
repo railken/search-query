@@ -121,18 +121,16 @@ class QueryNodeBridge
     public function newBySupportNode($support_node)
     {
         $subs = [];
+        $sub = new Nodes\KeyNode();
 
-        $node = new QueryLogicNode();
-        $sub = (new QueryKeyNode());
-        
         foreach ($support_node->parts as $part) {
             if ($part instanceof QuerySupportNode) {
                 $subs[] = $this->newBySupportNode($part);
             } else {
                 if ($this->isTokenLogic($part)) {
-                    $sub = new $this->operators[$part];
 
                     $subs[] = $this->parseTokenLogic($part);
+                    $sub = new Nodes\KeyNode();
                 } elseif ($this->isTokenOperator($part)) {
                     if ($sub->getKey() !== null) {
                         $old_generic_sub = $sub;
@@ -141,9 +139,9 @@ class QueryNodeBridge
                         $sub->setFilters($old_generic_sub->getFilters());
                         $sub->setKey($old_generic_sub->getKey());
                     }
-                } elseif ($part[0] === Token::TOKEN_FILTER_DELIMETER) {
+                } elseif ($sub && $part[0] === Token::TOKEN_FILTER_DELIMETER) {
                     $sub->addFilter(substr($part, 1));
-                } else {
+                } elseif ($sub) {
                     if ($sub->getKey() !== null && $sub->getValue() == null) {
                         $sub->setValue($part);
                     }
@@ -159,26 +157,23 @@ class QueryNodeBridge
             }
         }
 
+
         # No Subs? Throw exception.
         if (count($subs) == 0) {
             throw new Exceptions\QuerySyntaxException("Parts ".json_encode($support_node));
         }
 
-
-        $node = $this->groupNodes($node, $subs);
-
-        return $node;
+        return $this->groupNodes($subs);
     }
 
     /**
      * Group node based on operator weight
      *
-     * @param FilterNode $node
      * @param array $subs
      *
      * @return FilterNode
      */
-    public function groupNodes($node, $subs)
+    public function groupNodes($subs)
     {
         if (count($subs) == 1) {
             return $subs;
@@ -212,7 +207,7 @@ class QueryNodeBridge
                         $group = [];
 
                         for ($i = $position[0]-1; $i <= end($position)+1; $i++) {
-                            if ($subs[$i] instanceof QueryBaseNode) {
+                            if ($subs[$i] instanceof Nodes\Node) {
                                 $group[] = $subs[$i];
                             }
 
@@ -237,7 +232,7 @@ class QueryNodeBridge
         }
 
         $node = (new $this->operators[$last_operator]);
-        $node->value = array_values($subs);
+        $node->setValue(array_values($subs));
 
 
 

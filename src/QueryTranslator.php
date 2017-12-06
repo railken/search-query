@@ -4,7 +4,7 @@ namespace Railken\SQ;
 
 use Railken\SQ\Exceptions;
 
-class QueryConverter
+class QueryTranslator
 {
 
     /**
@@ -78,7 +78,7 @@ class QueryConverter
      *
      * @return Object
      */
-    public function convert()
+    public function translate()
     {
         try {
             $this->node = new QuerySupportNode();
@@ -137,9 +137,9 @@ class QueryConverter
 
             return (new QueryNodeBridge())->newBySupportNode($this->node->parts[0]);
         } catch (Exceptions\QuerySyntaxException $e) {
-            throw $e;
-        } catch (\Exception $e) {
             throw new Exceptions\QuerySyntaxException($this->query);
+        } catch (\Exception $e) {
+            throw $e;
         }
     }
 

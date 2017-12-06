@@ -1,10 +1,9 @@
 <?php
 
-namespace Railken\SQ;
+namespace Railken\SQ\Nodes;
 
-use Railken\SQ\StringHelper;
 
-class QueryBaseNode
+class Node
 {
 
 
