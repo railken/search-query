@@ -39,6 +39,7 @@ var app = new Vue({
 		  		this.result = response.body.query;
 			}, response => {
 				this.error = response.body.message;
+		  		this.result = '';
 			});
 		}
 	},
