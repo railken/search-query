@@ -123,6 +123,7 @@ class QueryNodeBridge
         $subs = [];
         $sub = new Nodes\KeyNode();
 
+
         foreach ($support_node->parts as $part) {
             if ($part instanceof QuerySupportNode) {
                 $subs[] = $this->newBySupportNode($part);
@@ -139,28 +140,36 @@ class QueryNodeBridge
                         $sub->setFilters($old_generic_sub->getFilters());
                         $sub->setKey($old_generic_sub->getKey());
                     }
-                } elseif ($sub && $part[0] === Token::TOKEN_FILTER_DELIMETER) {
+                } elseif ($part[0] === Token::TOKEN_FILTER_DELIMETER) {
                     $sub->addFilter(substr($part, 1));
-                } elseif ($sub) {
+                } else {
+
+                    if ($sub->getKey() !== null && $sub->getOperator() === null) {
+                        throw new Exceptions\QuerySyntaxException("");
+                    }
+
                     if ($sub->getKey() !== null && $sub->getValue() == null) {
                         $sub->setValue($part);
                     }
 
-                    if ($sub->getKey() == null) {
+                    if ($sub->getKey() === null) {
                         $sub->setKey($part);
                     }
                 }
-
+            
                 if ($sub->getKey() !== null && $sub->getValue() !== null && $sub->getOperator() !== null) {
                     $subs[] = $sub;
                 }
             }
         }
 
+        if ($sub->getKey() === null || $sub->getValue() === null || $sub->getOperator() === null) {
+            throw new Exceptions\QuerySyntaxException("");
+        }
 
         # No Subs? Throw exception.
         if (count($subs) == 0) {
-            throw new Exceptions\QuerySyntaxException("Parts ".json_encode($support_node));
+            throw new Exceptions\QuerySyntaxException("");
         }
 
         return $this->groupNodes($subs);
