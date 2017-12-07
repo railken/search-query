@@ -2,6 +2,7 @@
 namespace Railken\SQ\Nodes;
 
 use Railken\SQ\StringHelper;
+
 class KeyNode extends Node
 {
     
@@ -76,10 +77,13 @@ class KeyNode extends Node
     {
         preg_match('#(.*?)\((.*?)\)#', $filter, $r);
 
-        $helper = new StringHelper();
-        $parameters = $helper->divideBy($r[2], ",");
-        
-        $this->filters[] = ['name' => $r[1], 'parameters' => $parameters];
+        if (count($r) > 0) {
+            $helper = new StringHelper();
+            $parameters = $helper->divideBy($r[2], ",");
+            $this->filters[] = ['name' => $r[1], 'parameters' => $parameters];
+        } else {
+            $this->filters[] = ['name' => $filter];
+        }
 
         return $this;
     }
