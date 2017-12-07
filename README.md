@@ -15,6 +15,9 @@ You can install it via [Composer](https://getcomposer.org/) by typing the follow
 composer require railken/search-query
 ```
 
+## Demo
+
+![demo](https://raw.githubusercontent.com/railken/search-query/master/demo/demo.gif)
 
 ## Usage
 
