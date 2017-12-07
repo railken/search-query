@@ -23,6 +23,6 @@ class QueryParser
      */
     public function parse($query)
     {
-        return (new QueryTranslator($query))->translate();
+        return $query ? (new QueryTranslator($query))->translate() : null;
     }
 }

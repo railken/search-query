@@ -136,9 +136,9 @@ class QueryTest extends TestCase
     public function testAnd()
     {   
         $query = new QueryParser();
-        $this->assertEquals(json_decode('{"operator":"and","key":null,"filters":[],"value":[{"operator":"eq","key":"x","filters":[],"value":"1"},{"operator":"eq","key":"x","filters":[],"value":"2"}]}'), json_decode(json_encode($query->parse('x = 1 and x = 2'))));
+        $this->assertEquals(json_decode('{"operator":"and","value":[{"operator":"eq","key":"x","filters":[],"value":"1"},{"operator":"eq","key":"x","filters":[],"value":"2"}]}'), json_decode(json_encode($query->parse('x = 1 and x = 2'))));
         
-        $this->assertEquals(json_decode('{"operator":"and","key":null,"filters":[],"value":[{"operator":"eq","key":"x","filters":[],"value":"1"},{"operator":"eq","key":"x","filters":[],"value":"2"}]}'), json_decode(json_encode($query->parse('x = 1 && x = 2'))));
+        $this->assertEquals(json_decode('{"operator":"and","value":[{"operator":"eq","key":"x","filters":[],"value":"1"},{"operator":"eq","key":"x","filters":[],"value":"2"}]}'), json_decode(json_encode($query->parse('x = 1 && x = 2'))));
 
     }
 
@@ -146,9 +146,9 @@ class QueryTest extends TestCase
     {   
         $query = new QueryParser();
         
-        $this->assertEquals(json_decode('{"operator":"or","key":null,"filters":[],"value":[{"operator":"eq","key":"x","filters":[],"value":"1"},{"operator":"eq","key":"x","filters":[],"value":"2"}]}'), json_decode(json_encode($query->parse('x = 1 or x = 2'))));
+        $this->assertEquals(json_decode('{"operator":"or","value":[{"operator":"eq","key":"x","filters":[],"value":"1"},{"operator":"eq","key":"x","filters":[],"value":"2"}]}'), json_decode(json_encode($query->parse('x = 1 or x = 2'))));
 
-        $this->assertEquals(json_decode('{"operator":"or","key":null,"filters":[],"value":[{"operator":"eq","key":"x","filters":[],"value":"1"},{"operator":"eq","key":"x","filters":[],"value":"2"}]}'), json_decode(json_encode($query->parse('x = 1 || x = 2'))));
+        $this->assertEquals(json_decode('{"operator":"or","value":[{"operator":"eq","key":"x","filters":[],"value":"1"},{"operator":"eq","key":"x","filters":[],"value":"2"}]}'), json_decode(json_encode($query->parse('x = 1 || x = 2'))));
 
     }
 
@@ -158,10 +158,10 @@ class QueryTest extends TestCase
 
         $this->assertEquals(json_decode('[{"key":"x","filters":[{"name":"date_modify","parameters":["\"+1  days\"","false"]},{"name":"date","parameters":["\"d\""]}],"operator":"eq","value":"1"}]'), json_decode(json_encode($query->parse('x|date_modify("+1  days", false)|date("d") eq 1'))));
 
-        $this->assertEquals(json_decode('{"key":null,"filters":[],"operator":"or","value":[{"key":"x","filters":[],"operator":"eq","value":"1"},{"key":null,"filters":[],"operator":"and","value":[{"key":"y","filters":[],"operator":"eq","value":"1"},{"key":"x","filters":[],"operator":"eq","value":"2"},{"key":"x","filters":[],"operator":"eq","value":"4"}]},{"key":null,"filters":[],"operator":"and","value":[{"key":"x","filters":[],"operator":"eq","value":"1"},{"key":"x","filters":[],"operator":"eq","value":"1"}]}]}
+        $this->assertEquals(json_decode('{"operator":"or","value":[{"operator":"eq","key":"x","filters":[],"value":"1"},{"operator":"and","value":[{"operator":"eq","key":"y","filters":[],"value":"1"},{"operator":"eq","key":"x","filters":[],"value":"2"},{"operator":"eq","key":"x","filters":[],"value":"4"}]},{"operator":"and","value":[{"operator":"eq","key":"x","filters":[],"value":"1"},{"operator":"eq","key":"x","filters":[],"value":"1"}]}]}
 '), json_decode(json_encode($query->parse('x eq 1 or y eq 1 and x eq 2 and x eq 4 or x eq 1 and x eq 1'))));
 
-        $this->assertEquals(json_decode('{"key":null,"filters":[],"operator":"or","value":[{"key":null,"filters":[],"operator":"or","value":[{"key":"title","filters":[],"operator":"eq","value":"something"},{"key":"rating","filters":[],"operator":"gt","value":"3"}]},{"key":null,"filters":[],"operator":"or","value":[{"key":"title","filters":[],"operator":"eq","value":"something else"},{"key":"rating","filters":[],"operator":"lt","value":"3"}]},{"key":"title","filters":[],"operator":"eq","value":"another"}]}
+        $this->assertEquals(json_decode('{"operator":"or","value":[{"operator":"or","value":[{"key":"title","filters":[],"operator":"eq","value":"something"},{"key":"rating","filters":[],"operator":"gt","value":"3"}]},{"operator":"or","value":[{"key":"title","filters":[],"operator":"eq","value":"something else"},{"key":"rating","filters":[],"operator":"lt","value":"3"}]},{"key":"title","filters":[],"operator":"eq","value":"another"}]}
 '), json_decode(json_encode($query->parse('(title eq "something" or rating gt 3) or (title eq "something else" or rating lt 3) or title eq "another"'))));
 
 
