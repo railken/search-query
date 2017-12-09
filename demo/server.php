@@ -8,9 +8,25 @@ if (!file_exists($autoload)) {
 require_once $autoload;
 
 use Railken\SQ\QueryParser;
+use Railken\SQ\Resolvers as Resolvers;
 
 
 $parser = new QueryParser();
+$parser->addResolvers([
+    new Resolvers\GroupingResolver(),
+    new Resolvers\NotEqResolver(),
+    new Resolvers\EqResolver(),
+    new Resolvers\LtResolver(),
+    new Resolvers\LteResolver(),
+    new Resolvers\GtResolver(),
+    new Resolvers\GteResolver(),
+    new Resolvers\CtResolver(),
+    new Resolvers\SwResolver(),
+    new Resolvers\NotInResolver(),
+    new Resolvers\InResolver(),
+    new Resolvers\EwResolver(),
+    new Resolvers\AndResolver(),
+]);
 
 try {
 	$result = $parser->parse($_GET['q']);
