@@ -16,7 +16,7 @@ class OrResolver implements ResolverContract
     public $node = Nodes\OrNode::class;
 
     /**
-     * Regex token 
+     * Regex token
      *
      * @var string
      */
@@ -31,7 +31,7 @@ class OrResolver implements ResolverContract
      */
     public function resolve(NodeContract $node)
     {
-         // $node->content = "";
+        // $node->content = "";
 
         $childs = $node->getChilds();
         
@@ -46,7 +46,6 @@ class OrResolver implements ResolverContract
         if ($node instanceof Nodes\TextNode) {
             $this->resolveTextNode($node);
         }
-
     }
 
     public function resolveTextNode($node)
@@ -77,7 +76,7 @@ class OrResolver implements ResolverContract
                 } else {
                     $p = $node->getParent();
                 }
-            }    
+            }
         }
     }
 }

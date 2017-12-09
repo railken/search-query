@@ -10,6 +10,4 @@ class RootNode extends Node
             'value' => $this->getChilds(),
         ];
     }
-
-	
 }

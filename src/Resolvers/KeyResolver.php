@@ -18,7 +18,7 @@ class KeyResolver implements ResolverContract
      */
     public function resolve(NodeContract $node)
     {
-    	 // $node->content = "";
+        // $node->content = "";
 
         $childs = $node->getChilds();
         
@@ -33,7 +33,6 @@ class KeyResolver implements ResolverContract
         if ($node instanceof Nodes\TextNode) {
             $this->resolveTextNode($node);
         }
-
     }
 
     public function resolveTextNode($node)
@@ -53,23 +52,23 @@ class KeyResolver implements ResolverContract
 
                 $first = new Nodes\TextNode(substr($node->getValue(), 0, $start));
 
-                if ($first->getValue())
+                if ($first->getValue()) {
                     $push[] = $first;
+                }
 
                 $push[] = $new_node;
                 
                 $second = new Nodes\TextNode(substr($node->getValue(), $start+$length));
 
-                if ($second->getValue())
+                if ($second->getValue()) {
                     $push[] = $second;
+                }
 
                 $node->getParent()->replaceChild($node->getPos(), $push);
 
                 // Search for another match in this node.
                 $this->resolveTextNode($second);
-
-
-            }    
+            }
         }
     }
 }

@@ -37,8 +37,8 @@ class QueryTest extends TestCase
      */
     public function testQuerySyntaxException1()
     {
-       $query = $this->parser;
-       $query->parse('x');
+        $query = $this->parser;
+        $query->parse('x');
     }
 
     /**
@@ -46,18 +46,17 @@ class QueryTest extends TestCase
      */
     public function testQuerySyntaxException2()
     {
-       $query = $this->parser;
-       $query->parse('x eq');
+        $query = $this->parser;
+        $query->parse('x eq');
     }
 
     /**
      * @expectedException Railken\SQ\Exceptions\QuerySyntaxException
      */
-   public function testQuerySyntaxException3()
+    public function testQuerySyntaxException3()
     {
-
-       $query = $this->parser;
-       $query->parse('x wrong 1');
+        $query = $this->parser;
+        $query->parse('x wrong 1');
     }
 
     /**
@@ -65,13 +64,12 @@ class QueryTest extends TestCase
      */
     public function testQuerySyntaxException5()
     {
-
-       $query = $this->parser;
-       $query->parse('x|date( eq 1');
+        $query = $this->parser;
+        $query->parse('x|date( eq 1');
     }
 
     public function testEq()
-    {   
+    {
         $query = $this->parser;
 
         $result = $query->parse('x eq 1');
@@ -83,14 +81,13 @@ class QueryTest extends TestCase
         $this->assertEquals(Nodes\EqNode::class, get_class($result));
         $this->assertEquals('x', $result->getKey());
         $this->assertEquals('1', $result->getValue());
-
     }
 
     public function testNotEq()
-    {   
+    {
         $query = $this->parser;
 
-        $result = $query->parse('x not eq 1');        
+        $result = $query->parse('x not eq 1');
         $this->assertEquals(Nodes\NotEqNode::class, get_class($result));
         $this->assertEquals('x', $result->getKey());
         $this->assertEquals('1', $result->getValue());
@@ -104,11 +101,10 @@ class QueryTest extends TestCase
         $this->assertEquals(Nodes\NotEqNode::class, get_class($result));
         $this->assertEquals('x', $result->getKey());
         $this->assertEquals('1', $result->getValue());
-
-    } 
+    }
 
     public function testGt()
-    {   
+    {
         $query = $this->parser;
 
         $result = $query->parse('x gt 1');
@@ -120,11 +116,10 @@ class QueryTest extends TestCase
         $this->assertEquals(Nodes\GtNode::class, get_class($result));
         $this->assertEquals('x', $result->getKey());
         $this->assertEquals('1', $result->getValue());
-
     }
 
     public function testGte()
-    {   
+    {
         $query = $this->parser;
 
         $result = $query->parse('x gte 1');
@@ -136,12 +131,11 @@ class QueryTest extends TestCase
         $this->assertEquals(Nodes\GteNode::class, get_class($result));
         $this->assertEquals('x', $result->getKey());
         $this->assertEquals('1', $result->getValue());
-
     }
 
 
     public function testLt()
-    {   
+    {
         $query = $this->parser;
 
         $result = $query->parse('x lt 1');
@@ -153,11 +147,10 @@ class QueryTest extends TestCase
         $this->assertEquals(Nodes\LtNode::class, get_class($result));
         $this->assertEquals('x', $result->getKey());
         $this->assertEquals('1', $result->getValue());
-
     }
 
     public function testLte()
-    {   
+    {
         $query = $this->parser;
 
         $result = $query->parse('x lte 1');
@@ -169,11 +162,10 @@ class QueryTest extends TestCase
         $this->assertEquals(Nodes\LteNode::class, get_class($result));
         $this->assertEquals('x', $result->getKey());
         $this->assertEquals('1', $result->getValue());
-
     }
 
     public function testCt()
-    {   
+    {
         $query = $this->parser;
 
         $result = $query->parse('x ct 1');
@@ -185,12 +177,10 @@ class QueryTest extends TestCase
         $this->assertEquals(Nodes\CtNode::class, get_class($result));
         $this->assertEquals('x', $result->getKey());
         $this->assertEquals('1', $result->getValue());
-
     }
 
     public function testSw()
-    {   
-
+    {
         $query = $this->parser;
 
         $result = $query->parse('x sw 1');
@@ -205,7 +195,7 @@ class QueryTest extends TestCase
     }
 
     public function testEw()
-    {   
+    {
         $query = $this->parser;
 
         $result = $query->parse('x ew 1');
@@ -220,7 +210,7 @@ class QueryTest extends TestCase
     }
 
     public function testNotIn()
-    {   
+    {
         $query = $this->parser;
 
         $result = $query->parse('x not in 1');
@@ -235,7 +225,7 @@ class QueryTest extends TestCase
     }
 
     public function testIn()
-    {   
+    {
         $query = $this->parser;
 
         $result = $query->parse('x in 1');
@@ -250,7 +240,7 @@ class QueryTest extends TestCase
     }
 
     public function testAnd()
-    {   
+    {
         $query = $this->parser;
         $result = $query->parse('x = 1 and y = 1');
         $this->assertEquals(Nodes\AndNode::class, get_class($result));
@@ -270,11 +260,10 @@ class QueryTest extends TestCase
         $this->assertEquals(Nodes\EqNode::class, get_class($result->getChild(1)));
         $this->assertEquals('y', $result->getChild(1)->getKey());
         $this->assertEquals('1', $result->getChild(1)->getValue());
-
     }
 
     public function testOr()
-    {   
+    {
         $query = $this->parser;
         $result = $query->parse('x = 1 or y = 1');
         $this->assertEquals(Nodes\OrNode::class, get_class($result));
@@ -294,9 +283,5 @@ class QueryTest extends TestCase
         $this->assertEquals(Nodes\EqNode::class, get_class($result->getChild(1)));
         $this->assertEquals('y', $result->getChild(1)->getKey());
         $this->assertEquals('1', $result->getChild(1)->getValue());
-
     }
-
 }
-
-

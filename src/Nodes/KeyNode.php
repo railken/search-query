@@ -115,5 +115,4 @@ class KeyNode extends Node
             'value' => $this->getValue(),
         ]);
     }
-
 }

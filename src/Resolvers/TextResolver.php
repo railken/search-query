@@ -20,7 +20,7 @@ class TextResolver implements ResolverContract
      */
     public function resolve(NodeContract $node)
     {
-         // $node->content = "";
+        // $node->content = "";
 
         $childs = $node->getChilds();
         
@@ -35,7 +35,6 @@ class TextResolver implements ResolverContract
         if ($node instanceof Nodes\TextNode) {
             $this->resolveTextNode($node);
         }
-
     }
 
     /**
@@ -47,12 +46,10 @@ class TextResolver implements ResolverContract
      */
     public function resolveTextNode($node)
     {
-
         if (empty(trim($node->getValue()))) {
             $node->getParent()->replaceChild($node->getPos(), []);
         } else {
             throw new Exceptions\QuerySyntaxException($node->getValue());
         }
-
     }
 }

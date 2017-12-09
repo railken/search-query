@@ -10,6 +10,4 @@ class LogicNode extends Node
             'childs' => $this->getChilds(),
         ]);
     }
-
-	
 }

@@ -14,10 +14,9 @@ class EqResolver extends KeyResolver
     public $node = Nodes\EqNode::class;
 
     /**
-     * Regex token 
+     * Regex token
      *
      * @var string
      */
     public $regex = ['/([\w]*) eq (("[^"]*"|[^\s]*))/i', '/([\w]*) = (("[^"]*"|[^\s]*))/i'];
-
 }

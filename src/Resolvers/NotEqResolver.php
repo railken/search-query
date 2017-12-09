@@ -14,14 +14,13 @@ class NotEqResolver extends KeyResolver
     public $node = Nodes\NotEqNode::class;
 
     /**
-     * Regex token 
+     * Regex token
      *
      * @var string
      */
     public $regex = [
-        '/([\w]*) not eq (("[^"]*"|[^\s]*))/i', 
+        '/([\w]*) not eq (("[^"]*"|[^\s]*))/i',
         '/([\w]*) <> (("[^"]*"|[^\s]*))/i',
         '/([\w]*) != (("[^"]*"|[^\s]*))/i'
     ];
-
 }

@@ -14,13 +14,12 @@ class InResolver extends KeyResolver
     public $node = Nodes\InNode::class;
 
     /**
-     * Regex token 
+     * Regex token
      *
      * @var string
      */
     public $regex = [
-        '/([\w]*) in (("[^"]*"|[^\s]*))/i', 
+        '/([\w]*) in (("[^"]*"|[^\s]*))/i',
         '/([\w]*) =\[\] (("[^"]*"|[^\s]*))/i'
     ];
-
 }

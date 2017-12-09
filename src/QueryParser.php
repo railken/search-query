@@ -32,7 +32,6 @@ class QueryParser
      */
     public function addResolvers($resolvers)
     {
-
         foreach ($resolvers as $resolver) {
             $this->addResolver($resolver);
         }
@@ -53,7 +52,7 @@ class QueryParser
      * @return Object
      */
     public function parse($query)
-    {   
+    {
         $node = new Nodes\RootNode();
 
         $l = new Nodes\LogicNode();
@@ -79,5 +78,4 @@ class QueryParser
 
         return $node;
     }
-
 }

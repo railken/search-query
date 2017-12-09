@@ -14,13 +14,12 @@ class GteResolver extends KeyResolver
     public $node = Nodes\GteNode::class;
 
     /**
-     * Regex token 
+     * Regex token
      *
      * @var string
      */
     public $regex = [
-        '/([\w]*) gte (("[^"]*"|[^\s]*))/i', 
+        '/([\w]*) gte (("[^"]*"|[^\s]*))/i',
         '/([\w]*) >= (("[^"]*"|[^\s]*))/i'
     ];
-
 }

@@ -14,13 +14,12 @@ class SwResolver extends KeyResolver
     public $node = Nodes\SwNode::class;
 
     /**
-     * Regex token 
+     * Regex token
      *
      * @var string
      */
     public $regex = [
-        '/([\w]*) sw (("[^"]*"|[^\s]*))/i', 
+        '/([\w]*) sw (("[^"]*"|[^\s]*))/i',
         '/([\w]*) \^= (("[^"]*"|[^\s]*))/i'
     ];
-
 }

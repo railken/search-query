@@ -16,7 +16,7 @@ class GroupingResolver implements ResolverContract
     public $node = Nodes\GroupNode::class;
 
     /**
-     * Regex token 
+     * Regex token
      *
      * @var string
      */
@@ -31,12 +31,11 @@ class GroupingResolver implements ResolverContract
      */
     public function resolve(NodeContract $node)
     {
-
         $nk = 0;
         $offset = 0;
 
         $key = 0;
-        while($child = $node->getChild($key)) {
+        while ($child = $node->getChild($key)) {
             if ($child instanceof Nodes\TextNode) {
                 foreach ($this->regex as $regex) {
                     preg_match($regex, $child->getValue(), $match, PREG_OFFSET_CAPTURE);
@@ -54,25 +53,24 @@ class GroupingResolver implements ResolverContract
 
                         $first = new Nodes\TextNode(substr($child->getValue(), 0, $start));
 
-                        if ($first->getValue())
+                        if ($first->getValue()) {
                             $push[] = $first;
+                        }
 
                         $push[] = $new_node;
 
                         $second = new Nodes\TextNode(substr($child->getValue(), $start+$length));
 
-                        if ($second->getValue())
+                        if ($second->getValue()) {
                             $push[] = $second;
+                        }
 
                         $node->replaceChild($key, $push);
-                    }    
+                    }
                 }
             }
 
             $key++;
         }
-
-
-
     }
 }

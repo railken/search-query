@@ -14,13 +14,12 @@ class CtResolver extends KeyResolver
     public $node = Nodes\CtNode::class;
 
     /**
-     * Regex token 
+     * Regex token
      *
      * @var string
      */
     public $regex = [
-        '/([\w]*) ct (("[^"]*"|[^\s]*))/i', 
+        '/([\w]*) ct (("[^"]*"|[^\s]*))/i',
         '/([\w]*) \*= (("[^"]*"|[^\s]*))/i'
     ];
-
 }

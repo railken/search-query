@@ -14,13 +14,12 @@ class LteResolver extends KeyResolver
     public $node = Nodes\LteNode::class;
 
     /**
-     * Regex token 
+     * Regex token
      *
      * @var string
      */
     public $regex = [
-        '/([\w]*) lte (("[^"]*"|[^\s]*))/i', 
+        '/([\w]*) lte (("[^"]*"|[^\s]*))/i',
         '/([\w]*) <= (("[^"]*"|[^\s]*))/i'
     ];
-
 }

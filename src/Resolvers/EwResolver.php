@@ -14,13 +14,12 @@ class EwResolver extends KeyResolver
     public $node = Nodes\EwNode::class;
 
     /**
-     * Regex token 
+     * Regex token
      *
      * @var string
      */
     public $regex = [
-        '/([\w]*) ew (("[^"]*"|[^\s]*))/i', 
+        '/([\w]*) ew (("[^"]*"|[^\s]*))/i',
         '/([\w]*) \$= (("[^"]*"|[^\s]*))/i'
     ];
-
 }

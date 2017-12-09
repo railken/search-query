@@ -4,7 +4,7 @@ namespace Railken\SQ\Nodes;
 
 use Railken\SQ\Contracts\NodeContract;
 
-class Node implements NodeContract, \JsonSerializable 
+class Node implements NodeContract, \JsonSerializable
 {
     /**
      * Operator of node
@@ -151,7 +151,6 @@ class Node implements NodeContract, \JsonSerializable
      */
     public function setChildByKey($child, $key)
     {
-
         $this->childs[$key] = $child;
         $child->setParent($this);
         $child->setPos($key);
@@ -218,7 +217,6 @@ class Node implements NodeContract, \JsonSerializable
             $this->addChild($child);
         }
         return $this;
-
     }
 
     public function jsonSerialize()
@@ -227,5 +225,4 @@ class Node implements NodeContract, \JsonSerializable
             'type' => get_class($this),
         ];
     }
-
 }

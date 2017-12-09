@@ -14,13 +14,12 @@ class NotInResolver extends KeyResolver
     public $node = Nodes\NotInNode::class;
 
     /**
-     * Regex token 
+     * Regex token
      *
      * @var string
      */
     public $regex = [
-        '/([\w]*) not in (("[^"]*"|[^\s]*))/i', 
+        '/([\w]*) not in (("[^"]*"|[^\s]*))/i',
         '/([\w]*) !=\[\] (("[^"]*"|[^\s]*))/i'
     ];
-
 }
