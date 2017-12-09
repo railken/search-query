@@ -23,6 +23,8 @@ class QueryTest extends TestCase
             new Resolvers\GteResolver(),
             new Resolvers\CtResolver(),
             new Resolvers\SwResolver(),
+            new Resolvers\NotInResolver(),
+            new Resolvers\InResolver(),
             new Resolvers\EwResolver(),
             new Resolvers\AndResolver(),
         ]);
@@ -220,16 +222,30 @@ class QueryTest extends TestCase
     {   
         $query = $this->parser;
 
-        $this->assertEquals(json_decode('[{"key":"x","filters":[],"operator":"not_in","value":["1"]}]'), json_decode(json_encode($query->parse('x not_in 1'))));
-        $this->assertEquals(json_decode('[{"key":"x","filters":[],"operator":"not_in","value":["1"]}]'), json_decode(json_encode($query->parse('x !=[] 1'))));
+        $result = $query->parse('x not in 1');
+        $this->assertEquals(Nodes\NotInNode::class, get_class($result));
+        $this->assertEquals('x', $result->getKey());
+        $this->assertEquals(['1'], $result->getValue());
+
+        $result = $query->parse('x !=[] 1');
+        $this->assertEquals(Nodes\NotInNode::class, get_class($result));
+        $this->assertEquals('x', $result->getKey());
+        $this->assertEquals(['1'], $result->getValue());
     }
 
     public function testIn()
     {   
         $query = $this->parser;
 
-        $this->assertEquals(json_decode('[{"key":"x","filters":[],"operator":"in","value":["1"]}]'), json_decode(json_encode($query->parse('x in 1'))));
-        $this->assertEquals(json_decode('[{"key":"x","filters":[],"operator":"in","value":["1"]}]'), json_decode(json_encode($query->parse('x =[] 1'))));
+        $result = $query->parse('x in 1');
+        $this->assertEquals(Nodes\InNode::class, get_class($result));
+        $this->assertEquals('x', $result->getKey());
+        $this->assertEquals(['1'], $result->getValue());
+
+        $result = $query->parse('x =[] 1');
+        $this->assertEquals(Nodes\InNode::class, get_class($result));
+        $this->assertEquals('x', $result->getKey());
+        $this->assertEquals(['1'], $result->getValue());
     }
 
     public function testAnd()
