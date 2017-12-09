@@ -2,9 +2,11 @@
 
 namespace Railken\SQ\Resolvers;
 
+use Railken\SQ\Contracts\ResolverContract;
+use Railken\SQ\Contracts\NodeContract;
 use Railken\SQ\Nodes as Nodes;
 
-class AndResolver
+class AndResolver implements ResolverContract
 {
     /**
      * Node resolved
@@ -27,7 +29,7 @@ class AndResolver
      *
      * @return $this
      */
-    public function resolve($node)
+    public function resolve(NodeContract $node)
     {
          // $node->content = "";
 

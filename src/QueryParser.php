@@ -4,29 +4,44 @@ namespace Railken\SQ;
 
 use Railken\SQ\Exceptions as Exceptions;
 
+use Railken\SQ\Contracts\ResolverContract;
+
 class QueryParser
 {
+
+    /**
+     * @var ResolverContract[]
+     */
+    protected $resolvers;
 
     /**
      * Construct
      */
     public function __construct()
     {
-        $this->tokens = [];
+        $this->resolvers = [];
     }
     
     /**
-     * Add tokens to resolve query
+     * Add resolvers to resolve query
      *
-     * @param array $tokens
+     * @param array $resolvers
      *
      * @return $this
      */
-    public function addTokens($tokens)
+    public function addResolvers($resolvers)
     {
-        $this->tokens = array_merge($this->tokens, $tokens);
+
+        foreach ($resolvers as $resolver) {
+            $this->addResolver($resolver);
+        }
 
         return $this;
+    }
+
+    public function addResolver(ResolverContract $resolver)
+    {
+        $this->resolvers[] = $resolver;
     }
 
     /**
@@ -44,7 +59,7 @@ class QueryParser
         $t->setValue($query);
         $node->addChild($t);
 
-        foreach ($this->tokens as $token) {
+        foreach ($this->resolvers as $token) {
             $token->resolve($node);
         }
 

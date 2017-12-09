@@ -2,8 +2,9 @@
 
 namespace Railken\SQ\Nodes;
 
+use Railken\SQ\Contracts\NodeContract;
 
-class Node
+class Node implements NodeContract
 {
     /**
      * Operator of node

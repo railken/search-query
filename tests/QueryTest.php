@@ -13,7 +13,7 @@ class QueryTest extends TestCase
     public function setUp()
     {
         $this->parser = new QueryParser();
-        $this->parser->addTokens([
+        $this->parser->addResolvers([
             new Resolvers\GroupingResolver(),
             new Resolvers\NotEqResolver(),
             new Resolvers\EqResolver(),

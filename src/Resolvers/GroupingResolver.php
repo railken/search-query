@@ -2,9 +2,11 @@
 
 namespace Railken\SQ\Resolvers;
 
+use Railken\SQ\Contracts\ResolverContract;
+use Railken\SQ\Contracts\NodeContract;
 use Railken\SQ\Nodes as Nodes;
 
-class GroupingResolver
+class GroupingResolver implements ResolverContract
 {
     /**
      * Node resolved
@@ -27,7 +29,7 @@ class GroupingResolver
      *
      * @return $this
      */
-    public function resolve($node)
+    public function resolve(NodeContract $node)
     {
 
         $nk = 0;
