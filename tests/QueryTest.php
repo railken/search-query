@@ -17,6 +17,10 @@ class QueryTest extends TestCase
             new Resolvers\GroupingResolver(),
             new Resolvers\NotEqResolver(),
             new Resolvers\EqResolver(),
+            new Resolvers\LtResolver(),
+            new Resolvers\LteResolver(),
+            new Resolvers\GtResolver(),
+            new Resolvers\GteResolver(),
             new Resolvers\AndResolver(),
         ]);
     }
@@ -97,37 +101,69 @@ class QueryTest extends TestCase
 
     } 
 
-
     public function testGt()
     {   
         $query = $this->parser;
 
-        $this->assertEquals(json_decode('[{"key":"x","filters":[],"operator":"gt","value":"1"}]'), json_decode(json_encode($query->parse('x gt 1'))));
-        $this->assertEquals(json_decode('[{"key":"x","filters":[],"operator":"gt","value":"1"}]'), json_decode(json_encode($query->parse('x > 1'))));
+        $result = $query->parse('x gt 1');
+        $this->assertEquals(Nodes\GtNode::class, get_class($result));
+        $this->assertEquals('x', $result->getKey());
+        $this->assertEquals('1', $result->getValue());
+
+        $result = $query->parse('x > 1');
+        $this->assertEquals(Nodes\GtNode::class, get_class($result));
+        $this->assertEquals('x', $result->getKey());
+        $this->assertEquals('1', $result->getValue());
+
     }
 
     public function testGte()
     {   
         $query = $this->parser;
 
-        $this->assertEquals(json_decode('[{"key":"x","filters":[],"operator":"gte","value":"1"}]'), json_decode(json_encode($query->parse('x gte 1'))));
-        $this->assertEquals(json_decode('[{"key":"x","filters":[],"operator":"gte","value":"1"}]'), json_decode(json_encode($query->parse('x >= 1'))));
+        $result = $query->parse('x gte 1');
+        $this->assertEquals(Nodes\GteNode::class, get_class($result));
+        $this->assertEquals('x', $result->getKey());
+        $this->assertEquals('1', $result->getValue());
+
+        $result = $query->parse('x >= 1');
+        $this->assertEquals(Nodes\GteNode::class, get_class($result));
+        $this->assertEquals('x', $result->getKey());
+        $this->assertEquals('1', $result->getValue());
+
     }
+
 
     public function testLt()
     {   
         $query = $this->parser;
 
-        $this->assertEquals(json_decode('[{"key":"x","filters":[],"operator":"lt","value":"1"}]'), json_decode(json_encode($query->parse('x lt 1'))));
-        $this->assertEquals(json_decode('[{"key":"x","filters":[],"operator":"lt","value":"1"}]'), json_decode(json_encode($query->parse('x < 1'))));
+        $result = $query->parse('x lt 1');
+        $this->assertEquals(Nodes\LtNode::class, get_class($result));
+        $this->assertEquals('x', $result->getKey());
+        $this->assertEquals('1', $result->getValue());
+
+        $result = $query->parse('x < 1');
+        $this->assertEquals(Nodes\LtNode::class, get_class($result));
+        $this->assertEquals('x', $result->getKey());
+        $this->assertEquals('1', $result->getValue());
+
     }
 
     public function testLte()
     {   
         $query = $this->parser;
 
-        $this->assertEquals(json_decode('[{"key":"x","filters":[],"operator":"lte","value":"1"}]'), json_decode(json_encode($query->parse('x lte 1'))));
-        $this->assertEquals(json_decode('[{"key":"x","filters":[],"operator":"lte","value":"1"}]'), json_decode(json_encode($query->parse('x <= 1'))));
+        $result = $query->parse('x lte 1');
+        $this->assertEquals(Nodes\LteNode::class, get_class($result));
+        $this->assertEquals('x', $result->getKey());
+        $this->assertEquals('1', $result->getValue());
+
+        $result = $query->parse('x <= 1');
+        $this->assertEquals(Nodes\LteNode::class, get_class($result));
+        $this->assertEquals('x', $result->getKey());
+        $this->assertEquals('1', $result->getValue());
+
     }
 
     public function testCt()
