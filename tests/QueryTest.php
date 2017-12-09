@@ -15,6 +15,7 @@ class QueryTest extends TestCase
         $this->parser = new QueryParser();
         $this->parser->addTokens([
             new Resolvers\GroupingResolver(),
+            new Resolvers\NotEqResolver(),
             new Resolvers\EqResolver(),
             new Resolvers\AndResolver(),
         ]);
@@ -73,14 +74,27 @@ class QueryTest extends TestCase
         $this->assertEquals('x', $result->getKey());
         $this->assertEquals('1', $result->getValue());
 
-    } 
+    }
 
     public function testNotEq()
     {   
         $query = $this->parser;
 
-        $this->assertEquals(json_decode('[{"key":"x","filters":[],"operator":"not_eq","value":"1"}]'), json_decode(json_encode($query->parse('x != 1'))));
-        $this->assertEquals(json_decode('[{"key":"x","filters":[],"operator":"not_eq","value":"1"}]'), json_decode(json_encode($query->parse('x <> 1'))));
+        $result = $query->parse('x not eq 1');        
+        $this->assertEquals(Nodes\NotEqNode::class, get_class($result));
+        $this->assertEquals('x', $result->getKey());
+        $this->assertEquals('1', $result->getValue());
+
+        $result = $query->parse('x != 1');
+        $this->assertEquals(Nodes\NotEqNode::class, get_class($result));
+        $this->assertEquals('x', $result->getKey());
+        $this->assertEquals('1', $result->getValue());
+
+        $result = $query->parse('x <> 1');
+        $this->assertEquals(Nodes\NotEqNode::class, get_class($result));
+        $this->assertEquals('x', $result->getKey());
+        $this->assertEquals('1', $result->getValue());
+
     } 
 
 
