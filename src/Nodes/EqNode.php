@@ -10,4 +10,5 @@ class EqNode extends KeyNode
      * @var string
      */
     public $operator = 'eq';
+
 }

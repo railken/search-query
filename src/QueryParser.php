@@ -12,6 +12,21 @@ class QueryParser
      */
     public function __construct()
     {
+        $this->tokens = [];
+    }
+    
+    /**
+     * Add tokens to resolve query
+     *
+     * @param array $tokens
+     *
+     * @return $this
+     */
+    public function addTokens($tokens)
+    {
+        $this->tokens = array_merge($this->tokens, $tokens);
+
+        return $this;
     }
 
     /**
@@ -22,7 +37,21 @@ class QueryParser
      * @return Object
      */
     public function parse($query)
-    {
-        return $query ? (new QueryTranslator($query))->translate() : null;
+    {   
+        $node = new Nodes\LogicOperatorNode();
+
+        $t = new Nodes\TextNode();
+        $t->setValue($query);
+        $node->addChild($t);
+
+        foreach ($this->tokens as $token) {
+            $token->resolve($node);
+        }
+
+        if (count($node->getChilds()) === 1) {
+            return $node->getChild(0);
+        }
+
+        return $node;
     }
 }
