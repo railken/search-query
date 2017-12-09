@@ -251,9 +251,24 @@ class QueryTest extends TestCase
     public function testAnd()
     {   
         $query = $this->parser;
-        $this->assertEquals(json_decode('{"operator":"and","value":[{"operator":"eq","key":"x","filters":[],"value":"1"},{"operator":"eq","key":"x","filters":[],"value":"2"}]}'), json_decode(json_encode($query->parse('x = 1 and x = 2'))));
-        
-        $this->assertEquals(json_decode('{"operator":"and","value":[{"operator":"eq","key":"x","filters":[],"value":"1"},{"operator":"eq","key":"x","filters":[],"value":"2"}]}'), json_decode(json_encode($query->parse('x = 1 && x = 2'))));
+        $result = $query->parse('x = 1 and y = 1');
+        $this->assertEquals(Nodes\AndNode::class, get_class($result));
+        $this->assertEquals(Nodes\EqNode::class, get_class($result->getChild(0)));
+        $this->assertEquals('x', $result->getChild(0)->getKey());
+        $this->assertEquals('1', $result->getChild(0)->getValue());
+        $this->assertEquals(Nodes\EqNode::class, get_class($result->getChild(1)));
+        $this->assertEquals('y', $result->getChild(1)->getKey());
+        $this->assertEquals('1', $result->getChild(1)->getValue());
+
+
+        $result = $query->parse('x = 1 && y = 1');
+        $this->assertEquals(Nodes\AndNode::class, get_class($result));
+        $this->assertEquals(Nodes\EqNode::class, get_class($result->getChild(0)));
+        $this->assertEquals('x', $result->getChild(0)->getKey());
+        $this->assertEquals('1', $result->getChild(0)->getValue());
+        $this->assertEquals(Nodes\EqNode::class, get_class($result->getChild(1)));
+        $this->assertEquals('y', $result->getChild(1)->getKey());
+        $this->assertEquals('1', $result->getChild(1)->getValue());
 
     }
 

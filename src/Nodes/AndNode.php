@@ -2,7 +2,7 @@
 
 namespace Railken\SQ\Nodes;
 
-class AndNode extends LogicOperatorNode
+class AndNode extends LogicNode
 {
     /**
      * Operator

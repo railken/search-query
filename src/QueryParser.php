@@ -53,18 +53,25 @@ class QueryParser
      */
     public function parse($query)
     {   
-        $node = new Nodes\LogicOperatorNode();
+        $node = new Nodes\RootNode();
+
+        $l = new Nodes\LogicNode();
+        $node->addChild($l);
 
         $t = new Nodes\TextNode();
         $t->setValue($query);
-        $node->addChild($t);
+        $l->addChild($t);
 
         foreach ($this->resolvers as $token) {
             $token->resolve($node);
         }
 
+        // From Root to Logic
+        $node = $node->getChild(0);
+
+        // If logic has only one child, skip to first key node
         if (count($node->getChilds()) === 1) {
-            return $node->getChild(0);
+            $node = $node->getChild(0);
         }
 
         return $node;

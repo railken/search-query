@@ -13,7 +13,7 @@ class GroupingResolver implements ResolverContract
      *
      * @var string
      */
-    public $node = Nodes\LogicOperatorNode::class;
+    public $node = Nodes\GroupNode::class;
 
     /**
      * Regex token 

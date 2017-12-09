@@ -2,7 +2,7 @@
 
 namespace Railken\SQ\Nodes;
 
-class LogicOperatorNode extends Node
+class GroupNode extends LogicNode
 {
 	
 }
