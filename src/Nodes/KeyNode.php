@@ -106,13 +106,14 @@ class KeyNode extends Node
 
         return $this;
     }
+
     public function jsonSerialize()
     {
-        return [
+        return array_merge([
+            'type' => get_class($this),
             'key' => $this->getKey(),
             'value' => $this->getValue(),
-            'operator' => $this->getOperator(),
-        ];
+        ]);
     }
 
 }

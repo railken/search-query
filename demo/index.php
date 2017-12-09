@@ -14,7 +14,7 @@
 <body>
 <div id="app">
 	<div class='container'>
-		<h3>Query parser</h3>
+		<h3>SQ - Parser</h3>
 		<input type='text' v-model='query' class='form-control' placeholder='Type query here' v-bind:class="{'is-invalid': error}">
 		<p class='text-danger'>{{ error }}&nbsp;</p>
 		<pre>{{ result }}</pre>

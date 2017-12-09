@@ -224,8 +224,7 @@ class Node implements NodeContract, \JsonSerializable
     public function jsonSerialize()
     {
         return [
-            'value' => $this->getValue(),
-            'operator' => $this->getOperator(),
+            'type' => get_class($this),
         ];
     }
 
