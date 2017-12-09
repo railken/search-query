@@ -21,6 +21,9 @@ class QueryTest extends TestCase
             new Resolvers\LteResolver(),
             new Resolvers\GtResolver(),
             new Resolvers\GteResolver(),
+            new Resolvers\CtResolver(),
+            new Resolvers\SwResolver(),
+            new Resolvers\EwResolver(),
             new Resolvers\AndResolver(),
         ]);
     }
@@ -170,24 +173,47 @@ class QueryTest extends TestCase
     {   
         $query = $this->parser;
 
-        $this->assertEquals(json_decode('[{"key":"x","filters":[],"operator":"ct","value":"1"}]'), json_decode(json_encode($query->parse('x ct 1'))));
-        $this->assertEquals(json_decode('[{"key":"x","filters":[],"operator":"ct","value":"1"}]'), json_decode(json_encode($query->parse('x *= 1'))));
+        $result = $query->parse('x ct 1');
+        $this->assertEquals(Nodes\CtNode::class, get_class($result));
+        $this->assertEquals('x', $result->getKey());
+        $this->assertEquals('1', $result->getValue());
+
+        $result = $query->parse('x *= 1');
+        $this->assertEquals(Nodes\CtNode::class, get_class($result));
+        $this->assertEquals('x', $result->getKey());
+        $this->assertEquals('1', $result->getValue());
+
     }
 
     public function testSw()
     {   
+
         $query = $this->parser;
 
-        $this->assertEquals(json_decode('[{"key":"x","filters":[],"operator":"sw","value":"1"}]'), json_decode(json_encode($query->parse('x sw 1'))));
-        $this->assertEquals(json_decode('[{"key":"x","filters":[],"operator":"sw","value":"1"}]'), json_decode(json_encode($query->parse('x ^= 1'))));
+        $result = $query->parse('x sw 1');
+        $this->assertEquals(Nodes\SwNode::class, get_class($result));
+        $this->assertEquals('x', $result->getKey());
+        $this->assertEquals('1', $result->getValue());
+
+        $result = $query->parse('x ^= 1');
+        $this->assertEquals(Nodes\SwNode::class, get_class($result));
+        $this->assertEquals('x', $result->getKey());
+        $this->assertEquals('1', $result->getValue());
     }
 
     public function testEw()
     {   
         $query = $this->parser;
 
-        $this->assertEquals(json_decode('[{"key":"x","filters":[],"operator":"ew","value":"1"}]'), json_decode(json_encode($query->parse('x ew 1'))));
-        $this->assertEquals(json_decode('[{"key":"x","filters":[],"operator":"ew","value":"1"}]'), json_decode(json_encode($query->parse('x $= 1'))));
+        $result = $query->parse('x ew 1');
+        $this->assertEquals(Nodes\EwNode::class, get_class($result));
+        $this->assertEquals('x', $result->getKey());
+        $this->assertEquals('1', $result->getValue());
+
+        $result = $query->parse('x $= 1');
+        $this->assertEquals(Nodes\EwNode::class, get_class($result));
+        $this->assertEquals('x', $result->getKey());
+        $this->assertEquals('1', $result->getValue());
     }
 
     public function testNotIn()

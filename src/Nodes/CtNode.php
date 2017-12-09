@@ -2,12 +2,12 @@
 
 namespace Railken\SQ\Nodes;
 
-class StartWithNode extends KeyNode
+class CtNode extends KeyNode
 {
     /**
      * Operator
      *
      * @var string
      */
-    public $operator = 'sw';
+    public $operator = 'ct';
 }
