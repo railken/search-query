@@ -27,6 +27,7 @@ class QueryTest extends TestCase
             new Resolvers\InResolver(),
             new Resolvers\EwResolver(),
             new Resolvers\AndResolver(),
+            new Resolvers\OrResolver(),
         ]);
     }
 
@@ -275,10 +276,24 @@ class QueryTest extends TestCase
     public function testOr()
     {   
         $query = $this->parser;
-        
-        $this->assertEquals(json_decode('{"operator":"or","value":[{"operator":"eq","key":"x","filters":[],"value":"1"},{"operator":"eq","key":"x","filters":[],"value":"2"}]}'), json_decode(json_encode($query->parse('x = 1 or x = 2'))));
+        $result = $query->parse('x = 1 or y = 1');
+        $this->assertEquals(Nodes\OrNode::class, get_class($result));
+        $this->assertEquals(Nodes\EqNode::class, get_class($result->getChild(0)));
+        $this->assertEquals('x', $result->getChild(0)->getKey());
+        $this->assertEquals('1', $result->getChild(0)->getValue());
+        $this->assertEquals(Nodes\EqNode::class, get_class($result->getChild(1)));
+        $this->assertEquals('y', $result->getChild(1)->getKey());
+        $this->assertEquals('1', $result->getChild(1)->getValue());
 
-        $this->assertEquals(json_decode('{"operator":"or","value":[{"operator":"eq","key":"x","filters":[],"value":"1"},{"operator":"eq","key":"x","filters":[],"value":"2"}]}'), json_decode(json_encode($query->parse('x = 1 || x = 2'))));
+
+        $result = $query->parse('x = 1 || y = 1');
+        $this->assertEquals(Nodes\OrNode::class, get_class($result));
+        $this->assertEquals(Nodes\EqNode::class, get_class($result->getChild(0)));
+        $this->assertEquals('x', $result->getChild(0)->getKey());
+        $this->assertEquals('1', $result->getChild(0)->getValue());
+        $this->assertEquals(Nodes\EqNode::class, get_class($result->getChild(1)));
+        $this->assertEquals('y', $result->getChild(1)->getKey());
+        $this->assertEquals('1', $result->getChild(1)->getValue());
 
     }
 
