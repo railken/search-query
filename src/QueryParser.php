@@ -55,14 +55,14 @@ class QueryParser
     {
         $node = new Nodes\RootNode();
 
-        $l = new Nodes\LogicNode();
+        $l = new Nodes\UndefinedLogicNode();
         $node->addChild($l);
 
         $t = new Nodes\TextNode();
         $t->setValue($query);
         $l->addChild($t);
 
-        $this->addResolver(new Resolvers\TextResolver());
+        // $this->addResolver(new Resolvers\TextResolver());
 
         foreach ($this->resolvers as $token) {
             $token->resolve($node);

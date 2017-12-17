@@ -62,20 +62,45 @@ class OrResolver implements ResolverContract
 
                 $push = [];
 
-                $node->getParent()->setOperator($new_node->getOperator());
+                $parent = $node->getParent();
 
-                $node->getParent()->replaceChild($node->getPos(), []);
+                if ($parent instanceof Nodes\OrNode) {
+                    $node->getParent()->replaceChild($node->getPos(), []);
+                } 
 
-                foreach ($node->getParent()->getChilds() as $child) {
-                    $new_node->addChild($child);
+                if ($parent instanceof Nodes\AndNode) {
+
+                    // Get the parent without all childs after this.
+                    // Create a new OrNode with the first child the parent, and the rest the remaining childs
+
+                    $parent->getParent()->replaceChild($parent->getPos(), [$new_node]);
+
+                    $new_node->addChild($parent);
+
+                    $childs_after = $parent->getChildsAfterKey($node->getPos()+1);
+                    $parent->removeChildByKey($node->getPos(), false);
+
+                    foreach ($childs_after as $child) {
+                        $parent->removeChildByKey($child->getPos(), false);
+                        $new_node->addChild($child);
+                    }
+
                 }
 
-                $p = $node->getParent()->getParent();
-                if ($p) {
+                if ($parent instanceof Nodes\UndefinedLogicNode or $parent instanceof Nodes\GroupNode) {
+                    $node->getParent()->setOperator($new_node->getOperator());
+
+                    $node->getParent()->replaceChild($node->getPos(), []);
+
+                    foreach ($node->getParent()->getChilds() as $child) {
+                        $new_node->addChild($child);
+                    }
+
+                    $p = $node->getParent()->getParent();
                     $p->setChildByKey($new_node, $node->getParent()->getPos());
-                } else {
-                    $p = $node->getParent();
+                    
                 }
+              
             }
         }
     }

@@ -219,6 +219,23 @@ class Node implements NodeContract, \JsonSerializable
         return $this;
     }
 
+
+    public function removeChildByKey($key, $resort = true)
+    {  
+
+        array_splice($this->childs, $key, 1);
+
+        if ($resort) {
+            // ...
+        }
+
+    }
+
+    public function getChildsAfterKey($key)
+    {
+        return array_slice($this->childs, $key);
+    }
+
     public function jsonSerialize()
     {
         return [
