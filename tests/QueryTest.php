@@ -289,12 +289,8 @@ class QueryTest extends TestCase
     public function testAndOr1()
     {
         $query = $this->parser;
-        $result = $query->parse('(a = 1 and (b = 1 or c = 1) and d = 1) or e = 1');
-
-
-        print_r($result);
-        return;
-
+        $result = $query->parse('(x = 1 and (y = 1 or x = 1)) or z = 1');
+     
         // {{ x = 1 and (y = 1 or x = 1) or z = 1 }}
         $this->assertEquals(Nodes\OrNode::class, get_class($result));
 
