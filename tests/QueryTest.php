@@ -323,4 +323,14 @@ class QueryTest extends TestCase
 
 
     }
+
+    public function testGrouping1()
+    {
+        $query = $this->parser;
+        $result = $query->parse('(((id eq 1)))');
+
+        $this->assertEquals(Nodes\GroupNode::class, get_class($result));
+    }
+
+
 }

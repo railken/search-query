@@ -83,9 +83,7 @@ class GroupingResolver implements ResolverContract
             }
         }
 
-
-        $text = implode(" ", $texts);
-
+        $text = implode("", $texts);
 
         if (preg_match($this->regex, $text, $match, PREG_OFFSET_CAPTURE)) {
 
@@ -96,13 +94,7 @@ class GroupingResolver implements ResolverContract
             $key_first = $positions[$start];
 
             // Key of last char
-            $key_last = $positions[$start+$length];
-
-
-            // 1. Create a text node that will replace the node where the first char is located
-            // 2. Create a text ... last char is located+
-            // 3. Create a text node for all remaining
-
+            $key_last = $positions[$start+$length-1];
 
  
             $push = []; 
@@ -127,12 +119,19 @@ class GroupingResolver implements ResolverContract
                     if ($child instanceof Nodes\Textnode) {
 
                         if ($i === $key_first['node']) {
+                            // print_r($texts[$key_first['node']]);
                             $first = new Nodes\TextNode(substr($text, $start+1, $key_first['remaining_char'])); 
-                            $new_node->addChild($first);
+                            // print_r($first->getValue());
+                            // $first = new Nodes\TextNode(substr($texts[$key_first['node']], 0, strlen($texts[$key_last['node']]) - $key_last['remaining_char'] - 1)); 
+                            if (trim($first->getValue()))
+                                $new_node->addChild($first);
                         } else if ($i === $key_last['node']) {
 
-                            $last = new Nodes\TextNode(substr($text, $start+$length-$key_last['char'], $length-$key_last['char'])); 
-                            $new_node->addChild($last);
+                            // print_r($key_last);
+                            // print_r($texts);
+                            $last = new Nodes\TextNode(substr($texts[$key_last['node']], 0, strlen($texts[$key_last['node']]) - $key_last['remaining_char'] - 1)); 
+                            if (trim($last->getValue()))
+                                $new_node->addChild($last);
                         } else {
                             $new_node->addChild($child);
                         }
@@ -140,6 +139,8 @@ class GroupingResolver implements ResolverContract
                     } else {
                         $new_node->addChild($child);
                     }
+
+                    $child->setParent($new_node);
                 }
             }
 
@@ -154,18 +155,21 @@ class GroupingResolver implements ResolverContract
             
             if (trim($second->getValue()))
                 $push[] = $second; 
-            
 
-            if ($key_first['node'] !== $key_last['node']) {
-                // print_r($push);
+
+            if (count($push) === 1 && $push[0]->countChilds() === 1 && $push[0]->getChild(0) instanceof Nodes\GroupNode) {
+                // $push = [$push[0]->getChild(0)];
             }
-
+            
             for ($i = $key_first['node']; $i <= $key_last['node']; $i++) {
                 $node->replaceChild($i, []);
             }
             $node->replaceChild($key_first['node'], $push);
 
-            // print_r($node);
+            foreach ($new_node->getChilds() as $child) {
+                $child->setParent($new_node);
+            }
+            
             $this->resolveTextNodes($node);
 
 

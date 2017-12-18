@@ -199,6 +199,16 @@ class Node implements NodeContract, \JsonSerializable
     }
 
     /**
+     * Count childs
+     *
+     * @return integer
+     */
+    public function countChilds()
+    {
+        return count($this->childs);
+    }
+
+    /**
      * Replace a child by others
      *
      * @param integer $key

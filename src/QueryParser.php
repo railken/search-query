@@ -62,7 +62,7 @@ class QueryParser
         $t->setValue($query);
         $l->addChild($t);
 
-        // $this->addResolver(new Resolvers\TextResolver());
+        $this->addResolver(new Resolvers\TextResolver());
 
         foreach ($this->resolvers as $token) {
             $token->resolve($node);
@@ -70,10 +70,12 @@ class QueryParser
 
         // From Root to Logic
         $node = $node->getChild(0);
+        $node->setParent(null);
 
         // If logic has only one child, skip to first key node
         if (count($node->getChilds()) === 1) {
             $node = $node->getChild(0);
+            $node->setParent(null);
         }
 
         return $node;
