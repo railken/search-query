@@ -20,6 +20,8 @@ class Node implements NodeContract, \JsonSerializable
      */
     public $value;
 
+    public $pos;
+
     /**
      * Childs
      *
@@ -33,8 +35,6 @@ class Node implements NodeContract, \JsonSerializable
      * @var Node
      */
     public $parent;
-
-    public $pos;
 
     /**
      * Construct
@@ -240,6 +240,7 @@ class Node implements NodeContract, \JsonSerializable
     {
         return [
             'type' => get_class($this),
+            'value' => $this->getValue(),
         ];
     }
 }

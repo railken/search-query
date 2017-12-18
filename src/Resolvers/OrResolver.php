@@ -20,7 +20,7 @@ class OrResolver implements ResolverContract
      *
      * @var string
      */
-    public $regex = ["/^(\s?)or(\s?)$/i", "/^(\s?)\|\|(\s?)$/i"];
+    public $regex = ["/^(\s*)or(\s*)$/i", "/^(\s*)\|\|(\s*)$/i"];
 
     /**
      * Resolve token eq node
@@ -31,6 +31,7 @@ class OrResolver implements ResolverContract
      */
     public function resolve(NodeContract $node)
     {
+
         // $node->content = "";
 
         $childs = $node->getChilds();
@@ -88,6 +89,9 @@ class OrResolver implements ResolverContract
                 }
 
                 if ($parent instanceof Nodes\UndefinedLogicNode or $parent instanceof Nodes\GroupNode) {
+                    // echo "Group..";
+                    // print_r(json_encode($node->getParent()->getParent(), JSON_PRETTY_PRINT));
+                    // print_r($node->getParent());
                     $node->getParent()->setOperator($new_node->getOperator());
 
                     $node->getParent()->replaceChild($node->getPos(), []);
@@ -97,8 +101,14 @@ class OrResolver implements ResolverContract
                     }
 
                     $p = $node->getParent()->getParent();
-                    $p->setChildByKey($new_node, $node->getParent()->getPos());
+
+                    // $node->getParent()->getParent()->replaceChild($node->getParent()->getPos(), [$new_node]);
+                    $node->getParent()->getParent()->setChildByKey($new_node, $node->getParent()->getPos());
                     
+                    // print_r(json_encode($node->getParent()->getParent(), JSON_PRETTY_PRINT));
+
+                    // print_r($node->getParent()->getParent());
+                    // die();
                 }
               
             }

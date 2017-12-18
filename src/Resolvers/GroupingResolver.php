@@ -110,6 +110,9 @@ class GroupingResolver implements ResolverContract
             $result = substr($match[0][0], 1, -1);
             $text_node = new Nodes\TextNode($result);
 
+            if ($key_first['node'] !== $key_last['node']) {
+                // print_r($positions);
+            }
 
             if ($key_first['node'] === $key_last['node']) {
 
@@ -119,7 +122,6 @@ class GroupingResolver implements ResolverContract
             if ($key_first['node'] !== $key_last['node']) {
 
                 for ($i = $key_first['node']; $i <= $key_last['node']; $i++) {
-                    print_r($i);
                     $child = $node->getChild($i);
 
                     if ($child instanceof Nodes\Textnode) {
@@ -143,27 +145,29 @@ class GroupingResolver implements ResolverContract
 
             $first = new Nodes\TextNode(substr($text, $start-$key_first['char'], $start)); 
 
-            if (trim($first->getValue())) { 
+            if (trim($first->getValue()))
                 $push[] = $first; 
-            }
+            
 
             $push[] = $new_node; 
             $second = new Nodes\TextNode(substr($text, $start+$length, $length+$key_last['remaining_char'])); 
             
-            if (trim($second->getValue())) { 
+            if (trim($second->getValue()))
                 $push[] = $second; 
+            
+
+            if ($key_first['node'] !== $key_last['node']) {
+                // print_r($push);
             }
 
-
-
-            // Regroup all nodes into one.
-            $node->replaceChild($key_first['node'], $push);
-
-            for ($i = $key_first['node']; $i < $key_last['node']; $i++) {
+            for ($i = $key_first['node']; $i <= $key_last['node']; $i++) {
                 $node->replaceChild($i, []);
             }
-            
+            $node->replaceChild($key_first['node'], $push);
+
+            // print_r($node);
             $this->resolveTextNodes($node);
+
 
 
         }

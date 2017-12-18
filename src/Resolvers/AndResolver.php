@@ -20,7 +20,7 @@ class AndResolver implements ResolverContract
      *
      * @var string
      */
-    public $regex = ["/^(\s?)and(\s?)$/i", "/^(\s?)&&(\s?)$/i"];
+    public $regex = ["/^(\s*)and(\s*)$/i", "/^(\s*)&&(\s*)$/i"];
 
     /**
      * Resolve token eq node
@@ -71,11 +71,8 @@ class AndResolver implements ResolverContract
                 }
 
                 $p = $node->getParent()->getParent();
-                if ($p) {
-                    $p->setChildByKey($new_node, $node->getParent()->getPos());
-                } else {
-                    $p = $node->getParent();
-                }
+                $p->setChildByKey($new_node, $node->getParent()->getPos());
+             
             }
         }
     }
