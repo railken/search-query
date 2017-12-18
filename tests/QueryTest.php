@@ -324,6 +324,32 @@ class QueryTest extends TestCase
 
     }
 
+    public function testAndOr2()
+    {
+        $query = $this->parser;
+        $result = $query->parse('id eq 1 and id eq 2 or id eq 3');
+
+        $this->assertEquals(Nodes\OrNode::class, get_class($result));
+        $this->assertEquals(2, $result->countChilds());
+
+        $this->assertEquals(Nodes\AndNode::class, get_class($result->getChild(0)));
+        $this->assertEquals(2, $result->getChild(0)->countChilds());
+
+        $this->assertEquals(Nodes\EqNode::class, get_class($result->getChild(0)->getChild(0)));
+        $this->assertEquals('id', $result->getChild(0)->getChild(0)->getKey());
+        $this->assertEquals('1', $result->getChild(0)->getChild(0)->getValue());
+
+        $this->assertEquals(Nodes\EqNode::class, get_class($result->getChild(0)->getChild(1)));
+        $this->assertEquals('id', $result->getChild(0)->getChild(1)->getKey());
+        $this->assertEquals('2', $result->getChild(0)->getChild(1)->getValue());
+
+
+        $this->assertEquals(Nodes\EqNode::class, get_class($result->getChild(1)));
+        $this->assertEquals('id', $result->getChild(1)->getKey());
+        $this->assertEquals('3', $result->getChild(1)->getValue());
+
+    }
+
     public function testGrouping1()
     {
         $query = $this->parser;

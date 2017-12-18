@@ -236,9 +236,16 @@ class Node implements NodeContract, \JsonSerializable
         array_splice($this->childs, $key, 1);
 
         if ($resort) {
-            // ...
+            $this->calculatePosChilds();
         }
 
+    }
+
+    public function calculatePosChilds()
+    {
+        foreach ($this->childs as $key => $child) {
+            $child->setPos($key);
+        }
     }
 
     public function getChildsAfterKey($key)

@@ -79,7 +79,7 @@ class OrResolver implements ResolverContract
                     $new_node->addChild($parent);
 
                     $childs_after = $parent->getChildsAfterKey($node->getPos()+1);
-                    $parent->removeChildByKey($node->getPos(), false);
+                    $parent->removeChildByKey($node->getPos());
 
                     foreach ($childs_after as $child) {
                         $parent->removeChildByKey($child->getPos(), false);
@@ -102,8 +102,8 @@ class OrResolver implements ResolverContract
 
                     $p = $node->getParent()->getParent();
 
-                    // $node->getParent()->getParent()->replaceChild($node->getParent()->getPos(), [$new_node]);
-                    $node->getParent()->getParent()->setChildByKey($new_node, $node->getParent()->getPos());
+                    $node->getParent()->getParent()->replaceChild($node->getParent()->getPos(), [$new_node]);
+                    // $node->getParent()->getParent()->setChildByKey($new_node, $node->getParent()->getPos());
                     
                     // print_r(json_encode($node->getParent()->getParent(), JSON_PRETTY_PRINT));
 
