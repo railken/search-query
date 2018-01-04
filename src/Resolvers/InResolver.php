@@ -19,7 +19,7 @@ class InResolver extends KeyResolver
      * @var string
      */
     public $regex = [
-        '/([\w]*) in (("[^"]*"|[^\s]*))/i',
-        '/([\w]*) =\[\] (("[^"]*"|[^\s]*))/i'
+        '/([\w\.]*) in (("[^"]*"|[^\s]*))/i',
+        '/([\w\.]*) =\[\] (("[^"]*"|[^\s]*))/i'
     ];
 }

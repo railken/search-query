@@ -19,7 +19,7 @@ class NotInResolver extends KeyResolver
      * @var string
      */
     public $regex = [
-        '/([\w]*) not in (("[^"]*"|[^\s]*))/i',
-        '/([\w]*) !=\[\] (("[^"]*"|[^\s]*))/i'
+        '/([\w\.]*) not in (("[^"]*"|[^\s]*))/i',
+        '/([\w\.]*) !=\[\] (("[^"]*"|[^\s]*))/i'
     ];
 }
