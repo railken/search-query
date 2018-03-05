@@ -43,7 +43,7 @@ class KeyResolver implements ResolverContract
             if ($match) {
                 $new_node = new $this->node;
                 $new_node->setKey($match[1][0]);
-                $new_node->setValue($match[2][0]);
+                $new_node->setValue(isset($match[2]) ? $match[2][0] : null);
                 $start =  $match[0][1];
                 $length = strlen($match[0][0]);
 

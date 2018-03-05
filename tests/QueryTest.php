@@ -26,8 +26,10 @@ class QueryTest extends TestCase
             new Resolvers\NotInResolver(),
             new Resolvers\InResolver(),
             new Resolvers\EwResolver(),
+            new Resolvers\NullResolver(),
             new Resolvers\AndResolver(),
             new Resolvers\OrResolver(),
+            new Resolvers\TextResolver(),
         ]);
     }
 
@@ -162,6 +164,16 @@ class QueryTest extends TestCase
         $this->assertEquals(Nodes\LteNode::class, get_class($result));
         $this->assertEquals('x', $result->getKey());
         $this->assertEquals('1', $result->getValue());
+    }
+
+
+    public function testNull()
+    {
+        $query = $this->parser;
+
+        $result = $query->parse('x is null');
+        $this->assertEquals(Nodes\NullNode::class, get_class($result));
+        $this->assertEquals('x', $result->getKey());
     }
 
     public function testCt()
