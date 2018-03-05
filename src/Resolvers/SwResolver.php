@@ -19,7 +19,7 @@ class SwResolver extends KeyResolver
      * @var string
      */
     public $regex = [
-        '/([\w\.]*) sw (("[^"]*"|[^\s]*))/i',
-        '/([\w\.]*) \^= (("[^"]*"|[^\s]*))/i'
+        '/([\w\.\-]*) sw (("[^"]*"|[^\s]*))/i',
+        '/([\w\.\-]*) \^= (("[^"]*"|[^\s]*))/i'
     ];
 }
