@@ -27,6 +27,7 @@ class QueryTest extends TestCase
             new Resolvers\InResolver(),
             new Resolvers\EwResolver(),
             new Resolvers\NullResolver(),
+            new Resolvers\NotNullResolver(),
             new Resolvers\AndResolver(),
             new Resolvers\OrResolver(),
             new Resolvers\TextResolver(),
@@ -173,6 +174,15 @@ class QueryTest extends TestCase
 
         $result = $query->parse('x is null');
         $this->assertEquals(Nodes\NullNode::class, get_class($result));
+        $this->assertEquals('x', $result->getKey());
+    }
+
+    public function testNotNull()
+    {
+        $query = $this->parser;
+
+        $result = $query->parse('x is not null');
+        $this->assertEquals(Nodes\NotNullNode::class, get_class($result));
         $this->assertEquals('x', $result->getKey());
     }
 

@@ -158,7 +158,7 @@ class GroupingResolver implements ResolverContract
 
 
             if (count($push) === 1 && $push[0]->countChilds() === 1 && $push[0]->getChild(0) instanceof Nodes\GroupNode) {
-                // $push = [$push[0]->getChild(0)];
+                $push = [$push[0]->getChild(0)];
             }
             
             for ($i = $key_first['node']; $i <= $key_last['node']; $i++) {
