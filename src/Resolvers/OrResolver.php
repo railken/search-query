@@ -6,7 +6,7 @@ use Railken\SQ\Contracts\ResolverContract;
 use Railken\SQ\Contracts\NodeContract;
 use Railken\SQ\Nodes as Nodes;
 
-class OrResolver implements ResolverContract
+class OrResolver extends LogicResolver implements ResolverContract
 {
     /**
      * Node resolved
@@ -51,6 +51,7 @@ class OrResolver implements ResolverContract
 
     public function resolveTextNode($node)
     {
+
         foreach ($this->regex as $regex) {
             preg_match($regex, $node->getValue(), $match, PREG_OFFSET_CAPTURE);
 
@@ -67,48 +68,22 @@ class OrResolver implements ResolverContract
 
                 if ($parent instanceof Nodes\OrNode) {
                     $node->getParent()->replaceChild($node->getPos(), []);
-                } 
 
-                if ($parent instanceof Nodes\AndNode) {
+                } else if ($parent instanceof Nodes\UndefinedLogicNode or $parent instanceof Nodes\GroupNode) {
+                    $this->swapNodeUndefinedOrGroup($node, $new_node);
 
-                    // Get the parent without all childs after this.
-                    // Create a new OrNode with the first child the parent, and the rest the remaining childs
+                } else {
 
-                    $parent->getParent()->replaceChild($parent->getPos(), [$new_node]);
 
-                    $new_node->addChild($parent);
+                    $node->getParent()->replaceChild($node->getPos(), []); 
+     
+                    foreach ($node->getParent()->getChilds() as $child) { 
+                        $new_node->addChild($child); 
+                    } 
+     
+                    $p = $node->getParent()->getParent(); 
+                    $p->setChildByKey($new_node, $node->getParent()->getPos()); 
 
-                    $childs_after = $parent->getChildsAfterKey($node->getPos()+1);
-                    $parent->removeChildByKey($node->getPos());
-
-                    foreach ($childs_after as $child) {
-                        $parent->removeChildByKey($child->getPos(), false);
-                        $new_node->addChild($child);
-                    }
-
-                }
-
-                if ($parent instanceof Nodes\UndefinedLogicNode or $parent instanceof Nodes\GroupNode) {
-                    // echo "Group..";
-                    // print_r(json_encode($node->getParent()->getParent(), JSON_PRETTY_PRINT));
-                    // print_r($node->getParent());
-                    $node->getParent()->setOperator($new_node->getOperator());
-
-                    $node->getParent()->replaceChild($node->getPos(), []);
-
-                    foreach ($node->getParent()->getChilds() as $child) {
-                        $new_node->addChild($child);
-                    }
-
-                    $p = $node->getParent()->getParent();
-
-                    $node->getParent()->getParent()->replaceChild($node->getParent()->getPos(), [$new_node]);
-                    // $node->getParent()->getParent()->setChildByKey($new_node, $node->getParent()->getPos());
-                    
-                    // print_r(json_encode($node->getParent()->getParent(), JSON_PRETTY_PRINT));
-
-                    // print_r($node->getParent()->getParent());
-                    // die();
                 }
               
             }

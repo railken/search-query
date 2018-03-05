@@ -229,6 +229,11 @@ class Node implements NodeContract, \JsonSerializable
         return $this;
     }
 
+    public function removeChild($key)
+    {
+        return $this->replaceChild($key, []);
+    }
+
 
     public function removeChildByKey($key, $resort = true)
     {  
@@ -250,8 +255,14 @@ class Node implements NodeContract, \JsonSerializable
 
     public function getChildsAfterKey($key)
     {
-        return array_slice($this->childs, $key);
+        return array_slice($this->childs, $key+1);
     }
+    public function getChildsBeforeKey($key)
+    {
+        return array_slice($this->childs, 0, $key);
+    }
+
+
 
     public function jsonSerialize()
     {
@@ -259,5 +270,10 @@ class Node implements NodeContract, \JsonSerializable
             'type' => get_class($this),
             'value' => $this->getValue(),
         ];
+    }
+
+    public function toArray()
+    {
+        return $this->jsonSerialize();
     }
 }

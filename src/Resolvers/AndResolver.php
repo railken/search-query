@@ -6,7 +6,7 @@ use Railken\SQ\Contracts\ResolverContract;
 use Railken\SQ\Contracts\NodeContract;
 use Railken\SQ\Nodes as Nodes;
 
-class AndResolver implements ResolverContract
+class AndResolver extends LogicResolver implements ResolverContract
 {
     /**
      * Node resolved
@@ -60,20 +60,73 @@ class AndResolver implements ResolverContract
                 $start =  $match[0][1];
                 $length = strlen($match[0][0]);
 
+
                 $push = [];
 
-                $node->getParent()->setOperator($new_node->getOperator());
+                $parent = $node->getParent();
+                if ($parent instanceof Nodes\AndNode) {
+                    $node->getParent()->replaceChild($node->getPos(), []);
+                } 
 
-                $node->getParent()->replaceChild($node->getPos(), []);
+                // print_r($node->getParent()->toArray());
 
-                foreach ($node->getParent()->getChilds() as $child) {
-                    $new_node->addChild($child);
+                // Get child before and after
+                $childs_before = $parent->getChildsBeforeKey($node->getPos());
+                $childs_after = $parent->getChildsAfterKey($node->getPos());
+
+
+                if (count($childs_before) === 0 || count($childs_after) === 0) {
+                    $node->getParent()->removeChild($node->getPos());
+
+                } else {
+
+                    $child_before = $childs_before[count($childs_before) - 1];
+                    $child_after = $childs_after[0];
+
+
+                    if ($parent instanceof Nodes\OrNode) {
+
+                        // Set the new node
+                    
+
+                        // Remove old parent
+                        $node->getParent()->removeChild($child_before->getPos());
+                        $node->getParent()->removeChild($child_after->getPos());
+
+                        // Set new parent
+                        $new_node->addChild($child_before);
+                        $new_node->addChild($child_after);
+
+
+                        $node->getParent()->replaceChild($node->getPos(), [$new_node]);
+
+
+
+
+                    }
+
+
+                    if ($parent instanceof Nodes\UndefinedLogicNode or $parent instanceof Nodes\GroupNode) {
+
+                        $this->swapNodeUndefinedOrGroup($node, $new_node);
+                    }
                 }
 
-                $p = $node->getParent()->getParent();
-                $p->setChildByKey($new_node, $node->getParent()->getPos());
-             
+  
             }
         }
+    }
+
+    public function swapNodeUndefinedOrGroup($node, $new_node)
+    {
+
+        $node->getParent()->removeChild($node->getPos(), []);
+
+        foreach ($node->getParent()->getChilds() as $child) {
+            $new_node->addChild($child);
+        }
+
+
+        $node->getParent()->getParent()->replaceChild($node->getParent()->getPos(), [$new_node]);
     }
 }

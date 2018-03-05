@@ -7,7 +7,9 @@ class LogicNode extends Node
     public function jsonSerialize()
     {
         return array_merge(parent::jsonSerialize(), [
-            'childs' => $this->getChilds(),
+            'childs' => array_map(function($node) {
+            	return $node->jsonSerialize();
+            }, $this->getChilds()),
         ]);
     }
 }
