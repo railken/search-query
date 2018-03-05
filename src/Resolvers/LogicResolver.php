@@ -8,10 +8,8 @@ use Railken\SQ\Nodes as Nodes;
 
 abstract class LogicResolver implements ResolverContract
 {
-
     public function swapNodeUndefinedOrGroup($node, $new_node)
     {
-
         $node->getParent()->removeChild($node->getPos(), []);
 
         foreach ($node->getParent()->getChilds() as $child) {

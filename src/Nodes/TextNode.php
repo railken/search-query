@@ -7,5 +7,4 @@ class TextNode extends Node
     {
         $this->value = $value;
     }
-
 }

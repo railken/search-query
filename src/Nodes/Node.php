@@ -236,14 +236,12 @@ class Node implements NodeContract, \JsonSerializable
 
 
     public function removeChildByKey($key, $resort = true)
-    {  
-
+    {
         array_splice($this->childs, $key, 1);
 
         if ($resort) {
             $this->calculatePosChilds();
         }
-
     }
 
     public function calculatePosChilds()

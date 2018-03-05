@@ -51,14 +51,11 @@ class OrResolver extends LogicResolver implements ResolverContract
 
     public function resolveTextNode($node)
     {
-
         foreach ($this->regex as $regex) {
             preg_match($regex, $node->getValue(), $match, PREG_OFFSET_CAPTURE);
 
             if ($match) {
                 $new_node = new $this->node;
-                // $new_node->setKey($match[1][0]);
-                // $new_node->setValue($match[2][0]);
                 $start =  $match[0][1];
                 $length = strlen($match[0][0]);
 
@@ -68,24 +65,18 @@ class OrResolver extends LogicResolver implements ResolverContract
 
                 if ($parent instanceof Nodes\OrNode) {
                     $node->getParent()->replaceChild($node->getPos(), []);
-
-                } else if ($parent instanceof Nodes\UndefinedLogicNode or $parent instanceof Nodes\GroupNode) {
+                } elseif ($parent instanceof Nodes\UndefinedLogicNode or $parent instanceof Nodes\GroupNode) {
                     $this->swapNodeUndefinedOrGroup($node, $new_node);
-
                 } else {
-
-
-                    $node->getParent()->replaceChild($node->getPos(), []); 
+                    $node->getParent()->replaceChild($node->getPos(), []);
      
-                    foreach ($node->getParent()->getChilds() as $child) { 
-                        $new_node->addChild($child); 
-                    } 
+                    foreach ($node->getParent()->getChilds() as $child) {
+                        $new_node->addChild($child);
+                    }
      
-                    $p = $node->getParent()->getParent(); 
-                    $p->setChildByKey($new_node, $node->getParent()->getPos()); 
-
+                    $p = $node->getParent()->getParent();
+                    $p->setChildByKey($new_node, $node->getParent()->getPos());
                 }
-              
             }
         }
     }

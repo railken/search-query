@@ -55,8 +55,6 @@ class AndResolver extends LogicResolver implements ResolverContract
 
             if ($match) {
                 $new_node = new $this->node;
-                // $new_node->setKey($match[1][0]);
-                // $new_node->setValue($match[2][0]);
                 $start =  $match[0][1];
                 $length = strlen($match[0][0]);
 
@@ -66,7 +64,7 @@ class AndResolver extends LogicResolver implements ResolverContract
                 $parent = $node->getParent();
                 if ($parent instanceof Nodes\AndNode) {
                     $node->getParent()->replaceChild($node->getPos(), []);
-                } 
+                }
 
                 // print_r($node->getParent()->toArray());
 
@@ -77,9 +75,7 @@ class AndResolver extends LogicResolver implements ResolverContract
 
                 if (count($childs_before) === 0 || count($childs_after) === 0) {
                     $node->getParent()->removeChild($node->getPos());
-
                 } else {
-
                     $child_before = $childs_before[count($childs_before) - 1];
                     $child_after = $childs_after[0];
 
@@ -99,27 +95,19 @@ class AndResolver extends LogicResolver implements ResolverContract
 
 
                         $node->getParent()->replaceChild($node->getPos(), [$new_node]);
-
-
-
-
                     }
 
 
                     if ($parent instanceof Nodes\UndefinedLogicNode or $parent instanceof Nodes\GroupNode) {
-
                         $this->swapNodeUndefinedOrGroup($node, $new_node);
                     }
                 }
-
-  
             }
         }
     }
 
     public function swapNodeUndefinedOrGroup($node, $new_node)
     {
-
         $node->getParent()->removeChild($node->getPos(), []);
 
         foreach ($node->getParent()->getChilds() as $child) {

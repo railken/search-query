@@ -342,8 +342,6 @@ class QueryTest extends TestCase
         $this->assertEquals(Nodes\EqNode::class, get_class($result->getChild(1)));
         $this->assertEquals('z', $result->getChild(1)->getKey());
         $this->assertEquals('1', $result->getChild(1)->getValue());
-
-
     }
 
     public function testAndOr2()
@@ -369,7 +367,6 @@ class QueryTest extends TestCase
         $this->assertEquals(Nodes\EqNode::class, get_class($result->getChild(1)));
         $this->assertEquals('id', $result->getChild(1)->getKey());
         $this->assertEquals('3', $result->getChild(1)->getValue());
-
     }
 
 
@@ -396,7 +393,6 @@ class QueryTest extends TestCase
         $this->assertEquals(Nodes\EqNode::class, get_class($result->getChild(1)->getChild(1)));
         $this->assertEquals('z', $result->getChild(1)->getChild(1)->getKey());
         $this->assertEquals('3', $result->getChild(1)->getChild(1)->getValue());
-
     }
 
 
@@ -407,6 +403,4 @@ class QueryTest extends TestCase
 
         $this->assertEquals(Nodes\GroupNode::class, get_class($result));
     }
-
-
 }
