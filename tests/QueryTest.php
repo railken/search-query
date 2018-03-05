@@ -28,8 +28,8 @@ class QueryTest extends TestCase
             new Resolvers\EwResolver(),
             new Resolvers\NullResolver(),
             new Resolvers\NotNullResolver(),
-            new Resolvers\AndResolver(),
             new Resolvers\OrResolver(),
+            new Resolvers\AndResolver(),
             new Resolvers\TextResolver(),
         ]);
     }
@@ -371,6 +371,34 @@ class QueryTest extends TestCase
         $this->assertEquals('3', $result->getChild(1)->getValue());
 
     }
+
+
+    public function testAndOr3()
+    {
+        $query = $this->parser;
+        $result = $query->parse('x = 1 || y = 2 && z = 3');
+
+        $this->assertEquals(Nodes\OrNode::class, get_class($result));
+        $this->assertEquals(2, $result->countChilds());
+
+
+        $this->assertEquals(Nodes\EqNode::class, get_class($result->getChild(0)));
+        $this->assertEquals('x', $result->getChild(0)->getKey());
+        $this->assertEquals('1', $result->getChild(0)->getValue());
+
+        $this->assertEquals(Nodes\AndNode::class, get_class($result->getChild(1)));
+        $this->assertEquals(2, $result->getChild(1)->countChilds());
+
+        $this->assertEquals(Nodes\EqNode::class, get_class($result->getChild(1)->getChild(0)));
+        $this->assertEquals('y', $result->getChild(1)->getChild(0)->getKey());
+        $this->assertEquals('2', $result->getChild(1)->getChild(0)->getValue());
+
+        $this->assertEquals(Nodes\EqNode::class, get_class($result->getChild(1)->getChild(1)));
+        $this->assertEquals('z', $result->getChild(1)->getChild(1)->getKey());
+        $this->assertEquals('3', $result->getChild(1)->getChild(1)->getValue());
+
+    }
+
 
     public function testGrouping1()
     {
