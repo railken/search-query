@@ -19,7 +19,7 @@ class LteResolver extends KeyResolver
      * @var string
      */
     public $regex = [
-        '/([\w\.]*) lte (("[^"]*"|[^\s]*))/i',
-        '/([\w\.]*) <= (("[^"]*"|[^\s]*))/i'
+        '/([\w\.]*) lte (("[^"]+"|[^\s]+))/i',
+        '/([\w\.]*) <= (("[^"]+"|[^\s]+))/i'
     ];
 }

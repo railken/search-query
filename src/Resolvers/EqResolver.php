@@ -19,7 +19,7 @@ class EqResolver extends KeyResolver
      * @var string
      */
     public $regex = [
-        '/([\w\.\-]*) eq (("[^"]*"|[^\s]*))/i',
-        '/([\w\.\-]*) = (("[^"]*"|[^\s]*))/i'
+        '/([\w\.\-]+) eq (("[^"]+"|[^\s]+))/i',
+        '/([\w\.\-]+) = (("[^"]+"|[^\s]+))/i'
     ];
 }

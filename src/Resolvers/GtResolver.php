@@ -19,7 +19,7 @@ class GtResolver extends KeyResolver
      * @var string
      */
     public $regex = [
-        '/([\w\.\-]*) gt (("[^"]*"|[^\s]*))/i',
-        '/([\w\.\-]*) > (("[^"]*"|[^\s]*))/i'
+        '/([\w\.\-]+) gt (("[^"]+"|[^\s]+))/i',
+        '/([\w\.\-]+) > (("[^"]+"|[^\s]+))/i'
     ];
 }

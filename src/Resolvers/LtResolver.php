@@ -19,7 +19,7 @@ class LtResolver extends KeyResolver
      * @var string
      */
     public $regex = [
-        '/([\w\.\-]*) lt (("[^"]*"|[^\s]*))/i',
-        '/([\w\.\-]*) < (("[^"]*"|[^\s]*))/i'
+        '/([\w\.\-]+) lt (("[^"]+"|[^\s]+))/i',
+        '/([\w\.\-]+) < (("[^"]+"|[^\s]+))/i'
     ];
 }

@@ -19,6 +19,6 @@ class NullResolver extends KeyResolver
      * @var string
      */
     public $regex = [
-        '/([\w\.\-]*) is null/i',
+        '/([\w\.\-]+) is null/i',
     ];
 }

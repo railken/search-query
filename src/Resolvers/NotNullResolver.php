@@ -19,6 +19,6 @@ class NotNullResolver extends KeyResolver
      * @var string
      */
     public $regex = [
-        '/([\w\.\-]*) is not null/i',
+        '/([\w\.\-]+) is not null/i',
     ];
 }
