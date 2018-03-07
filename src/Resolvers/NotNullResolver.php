@@ -4,7 +4,7 @@ namespace Railken\SQ\Resolvers;
 
 use Railken\SQ\Nodes as Nodes;
 
-class NotNullResolver extends KeyResolver
+class NotNullResolver extends ComparisonOperatorResolver
 {
     /**
      * Node resolved
@@ -19,6 +19,6 @@ class NotNullResolver extends KeyResolver
      * @var string
      */
     public $regex = [
-        '/([\w\.\-]+) is not null/i',
+        '/is not null/i',
     ];
 }

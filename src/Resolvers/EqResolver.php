@@ -4,7 +4,7 @@ namespace Railken\SQ\Resolvers;
 
 use Railken\SQ\Nodes as Nodes;
 
-class EqResolver extends KeyResolver
+class EqResolver extends ComparisonOperatorResolver
 {
     /**
      * Node resolved
@@ -19,7 +19,10 @@ class EqResolver extends KeyResolver
      * @var string
      */
     public $regex = [
-        '/([\w\.\-]+) eq (("[^"]+"|[^\s]+))/i',
-        '/([\w\.\-]+) = (("[^"]+"|[^\s]+))/i'
+        '/eq/i',
+        '/=/i'
     ];
 }
+
+
+// sum(x, sum(4, 5))|number_format(8, 2) = 1

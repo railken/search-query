@@ -2,7 +2,7 @@
 
 namespace Railken\SQ\Nodes;
 
-class GtNode extends KeyNode
+class GtNode extends ComparisonOperatorNode
 {
     /**
      * Operator

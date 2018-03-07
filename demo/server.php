@@ -1,6 +1,7 @@
 <?php
 
 $autoload = __DIR__ . '/../vendor/autoload.php';
+
 if (!file_exists($autoload)) {
     throw new RuntimeException('Install dependencies using composer to run the demo.');
 }
@@ -13,8 +14,10 @@ use Railken\SQ\Resolvers as Resolvers;
 $parser = new QueryParser();
 $parser->addResolvers([
     new Resolvers\GroupingResolver(),
-    new Resolvers\NotEqResolver(),
+    new Resolvers\ValueResolver(),
+    new Resolvers\KeyResolver(),
     new Resolvers\EqResolver(),
+    new Resolvers\NotEqResolver(),
     new Resolvers\LtResolver(),
     new Resolvers\LteResolver(),
     new Resolvers\GtResolver(),

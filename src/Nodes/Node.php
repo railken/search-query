@@ -208,6 +208,23 @@ class Node implements NodeContract, \JsonSerializable
         return count($this->childs);
     }
 
+    public function next()
+    {
+        return $this->getParent() ? $this->getParent()->getChild($this->getPos()+1) : null;
+    }
+
+    public function prev()
+    {
+        return $this->getParent() ? $this->getParent()->getChild($this->getPos()-1) : null;
+    }
+    
+    public function moveNodeAsChild($child)
+    {   
+        $child->getParent()->removeChild($child->getPos());
+        $this->addChild($child);
+    }
+
+
     /**
      * Replace a child by others
      *

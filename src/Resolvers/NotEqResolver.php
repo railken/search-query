@@ -4,7 +4,7 @@ namespace Railken\SQ\Resolvers;
 
 use Railken\SQ\Nodes as Nodes;
 
-class NotEqResolver extends KeyResolver
+class NotEqResolver extends ComparisonOperatorResolver
 {
     /**
      * Node resolved
@@ -19,8 +19,8 @@ class NotEqResolver extends KeyResolver
      * @var string
      */
     public $regex = [
-        '/([\w\.\-]+) not eq (("[^"]+"|[^\s]+))/i',
-        '/([\w\.\-]+) <> (("[^"]+"|[^\s]+))/i',
-        '/([\w\.\-]+) != (("[^"]+"|[^\s]+))/i'
+        '/not eq/i',
+        '/<>/i',
+        '/!=/i'
     ];
 }

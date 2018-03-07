@@ -2,7 +2,7 @@
 
 namespace Railken\SQ\Nodes;
 
-class SwNode extends KeyNode
+class SwNode extends ComparisonOperatorNode
 {
     /**
      * Operator

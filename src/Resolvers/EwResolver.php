@@ -4,7 +4,7 @@ namespace Railken\SQ\Resolvers;
 
 use Railken\SQ\Nodes as Nodes;
 
-class EwResolver extends KeyResolver
+class EwResolver extends ComparisonOperatorResolver
 {
     /**
      * Node resolved
@@ -19,7 +19,7 @@ class EwResolver extends KeyResolver
      * @var string
      */
     public $regex = [
-        '/([\w\.\-]+) ew (("[^"]+"|[^\s]+))/i',
-        '/([\w\.\-]+) \$= (("[^"]+"|[^\s]+))/i'
+        '/ew/i',
+        '/\$=/i'
     ];
 }

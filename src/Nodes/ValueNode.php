@@ -3,6 +3,6 @@ namespace Railken\SQ\Nodes;
 
 use Railken\SQ\StringHelper;
 
-class KeyNode extends Node
+class ValueNode extends Node
 {
 }

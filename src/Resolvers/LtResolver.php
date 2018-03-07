@@ -4,7 +4,7 @@ namespace Railken\SQ\Resolvers;
 
 use Railken\SQ\Nodes as Nodes;
 
-class LtResolver extends KeyResolver
+class LtResolver extends ComparisonOperatorResolver
 {
     /**
      * Node resolved
@@ -19,7 +19,7 @@ class LtResolver extends KeyResolver
      * @var string
      */
     public $regex = [
-        '/([\w\.\-]+) lt (("[^"]+"|[^\s]+))/i',
-        '/([\w\.\-]+) < (("[^"]+"|[^\s]+))/i'
+        '/lt/i',
+        '/</i'
     ];
 }

@@ -7,7 +7,7 @@ use Railken\SQ\Contracts\NodeContract;
 use Railken\SQ\Nodes as Nodes;
 use Railken\SQ\Traits\SplitNodeTrait;
 
-class KeyResolver implements ResolverContract
+class ValueResolver implements ResolverContract
 {
 
     use SplitNodeTrait;
@@ -17,7 +17,7 @@ class KeyResolver implements ResolverContract
      *
      * @var string
      */
-    public $node = Nodes\KeyNode::class;
+    public $node = Nodes\ValueNode::class;
 
     /**
      * Regex token
@@ -25,7 +25,9 @@ class KeyResolver implements ResolverContract
      * @var string
      */
     public $regex = [
-        '/([a-z_][a-z0-9_]*)/i',
+        '/\'([^\']+)\'/i',
+        '/"([^"]+)"/i',
+        '/(0|[1-9]\d*)/',
     ];
 
     /**

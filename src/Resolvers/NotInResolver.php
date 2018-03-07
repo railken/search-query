@@ -4,7 +4,7 @@ namespace Railken\SQ\Resolvers;
 
 use Railken\SQ\Nodes as Nodes;
 
-class NotInResolver extends KeyResolver
+class NotInResolver extends ComparisonOperatorResolver
 {
     /**
      * Node resolved
@@ -19,7 +19,7 @@ class NotInResolver extends KeyResolver
      * @var string
      */
     public $regex = [
-        '/([\w\.\-]+) not in (("[^"]+"|[^\s]+))/i',
-        '/([\w\.\-]+) !=\[\] (("[^"]+"|[^\s]+))/i'
+        '/not in/i',
+        '/!=\[\]/i'
     ];
 }
