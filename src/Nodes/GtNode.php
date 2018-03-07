@@ -9,5 +9,5 @@ class GtNode extends ComparisonOperatorNode
      *
      * @var string
      */
-    public $operator = 'gt';
+    public $value = 'gt';
 }

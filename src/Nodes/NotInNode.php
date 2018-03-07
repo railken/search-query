@@ -9,7 +9,7 @@ class NotInNode extends ComparisonOperatorNode
      *
      * @var string
      */
-    public $operator = 'not_in';
+    public $value = 'not_in';
 
     /**
      * set value

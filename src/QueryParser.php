@@ -62,7 +62,7 @@ class QueryParser
         $t->setValue($query);
         $l->addChild($t);
 
-        $this->addResolver(new Resolvers\TextResolver());
+        // $this->addResolver(new Resolvers\TextResolver());
 
         foreach ($this->resolvers as $token) {
             $token->resolve($node);

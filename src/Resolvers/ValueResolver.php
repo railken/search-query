@@ -27,7 +27,7 @@ class ValueResolver implements ResolverContract
     public $regex = [
         '/\'([^\']+)\'/i',
         '/"([^"]+)"/i',
-        '/(0|[1-9]\d*)/',
+        '/(0|[1-9][\,\.\d]*)/',
     ];
 
     /**

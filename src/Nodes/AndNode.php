@@ -9,5 +9,5 @@ class AndNode extends LogicNode
      *
      * @var string
      */
-    public $operator = 'and';
+    public $value = 'and';
 }

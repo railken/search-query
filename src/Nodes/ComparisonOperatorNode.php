@@ -88,29 +88,12 @@ class ComparisonOperatorNode extends Node
         return $this;
     }
 
-    /**
-     * set value
-     *
-     * @param string $value
-     *
-     * @return $this
-     */
-    public function setValue($value)
-    {
-        # Remove '"' if present
-        if ($value && $value[0] == "\"") {
-            $value = substr($value, 1, -1);
-        }
-
-        $this->value = $value;
-
-        return $this;
-    }
 
     public function jsonSerialize()
     {
         return array_merge([
             'type' => get_class($this),
+            'value' => $this->value,
             'childs' => array_map(function ($node) {
                 return $node->jsonSerialize();
             }, $this->getChilds()),

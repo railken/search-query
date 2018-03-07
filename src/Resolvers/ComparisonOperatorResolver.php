@@ -6,6 +6,7 @@ use Railken\SQ\Contracts\ResolverContract;
 use Railken\SQ\Contracts\NodeContract;
 use Railken\SQ\Nodes as Nodes;
 use Railken\SQ\Traits\SplitNodeTrait;
+use Railken\SQ\Exceptions;
 
 class ComparisonOperatorResolver implements ResolverContract
 {
@@ -32,6 +33,7 @@ class ComparisonOperatorResolver implements ResolverContract
         if ($node instanceof Nodes\TextNode || $node instanceof Nodes\KeyNode) {
 
               foreach ($this->regex as $regex) {
+
                 preg_match($regex, $node->getValue(), $match, PREG_OFFSET_CAPTURE);
 
                 if ($match) {
@@ -41,23 +43,22 @@ class ComparisonOperatorResolver implements ResolverContract
                     $start =  $match[0][1];
                     $length = strlen($match[0][0]);
 
-                    $this->splitNode(Nodes\TextNode::class, $node, $new_node, $start, $start+$length);
+
+                    $this->splitNode(get_class($node), $node, $new_node, $start, $start+$length);
 
 
-                    if (!$node->next()) {
-                        // Throw exception. Expect Value|Column after eq
-                    }
-
-                    if (!$node->prev()) {
-                        // Throw exception. Expect Value|Column before eq
-                    }
-
-                    if ($new_node->next() instanceof Nodes\ValueNode || $new_node->next() instanceof Nodes\KeyNode) {
+                    if ($new_node->next() && ($new_node->next() instanceof Nodes\ValueNode || $new_node->next() instanceof Nodes\KeyNode)) {
                         $new_node->moveNodeAsChild($new_node->next());
+                    } else {
+
+                        throw new Exceptions\QuerySyntaxException($node->getParent()->valueToString());
                     }
 
-                    if ($new_node->prev() instanceof Nodes\ValueNode || $new_node->prev() instanceof Nodes\KeyNode) {
+                    if ($new_node->prev() && ($new_node->prev() instanceof Nodes\ValueNode || $new_node->prev() instanceof Nodes\KeyNode)) {
                         $new_node->moveNodeAsChild($new_node->prev());
+                    } else {
+                        throw new Exceptions\QuerySyntaxException($node->getParent()->valueToString());
+
                     }
 
 

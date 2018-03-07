@@ -9,5 +9,5 @@ class EwNode extends ComparisonOperatorNode
      *
      * @var string
      */
-    public $operator = 'ew';
+    public $value = 'ew';
 }

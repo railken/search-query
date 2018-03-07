@@ -9,5 +9,5 @@ class NotEqNode extends ComparisonOperatorNode
      *
      * @var string
      */
-    public $operator = 'not_eq';
+    public $value = 'not_eq';
 }

@@ -15,22 +15,23 @@ class QueryTest extends TestCase
         $this->parser = new QueryParser();
         $this->parser->addResolvers([
             new Resolvers\GroupingResolver(),
+            new Resolvers\ValueResolver(),
+            new Resolvers\KeyResolver(),
             new Resolvers\NotEqResolver(),
             new Resolvers\EqResolver(),
-            new Resolvers\LtResolver(),
             new Resolvers\LteResolver(),
-            new Resolvers\GtResolver(),
+            new Resolvers\LtResolver(),
             new Resolvers\GteResolver(),
+            new Resolvers\GtResolver(),
             new Resolvers\CtResolver(),
             new Resolvers\SwResolver(),
             new Resolvers\NotInResolver(),
             new Resolvers\InResolver(),
             new Resolvers\EwResolver(),
-            new Resolvers\NullResolver(),
             new Resolvers\NotNullResolver(),
+            new Resolvers\NullResolver(),
             new Resolvers\OrResolver(),
             new Resolvers\AndResolver(),
-            new Resolvers\TextResolver(),
         ]);
     }
 
@@ -77,13 +78,13 @@ class QueryTest extends TestCase
 
         $result = $query->parse('x eq 1');
         $this->assertEquals(Nodes\EqNode::class, get_class($result));
-        $this->assertEquals('x', $result->getKey());
-        $this->assertEquals('1', $result->getValue());
+        $this->assertEquals('x', $result->getFirstChildByClass(Nodes\KeyNode::class)->getValue());
+        $this->assertEquals('1', $result->getFirstChildByClass(Nodes\ValueNode::class)->getValue());
 
         $result = $query->parse('x = 1');
         $this->assertEquals(Nodes\EqNode::class, get_class($result));
-        $this->assertEquals('x', $result->getKey());
-        $this->assertEquals('1', $result->getValue());
+        $this->assertEquals('x', $result->getFirstChildByClass(Nodes\KeyNode::class)->getValue());
+        $this->assertEquals('1', $result->getFirstChildByClass(Nodes\ValueNode::class)->getValue());
     }
 
     public function testNotEq()
@@ -92,18 +93,18 @@ class QueryTest extends TestCase
 
         $result = $query->parse('x not eq 1');
         $this->assertEquals(Nodes\NotEqNode::class, get_class($result));
-        $this->assertEquals('x', $result->getKey());
-        $this->assertEquals('1', $result->getValue());
+        $this->assertEquals('x', $result->getFirstChildByClass(Nodes\KeyNode::class)->getValue());
+        $this->assertEquals('1', $result->getFirstChildByClass(Nodes\ValueNode::class)->getValue());
 
         $result = $query->parse('x != 1');
         $this->assertEquals(Nodes\NotEqNode::class, get_class($result));
-        $this->assertEquals('x', $result->getKey());
-        $this->assertEquals('1', $result->getValue());
+        $this->assertEquals('x', $result->getFirstChildByClass(Nodes\KeyNode::class)->getValue());
+        $this->assertEquals('1', $result->getFirstChildByClass(Nodes\ValueNode::class)->getValue());
 
         $result = $query->parse('x <> 1');
         $this->assertEquals(Nodes\NotEqNode::class, get_class($result));
-        $this->assertEquals('x', $result->getKey());
-        $this->assertEquals('1', $result->getValue());
+        $this->assertEquals('x', $result->getFirstChildByClass(Nodes\KeyNode::class)->getValue());
+        $this->assertEquals('1', $result->getFirstChildByClass(Nodes\ValueNode::class)->getValue());
     }
 
     public function testGt()
@@ -112,13 +113,13 @@ class QueryTest extends TestCase
 
         $result = $query->parse('x gt 1');
         $this->assertEquals(Nodes\GtNode::class, get_class($result));
-        $this->assertEquals('x', $result->getKey());
-        $this->assertEquals('1', $result->getValue());
+        $this->assertEquals('x', $result->getFirstChildByClass(Nodes\KeyNode::class)->getValue());
+        $this->assertEquals('1', $result->getFirstChildByClass(Nodes\ValueNode::class)->getValue());
 
         $result = $query->parse('x > 1');
         $this->assertEquals(Nodes\GtNode::class, get_class($result));
-        $this->assertEquals('x', $result->getKey());
-        $this->assertEquals('1', $result->getValue());
+        $this->assertEquals('x', $result->getFirstChildByClass(Nodes\KeyNode::class)->getValue());
+        $this->assertEquals('1', $result->getFirstChildByClass(Nodes\ValueNode::class)->getValue());
     }
 
     public function testGte()
@@ -127,13 +128,13 @@ class QueryTest extends TestCase
 
         $result = $query->parse('x gte 1');
         $this->assertEquals(Nodes\GteNode::class, get_class($result));
-        $this->assertEquals('x', $result->getKey());
-        $this->assertEquals('1', $result->getValue());
+        $this->assertEquals('x', $result->getFirstChildByClass(Nodes\KeyNode::class)->getValue());
+        $this->assertEquals('1', $result->getFirstChildByClass(Nodes\ValueNode::class)->getValue());
 
         $result = $query->parse('x >= 1');
         $this->assertEquals(Nodes\GteNode::class, get_class($result));
-        $this->assertEquals('x', $result->getKey());
-        $this->assertEquals('1', $result->getValue());
+        $this->assertEquals('x', $result->getFirstChildByClass(Nodes\KeyNode::class)->getValue());
+        $this->assertEquals('1', $result->getFirstChildByClass(Nodes\ValueNode::class)->getValue());
     }
 
 
@@ -143,13 +144,13 @@ class QueryTest extends TestCase
 
         $result = $query->parse('x lt 1');
         $this->assertEquals(Nodes\LtNode::class, get_class($result));
-        $this->assertEquals('x', $result->getKey());
-        $this->assertEquals('1', $result->getValue());
+        $this->assertEquals('x', $result->getFirstChildByClass(Nodes\KeyNode::class)->getValue());
+        $this->assertEquals('1', $result->getFirstChildByClass(Nodes\ValueNode::class)->getValue());
 
         $result = $query->parse('x < 1');
         $this->assertEquals(Nodes\LtNode::class, get_class($result));
-        $this->assertEquals('x', $result->getKey());
-        $this->assertEquals('1', $result->getValue());
+        $this->assertEquals('x', $result->getFirstChildByClass(Nodes\KeyNode::class)->getValue());
+        $this->assertEquals('1', $result->getFirstChildByClass(Nodes\ValueNode::class)->getValue());
     }
 
     public function testLte()
@@ -158,13 +159,13 @@ class QueryTest extends TestCase
 
         $result = $query->parse('x lte 1');
         $this->assertEquals(Nodes\LteNode::class, get_class($result));
-        $this->assertEquals('x', $result->getKey());
-        $this->assertEquals('1', $result->getValue());
+        $this->assertEquals('x', $result->getFirstChildByClass(Nodes\KeyNode::class)->getValue());
+        $this->assertEquals('1', $result->getFirstChildByClass(Nodes\ValueNode::class)->getValue());
 
         $result = $query->parse('x <= 1');
         $this->assertEquals(Nodes\LteNode::class, get_class($result));
-        $this->assertEquals('x', $result->getKey());
-        $this->assertEquals('1', $result->getValue());
+        $this->assertEquals('x', $result->getFirstChildByClass(Nodes\KeyNode::class)->getValue());
+        $this->assertEquals('1', $result->getFirstChildByClass(Nodes\ValueNode::class)->getValue());
     }
 
 
@@ -174,7 +175,7 @@ class QueryTest extends TestCase
 
         $result = $query->parse('x is null');
         $this->assertEquals(Nodes\NullNode::class, get_class($result));
-        $this->assertEquals('x', $result->getKey());
+        $this->assertEquals('x', $result->getFirstChildByClass(Nodes\KeyNode::class)->getValue());
     }
 
     public function testNotNull()
@@ -183,7 +184,7 @@ class QueryTest extends TestCase
 
         $result = $query->parse('x is not null');
         $this->assertEquals(Nodes\NotNullNode::class, get_class($result));
-        $this->assertEquals('x', $result->getKey());
+        $this->assertEquals('x', $result->getFirstChildByClass(Nodes\KeyNode::class)->getValue());
     }
 
     public function testCt()
@@ -192,13 +193,13 @@ class QueryTest extends TestCase
 
         $result = $query->parse('x ct 1');
         $this->assertEquals(Nodes\CtNode::class, get_class($result));
-        $this->assertEquals('x', $result->getKey());
-        $this->assertEquals('1', $result->getValue());
+        $this->assertEquals('x', $result->getFirstChildByClass(Nodes\KeyNode::class)->getValue());
+        $this->assertEquals('1', $result->getFirstChildByClass(Nodes\ValueNode::class)->getValue());
 
         $result = $query->parse('x *= 1');
         $this->assertEquals(Nodes\CtNode::class, get_class($result));
-        $this->assertEquals('x', $result->getKey());
-        $this->assertEquals('1', $result->getValue());
+        $this->assertEquals('x', $result->getFirstChildByClass(Nodes\KeyNode::class)->getValue());
+        $this->assertEquals('1', $result->getFirstChildByClass(Nodes\ValueNode::class)->getValue());
     }
 
     public function testSw()
@@ -207,13 +208,13 @@ class QueryTest extends TestCase
 
         $result = $query->parse('x sw 1');
         $this->assertEquals(Nodes\SwNode::class, get_class($result));
-        $this->assertEquals('x', $result->getKey());
-        $this->assertEquals('1', $result->getValue());
+        $this->assertEquals('x', $result->getFirstChildByClass(Nodes\KeyNode::class)->getValue());
+        $this->assertEquals('1', $result->getFirstChildByClass(Nodes\ValueNode::class)->getValue());
 
         $result = $query->parse('x ^= 1');
         $this->assertEquals(Nodes\SwNode::class, get_class($result));
-        $this->assertEquals('x', $result->getKey());
-        $this->assertEquals('1', $result->getValue());
+        $this->assertEquals('x', $result->getFirstChildByClass(Nodes\KeyNode::class)->getValue());
+        $this->assertEquals('1', $result->getFirstChildByClass(Nodes\ValueNode::class)->getValue());
     }
 
     public function testEw()
@@ -222,13 +223,13 @@ class QueryTest extends TestCase
 
         $result = $query->parse('x ew 1');
         $this->assertEquals(Nodes\EwNode::class, get_class($result));
-        $this->assertEquals('x', $result->getKey());
-        $this->assertEquals('1', $result->getValue());
+        $this->assertEquals('x', $result->getFirstChildByClass(Nodes\KeyNode::class)->getValue());
+        $this->assertEquals('1', $result->getFirstChildByClass(Nodes\ValueNode::class)->getValue());
 
         $result = $query->parse('x $= 1');
         $this->assertEquals(Nodes\EwNode::class, get_class($result));
-        $this->assertEquals('x', $result->getKey());
-        $this->assertEquals('1', $result->getValue());
+        $this->assertEquals('x', $result->getFirstChildByClass(Nodes\KeyNode::class)->getValue());
+        $this->assertEquals('1', $result->getFirstChildByClass(Nodes\ValueNode::class)->getValue());
     }
 
     public function testNotIn()
@@ -237,13 +238,13 @@ class QueryTest extends TestCase
 
         $result = $query->parse('x not in 1');
         $this->assertEquals(Nodes\NotInNode::class, get_class($result));
-        $this->assertEquals('x', $result->getKey());
-        $this->assertEquals(['1'], $result->getValue());
+        $this->assertEquals('x', $result->getFirstChildByClass(Nodes\KeyNode::class)->getValue());
+        $this->assertEquals(['1'], $result->getFirstChildByClass(Nodes\ValueNode::class)->getValue());
 
         $result = $query->parse('x !=[] 1');
         $this->assertEquals(Nodes\NotInNode::class, get_class($result));
-        $this->assertEquals('x', $result->getKey());
-        $this->assertEquals(['1'], $result->getValue());
+        $this->assertEquals('x', $result->getFirstChildByClass(Nodes\KeyNode::class)->getValue());
+        $this->assertEquals(['1'], $result->getFirstChildByClass(Nodes\ValueNode::class)->getValue());
     }
 
     public function testIn()
@@ -252,13 +253,13 @@ class QueryTest extends TestCase
 
         $result = $query->parse('x in 1');
         $this->assertEquals(Nodes\InNode::class, get_class($result));
-        $this->assertEquals('x', $result->getKey());
-        $this->assertEquals(['1'], $result->getValue());
+        $this->assertEquals('x', $result->getFirstChildByClass(Nodes\KeyNode::class)->getValue());
+        $this->assertEquals(['1'], $result->getFirstChildByClass(Nodes\ValueNode::class)->getValue());
 
         $result = $query->parse('x =[] 1');
         $this->assertEquals(Nodes\InNode::class, get_class($result));
-        $this->assertEquals('x', $result->getKey());
-        $this->assertEquals(['1'], $result->getValue());
+        $this->assertEquals('x', $result->getFirstChildByClass(Nodes\KeyNode::class)->getValue());
+        $this->assertEquals(['1'], $result->getFirstChildByClass(Nodes\ValueNode::class)->getValue());
     }
 
     public function testAnd()

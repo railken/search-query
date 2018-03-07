@@ -9,5 +9,5 @@ class OrNode extends LogicNode
      *
      * @var string
      */
-    public $operator = 'or';
+    public $value = 'or';
 }

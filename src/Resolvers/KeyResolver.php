@@ -58,6 +58,17 @@ class KeyResolver implements ResolverContract
 
                     $this->splitNode(Nodes\TextNode::class, $node, $new_node, $start, $start+$length);
 
+
+                    if ($new_node->prev() && $new_node->prev() instanceof Nodes\KeyNode) {
+                        $new_node->setValue($new_node->prev()->getValue()." ".$new_node->getValue());
+                        $new_node->getParent()->removeChild($new_node->prev()->getPos());
+                    }
+
+                    if ($new_node->next() && $new_node->next() instanceof Nodes\KeyNode) {
+                        $new_node->setValue($new_node->getValue()." ".$new_node->next()->getValue());
+                        $new_node->getParent()->removeChild($new_node->next()->getPos());
+                    }
+
                     // Search for another match in this node.
                     return $this->resolve($node->getParent(), $i);
                 }

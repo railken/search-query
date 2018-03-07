@@ -53,7 +53,7 @@ class Node implements NodeContract, \JsonSerializable
      */
     public function setValue($value)
     {
-        $this->value = $value;
+        $this->value = trim($value);
 
         return $this;
     }
@@ -224,6 +224,16 @@ class Node implements NodeContract, \JsonSerializable
         $this->addChild($child);
     }
 
+    public function getFirstChildByClass($class)
+    {
+        foreach ($this->getChilds() as $child) {
+            if ($child instanceof $class)
+                return $child;
+        }
+
+        return null;
+    }
+
 
     /**
      * Replace a child by others
@@ -290,5 +300,15 @@ class Node implements NodeContract, \JsonSerializable
     public function toArray()
     {
         return $this->jsonSerialize();
+    }
+
+    public function valueToString()
+    {
+        if ($this->countChilds() === 0)
+            return $this->getValue();
+        
+        return implode(" ", array_map(function ($node) {
+            return $node->valueToString();
+        }, $this->getChilds()));
     }
 }

@@ -9,7 +9,8 @@ trait SplitNodeTrait
 
         $push = [];
 
-        $first = new $class(substr($node->getValue(), 0, $position_to));
+        $first = new $class();
+        $first->setValue(substr($node->getValue(), 0, $position_to));
 
         if ($first->getValue() && !empty(rtrim($first->getValue()))) {
             $push[] = $first;
@@ -17,7 +18,8 @@ trait SplitNodeTrait
 
         $push[] = $new_node;
         
-        $second = new $class(substr($node->getValue(), $position_from));
+        $second = new $class();
+        $second->setValue(substr($node->getValue(), $position_from));
 
         if ($second->getValue() && !empty(rtrim($second->getValue()))) {
             $push[] = $second;

@@ -9,7 +9,7 @@ class InNode extends ComparisonOperatorNode
      *
      * @var string
      */
-    public $operator = 'in';
+    public $value = 'in';
 
     /**
      * set value

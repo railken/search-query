@@ -9,5 +9,5 @@ class SwNode extends ComparisonOperatorNode
      *
      * @var string
      */
-    public $operator = 'sw';
+    public $value = 'sw';
 }
