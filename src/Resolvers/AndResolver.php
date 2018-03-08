@@ -43,12 +43,12 @@ class AndResolver extends LogicResolver implements ResolverContract
             return;
         }
         
-        if ($node instanceof Nodes\TextNode) {
-            $this->resolveTextNode($node);
+        if ($node instanceof Nodes\KeyNode) {
+            $this->resolveKeyNode($node);
         }
     }
 
-    public function resolveTextNode($node)
+    public function resolveKeyNode($node)
     {
         foreach ($this->regex as $regex) {
             preg_match($regex, $node->getValue(), $match, PREG_OFFSET_CAPTURE);

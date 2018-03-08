@@ -28,23 +28,35 @@ class ComparisonOperatorResolver implements ResolverContract
         
         if (count($childs) > 0) {
             $this->resolve($node->getChild($i));
-        }
-        
-        if ($node instanceof Nodes\TextNode || $node instanceof Nodes\KeyNode) {
 
-              foreach ($this->regex as $regex) {
+            $value = array_map(function($node) { return $node->getValue(); }, $node->getChilds());
+            
+            $value = "";
+            $positions = [];
+            foreach ($node->getChilds() as $child) {
 
-                preg_match($regex, $node->getValue(), $match, PREG_OFFSET_CAPTURE);
+                if ($child instanceof Nodes\TextNode || $child instanceof Nodes\KeyNode) {
+
+                    $value .= " ".$child->getValue();
+                    $p = array_fill(0, strlen(" ".$child->getValue()), $child->getPos());
+                    $positions = array_merge($positions, $p);
+                }
+            }
+
+
+            foreach ($this->regex as $regex) {
+
+                preg_match($regex, $value, $match, PREG_OFFSET_CAPTURE);
 
                 if ($match) {
 
                     $new_node = new $this->node;
 
-                    $start =  $match[0][1];
+                    $start = $match[0][1];
                     $length = strlen($match[0][0]);
 
 
-                    $this->splitNode(get_class($node), $node, $new_node, $start, $start+$length);
+                    $this->groupNode($node, $new_node, $start, $start+$length-1, $positions);
                     $this->resolvePreviousNode($node, $new_node);
                     $this->resolveNextNode($node, $new_node);
 
