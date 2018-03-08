@@ -45,22 +45,8 @@ class ComparisonOperatorResolver implements ResolverContract
 
 
                     $this->splitNode(get_class($node), $node, $new_node, $start, $start+$length);
-
-
-                    if ($new_node->next() && ($new_node->next() instanceof Nodes\ValueNode || $new_node->next() instanceof Nodes\KeyNode)) {
-                        $new_node->moveNodeAsChild($new_node->next());
-                    } else {
-
-                        throw new Exceptions\QuerySyntaxException($node->getParent()->valueToString());
-                    }
-
-                    if ($new_node->prev() && ($new_node->prev() instanceof Nodes\ValueNode || $new_node->prev() instanceof Nodes\KeyNode)) {
-                        $new_node->moveNodeAsChild($new_node->prev());
-                    } else {
-                        throw new Exceptions\QuerySyntaxException($node->getParent()->valueToString());
-
-                    }
-
+                    $this->resolvePreviousNode($node, $new_node);
+                    $this->resolveNextNode($node, $new_node);
 
                     // Search for another match in this node.
                     return $this->resolve($node->getParent(), $i);
@@ -70,5 +56,42 @@ class ComparisonOperatorResolver implements ResolverContract
 
 
         return $node->next() ? $this->resolve($node->next()) : null;
+    }
+
+    /**
+     * Resolve previous node match
+     *
+     * @param NodeContract $node
+     * @param NodeContract $new_node
+     *
+     * @return void
+     */
+    public function resolvePreviousNode(NodeContract $node, NodeContract $new_node)
+    {
+        if ($new_node->prev() && ($new_node->prev() instanceof Nodes\ValueNode || $new_node->prev() instanceof Nodes\KeyNode)) {
+            $new_node->moveNodeAsChild($new_node->prev());
+        } else {
+            throw new Exceptions\QuerySyntaxException($node->getParent()->valueToString());
+
+        }
+    }
+
+    /**
+     * Resolve next node match
+     *
+     * @param NodeContract $node
+     * @param NodeContract $new_node
+     *
+     * @return void
+     */
+    public function resolveNextNode(NodeContract $node, NodeContract $new_node)
+    {
+
+        if ($new_node->next() && ($new_node->next() instanceof Nodes\ValueNode || $new_node->next() instanceof Nodes\KeyNode)) {
+            $new_node->moveNodeAsChild($new_node->next());
+        } else {
+
+            throw new Exceptions\QuerySyntaxException($node->getParent()->valueToString());
+        }
     }
 }

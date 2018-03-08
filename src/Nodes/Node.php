@@ -53,7 +53,10 @@ class Node implements NodeContract, \JsonSerializable
      */
     public function setValue($value)
     {
-        $this->value = trim($value);
+        is_string($value) && $value = trim($value);
+        is_array($value) && $value = array_map(function($v) { return trim($v); }, $value);
+
+        $this->value = $value;
 
         return $this;
     }
@@ -259,6 +262,14 @@ class Node implements NodeContract, \JsonSerializable
     public function removeChild($key)
     {
         return $this->replaceChild($key, []);
+    }
+    public function unsetChilds()
+    {
+        foreach ($this->childs as $child) {
+            unset($child);
+        }
+
+        $this->childs = [];
     }
 
 

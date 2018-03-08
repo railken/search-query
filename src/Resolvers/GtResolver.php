@@ -19,7 +19,7 @@ class GtResolver extends ComparisonOperatorResolver
      * @var string
      */
     public $regex = [
-        '/gt/i',
-        '/>/i'
+        '/(?<![^\s])gt(?![^\s])/i',
+        '/(?<![^\s])\>(?![^\s])/i',
     ];
 }

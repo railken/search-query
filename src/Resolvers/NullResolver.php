@@ -3,6 +3,7 @@
 namespace Railken\SQ\Resolvers;
 
 use Railken\SQ\Nodes as Nodes;
+use Railken\SQ\Contracts\NodeContract;
 
 class NullResolver extends ComparisonOperatorResolver
 {
@@ -19,6 +20,19 @@ class NullResolver extends ComparisonOperatorResolver
      * @var string
      */
     public $regex = [
-        '/is null/i',
+        '/(?<![^\s])is null(?![^\s])/i',
     ];
+
+    /**
+     * Resolve previous node match
+     *
+     * @param NodeContract $node
+     * @param NodeContract $new_node
+     *
+     * @return void
+     */
+    public function resolveNextNode(NodeContract $node, NodeContract $new_node)
+    {
+        // Nothing to resolve...
+    }
 }

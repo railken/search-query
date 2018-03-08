@@ -19,7 +19,7 @@ class CtResolver extends ComparisonOperatorResolver
      * @var string
      */
     public $regex = [
-        '/ct/i',
-        '/\*=/i'
+        '/(?<![^\s])ct(?![^\s])/i',
+        '/(?<![^\s])\*=(?![^\s])/i',
     ];
 }

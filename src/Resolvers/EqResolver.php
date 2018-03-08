@@ -19,10 +19,7 @@ class EqResolver extends ComparisonOperatorResolver
      * @var string
      */
     public $regex = [
-        '/eq/i',
-        '/=/i'
+        '/(?<![^\s])eq(?![^\s])/i',
+        '/(?<![^\s])=(?![^\s])/i'
     ];
 }
-
-
-// sum(x, sum(4, 5))|number_format(8, 2) = 1

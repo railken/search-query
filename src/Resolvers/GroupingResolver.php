@@ -80,6 +80,7 @@ class GroupingResolver implements ResolverContract
 
         $text = implode("", $texts);
 
+
         if (preg_match($this->regex, $text, $match, PREG_OFFSET_CAPTURE)) {
             $start =  $match[0][1];
             $length = strlen($match[0][0]);
@@ -94,7 +95,8 @@ class GroupingResolver implements ResolverContract
             $push = [];
             $new_node = new $this->node;
             $result = substr($match[0][0], 1, -1);
-            $text_node = new Nodes\TextNode($result);
+            $text_node = new Nodes\TextNode();
+            $text_node->setValue($result);
 
             if ($key_first['node'] !== $key_last['node']) {
                 // print_r($positions);
@@ -136,7 +138,8 @@ class GroupingResolver implements ResolverContract
                 }
             }
 
-            $first = new Nodes\TextNode(substr($text, $start-$key_first['char'], $start));
+            $first = new Nodes\TextNode();
+            $first->setValue(substr($text, $start-$key_first['char'], $start));
 
             if (trim($first->getValue())) {
                 $push[] = $first;
@@ -144,11 +147,13 @@ class GroupingResolver implements ResolverContract
             
 
             $push[] = $new_node;
-            $second = new Nodes\TextNode(substr($text, $start+$length, $length+$key_last['remaining_char']));
+            $second = new Nodes\TextNode();
+            $second->setValue(substr($text, $start+$length, $length+$key_last['remaining_char']));
             
             if (trim($second->getValue())) {
                 $push[] = $second;
             }
+
 
 
             if (count($push) === 1 && $push[0]->countChilds() === 1 && $push[0]->getChild(0) instanceof Nodes\GroupNode) {
@@ -156,8 +161,9 @@ class GroupingResolver implements ResolverContract
             }
             
             for ($i = $key_first['node']; $i <= $key_last['node']; $i++) {
-                $node->replaceChild($i, []);
+                $node->removeChild($i);
             }
+
             $node->replaceChild($key_first['node'], $push);
 
             foreach ($new_node->getChilds() as $child) {

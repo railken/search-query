@@ -19,7 +19,7 @@ class SwResolver extends ComparisonOperatorResolver
      * @var string
      */
     public $regex = [
-        '/sw/i',
-        '/\^=/i'
+        '/(?<![^\s])sw(?![^\s])/i',
+        '/(?<![^\s])\^=(?![^\s])/i',
     ];
 }

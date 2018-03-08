@@ -19,8 +19,8 @@ class NotEqResolver extends ComparisonOperatorResolver
      * @var string
      */
     public $regex = [
-        '/not eq/i',
-        '/<>/i',
-        '/!=/i'
+        '/(?<![^\s])not eq(?![^\s])/i',
+        '/(?<![^\s])<>(?![^\s])/i',
+        '/(?<![^\s])!=(?![^\s])/i',
     ];
 }

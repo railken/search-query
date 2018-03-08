@@ -236,30 +236,35 @@ class QueryTest extends TestCase
     {
         $query = $this->parser;
 
-        $result = $query->parse('x not in 1');
-        $this->assertEquals(Nodes\NotInNode::class, get_class($result));
-        $this->assertEquals('x', $result->getFirstChildByClass(Nodes\KeyNode::class)->getValue());
-        $this->assertEquals(['1'], $result->getFirstChildByClass(Nodes\ValueNode::class)->getValue());
+        $result = $query->parse('x not in (1, 2)');
 
-        $result = $query->parse('x !=[] 1');
         $this->assertEquals(Nodes\NotInNode::class, get_class($result));
         $this->assertEquals('x', $result->getFirstChildByClass(Nodes\KeyNode::class)->getValue());
-        $this->assertEquals(['1'], $result->getFirstChildByClass(Nodes\ValueNode::class)->getValue());
+        $this->assertEquals('1', $result->getFirstChildByClass(Nodes\GroupNode::class)->getChild(0)->getValue());
+        $this->assertEquals('2', $result->getFirstChildByClass(Nodes\GroupNode::class)->getChild(1)->getValue());
+
+        $result = $query->parse('x !=[] (1, 2)');
+        $this->assertEquals(Nodes\NotInNode::class, get_class($result));
+        $this->assertEquals('x', $result->getFirstChildByClass(Nodes\KeyNode::class)->getValue());
+        $this->assertEquals('1', $result->getFirstChildByClass(Nodes\GroupNode::class)->getChild(0)->getValue());
+        $this->assertEquals('2', $result->getFirstChildByClass(Nodes\GroupNode::class)->getChild(1)->getValue());
     }
 
     public function testIn()
     {
         $query = $this->parser;
 
-        $result = $query->parse('x in 1');
+        $result = $query->parse('x in (1,2)');
         $this->assertEquals(Nodes\InNode::class, get_class($result));
         $this->assertEquals('x', $result->getFirstChildByClass(Nodes\KeyNode::class)->getValue());
-        $this->assertEquals(['1'], $result->getFirstChildByClass(Nodes\ValueNode::class)->getValue());
+        $this->assertEquals('1', $result->getFirstChildByClass(Nodes\GroupNode::class)->getChild(0)->getValue());
+        $this->assertEquals('2', $result->getFirstChildByClass(Nodes\GroupNode::class)->getChild(1)->getValue());
 
-        $result = $query->parse('x =[] 1');
+        $result = $query->parse('x =[] (1,2)');
         $this->assertEquals(Nodes\InNode::class, get_class($result));
         $this->assertEquals('x', $result->getFirstChildByClass(Nodes\KeyNode::class)->getValue());
-        $this->assertEquals(['1'], $result->getFirstChildByClass(Nodes\ValueNode::class)->getValue());
+        $this->assertEquals('1', $result->getFirstChildByClass(Nodes\GroupNode::class)->getChild(0)->getValue());
+        $this->assertEquals('2', $result->getFirstChildByClass(Nodes\GroupNode::class)->getChild(1)->getValue());;
     }
 
     public function testAnd()
@@ -400,8 +405,12 @@ class QueryTest extends TestCase
     public function testGrouping1()
     {
         $query = $this->parser;
-        $result = $query->parse('(((id eq 1)))');
+        $result = $query->parse('(x eq 1)');
+
 
         $this->assertEquals(Nodes\GroupNode::class, get_class($result));
+        $this->assertEquals(Nodes\EqNode::class, get_class($result->getChild(0)));
+        $this->assertEquals('x', $result->getChild(0)->getFirstChildByClass(Nodes\KeyNode::class)->getValue());
+        $this->assertEquals('1', $result->getChild(0)->getFirstChildByClass(Nodes\ValueNode::class)->getValue());
     }
 }

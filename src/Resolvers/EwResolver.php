@@ -19,7 +19,7 @@ class EwResolver extends ComparisonOperatorResolver
      * @var string
      */
     public $regex = [
-        '/ew/i',
-        '/\$=/i'
+        '/(?<![^\s])ew(?![^\s])/i',
+        '/(?<![^\s])\$=(?![^\s])/i',
     ];
 }
