@@ -9,5 +9,5 @@ class CtNode extends ComparisonOperatorNode
      *
      * @var string
      */
-    public $value = 'ct';
+    public $value = 'CONTAINS';
 }

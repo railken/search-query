@@ -43,7 +43,6 @@ class ComparisonOperatorResolver implements ResolverContract
                 }
             }
 
-
             foreach ($this->regex as $regex) {
 
                 preg_match($regex, $value, $match, PREG_OFFSET_CAPTURE);

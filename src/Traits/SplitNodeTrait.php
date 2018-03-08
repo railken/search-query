@@ -19,11 +19,14 @@ trait SplitNodeTrait
 
             }
 
-            $node->removeChild($i);
+            $node->removeChild($position_node_from);
         }
 
+        // print_r($new_node);
+        // print_r($node);
+        $node->insertChildAfter($new_node, $position_node_from-1);
+        // print_r($node);
 
-        $node->insertChildBefore($new_node, $i-1);
     }
 
 

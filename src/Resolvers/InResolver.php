@@ -42,7 +42,7 @@ class InResolver extends ComparisonOperatorResolver
             $values = $new_node->next()->valueToString();
 
 
-            $new_node->next()->removeChilds();
+            $new_node->next()->unsetChilds();
 
             foreach (explode(",", $values) as $value) {
                 $vn = new Nodes\ValueNode();

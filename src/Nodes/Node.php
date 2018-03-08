@@ -264,10 +264,20 @@ class Node implements NodeContract, \JsonSerializable
         return $this->replaceChild($key, []);
     }
 
+    public function removeChilds()
+    {
+        
+    }
     public function insertChildBefore($child, $key)
     {
 
         return $this->replaceChild($key, [$child, $this->getChild($key)]);
+    }
+
+    public function insertChildAfter($child, $key)
+    {
+
+        return $this->replaceChild($key, [$this->getChild($key), $child]);
     }
 
     public function unsetChilds()

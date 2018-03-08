@@ -9,5 +9,5 @@ class NotNullNode extends ComparisonOperatorNode
      *
      * @var string
      */
-    public $value = 'not_null';
+    public $value = 'IS_NOT_NULL';
 }

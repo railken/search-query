@@ -29,8 +29,8 @@ $parser->addResolvers([
     new Resolvers\EwResolver(),
     new Resolvers\NotNullResolver(),
     new Resolvers\NullResolver(),
-    new Resolvers\OrResolver(),
     new Resolvers\AndResolver(),
+    new Resolvers\OrResolver(),
 ]);
 
 try {

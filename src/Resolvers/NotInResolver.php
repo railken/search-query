@@ -20,6 +20,6 @@ class NotInResolver extends InResolver
      */
     public $regex = [
         '/(?<![^\s])not in(?![^\s])/i',
-        '/(?<![^\s])>\!=\[\](?![^\s])/i',
+        '/(?<![^\s])\!=\[\](?![^\s])/i',
     ];
 }

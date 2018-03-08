@@ -9,5 +9,5 @@ class EqNode extends ComparisonOperatorNode
      *
      * @var string
      */
-    public $value = 'eq';
+    public $value = 'EQ';
 }

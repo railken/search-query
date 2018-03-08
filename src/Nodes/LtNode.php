@@ -9,5 +9,5 @@ class LtNode extends ComparisonOperatorNode
      *
      * @var string
      */
-    public $value = 'lt';
+    public $value = 'LT';
 }

@@ -9,5 +9,5 @@ class LteNode extends ComparisonOperatorNode
      *
      * @var string
      */
-    public $value = 'lte';
+    public $value = 'LTE';
 }

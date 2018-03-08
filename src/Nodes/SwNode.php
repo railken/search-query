@@ -9,5 +9,5 @@ class SwNode extends ComparisonOperatorNode
      *
      * @var string
      */
-    public $value = 'sw';
+    public $value = 'START_WITH';
 }
