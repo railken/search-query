@@ -56,8 +56,7 @@ class ComparisonOperatorResolver implements ResolverContract
 
 
                     $this->groupNode($node, $new_node, $start, $start+$length-1, $positions);
-                    $this->resolvePreviousNode($node, $new_node);
-                    $this->resolveNextNode($node, $new_node);
+                    $this->resolveRelationsNode($node, $new_node);
 
                     // Search for another match in this node.
                     return $this->resolve($node->getParent(), $i);
@@ -105,4 +104,20 @@ class ComparisonOperatorResolver implements ResolverContract
             throw new Exceptions\QuerySyntaxException($node->getParent()->valueToString());
         }
     }
+
+
+    /**
+     * Resolve node relations with other nodes
+     *
+     * @param NodeContract $node
+     * @param NodeContract $new_node
+     *
+     * @return void
+     */
+    public function resolveRelationsNode(NodeContract $node, NodeContract $new_node)
+    {
+        $this->resolvePreviousNode($node, $new_node);
+        $this->resolveNextNode($node, $new_node);
+    }
+
 }

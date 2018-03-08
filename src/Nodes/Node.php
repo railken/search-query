@@ -316,6 +316,12 @@ class Node implements NodeContract, \JsonSerializable
     }
 
 
+    public function swapParentAndDelete($old_parent, $new_parent)
+    {
+        $new_parent->moveNodeAsChild($this); 
+        $new_parent->removeChild($old_parent->getPos());
+    }
+
 
     public function jsonSerialize()
     {

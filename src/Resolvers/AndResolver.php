@@ -61,4 +61,36 @@ class AndResolver extends ComparisonOperatorResolver implements ResolverContract
             throw new Exceptions\QuerySyntaxException($node->getParent()->valueToString());
         }
     }
+
+    /**
+     * Resolve node relations with other nodes
+     *
+     * @param NodeContract $node
+     * @param NodeContract $new_node
+     *
+     * @return void
+     */
+    public function resolveRelationsNode(NodeContract $node, NodeContract $new_node)
+    {
+        $this->resolvePreviousNode($node, $new_node);
+        $this->resolveNextNode($node, $new_node);
+        $this->resolveGroupParent($node, $new_node);
+    }
+
+    /**
+     * Resolve node relations with other nodes
+     *
+     * @param NodeContract $node
+     * @param NodeContract $new_node
+     *
+     * @return void
+     */
+    public function resolveGroupParent(NodeContract $node, NodeContract $new_node)
+    {
+        if ($new_node->getParent() instanceof Nodes\GroupNode && $new_node->getParent()->countChilds() === 1) {
+
+            $new_node->swapParentAndDelete($new_node->getParent(), $new_node->getParent()->getParent());
+
+        }
+    }
 }
