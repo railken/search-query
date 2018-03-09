@@ -23,10 +23,33 @@ composer require railken/search-query
 
 A simple usage looks like this: 
 ```php
-$query = new Railken\SQ\QueryParser();
-$search = $query->parse('x eq 1 or y > 1');
+   use Railken\SQ\QueryParser;
+   use Railken\SQ\Resolvers as Resolvers;
+
+   $parser = new QueryParser();
+   $parser->addResolvers([
+      new Resolvers\ValueResolver(),
+      new Resolvers\KeyResolver(),
+      new Resolvers\GroupingResolver(),
+      new Resolvers\NotEqResolver(),
+      new Resolvers\EqResolver(),
+      new Resolvers\LteResolver(),
+      new Resolvers\LtResolver(),
+      new Resolvers\GteResolver(),
+      new Resolvers\GtResolver(),
+      new Resolvers\CtResolver(),
+      new Resolvers\SwResolver(),
+      new Resolvers\NotInResolver(),
+      new Resolvers\InResolver(),
+      new Resolvers\EwResolver(),
+      new Resolvers\NotNullResolver(),
+      new Resolvers\NullResolver(),
+      new Resolvers\AndResolver(),
+      new Resolvers\OrResolver(),
+   ]);
+   $result = $query->parse('x eq 1 or y > 1');
 ```
-The result formatted in json of `$search`:
+The result formatted in json of `$result`:
 
 ```json
 {
@@ -73,7 +96,7 @@ All alphanumeric (starting with alphabetic character) are converted as ```KeyNod
 Examples:
 
 ```
-created_id
+created_at
 ```
 
 
@@ -89,17 +112,22 @@ Examples:
 
 
 ### Group node
-All round parenthesis create a group node ```( ... )```. This group is used also for logic operators, operators in/not in
+All round parenthesis create a group node ```( ... )```. Of course a nested group can be made. If a parenthesis is missing an exception will be thrown
 
 Examples:
 
 ```
 (x or y) and z
+((x > 10 and w) or (y > 5 and f)) and z
 ```
 
 ### AND, OR
-This operators requires a ```Node``` before and after. If a parent group is defined and the LogicNode is the only child, the LogicNode will take the place of the GroupNode.
-Can be expressed as a literals (and, or) and as a symbols (&&, ||)
+This operators requires a ```Node``` before and after, otherwise an exception will be thrown. 
+
+Can be expressed as literals (and, or) or as symbols (&&, ||)
+
+**Important**: If a parent group is defined and the LogicNode is the only child, the LogicNode will take the place of the GroupNode.
+
 
 Examples:
 
@@ -111,7 +139,7 @@ x and y && z
 
 ### EQ, NOT_EQ, GT, GTE, LT, LTE
 All these operators requires ```KeyNode``` or a ```ValueNode``` before and afters. 
-Can be expressed as a literals (eq, not eq, gt, gte, lt, lte) and as a symbols (=, !=, >, >=, < <=)
+Can be expressed as literals (eq, not eq, gt, gte, lt, lte) or as symbols (=, !=, >, >=, < <=)
 
 Examples:
 
@@ -120,14 +148,25 @@ x eq 1
 x = 1
 x gt 1
 x > 1
+x gte 1
+x >= 1
+x lt 1
 x < 1
+x lte 1
 x <= 1
+```
+
+Comparison can be also made between two keys
+
+Examples:
+
+```
+x eq y
 ```
 
 
 ### CT, SW, EW
-these operators will handle strings: contains, start with and end with.
-
+These operators will handle comparison with strings: contains, start with and end with.
 
 Examples:
 
@@ -139,8 +178,104 @@ description ew "the text must end with this"
 
 
 ### NULL, NOT NULL
+These operators doesn't require a node after the operator.
+```
+deleted_at is null
+deleted_at is not null
+```
 
-### IN, NOT IN
+
+## Custom resolver
+
+As you already saw, in order to parse the query you have to add the resolvers. 
+So are free to add any resolvers you want, but pay attention to the order: KeyValue and NodeValue are the foundation for all the resolvers, so be carefull.
+
+Here's an example of custom resolver and node
+
+CustomResolver.php
+```php
+<?php
+namespace App\SQ\Resolvers;
+
+use Railken\SQ\Resolvers\ComparisonOperatorResolver;
+use App\SQ\Nodes\CustomNode;
+
+class CustomResolver extends ComparisonOperatorResolver
+{
+    /**
+     * Node resolved
+     *
+     * @var string
+     */
+    public $node = CustomNode::class;
+
+    /**
+     * Regex token
+     *
+     * @var string
+     */
+    public $regex = [
+        '/(?<![^\s])custom(?![^\s])/i',
+    ];
+}
+```
+
+
+CustomNode.php
+```php
+<?php
+namespace App\SQ\Nodes;
+
+use Railken\SQ\Nodes\ComparisonOperatorNode;
+
+class CustomNode extends ComparisonOperatorNode
+{
+    /**
+     * Value
+     *
+     * @var string
+     */
+    public $value = 'CUSTOM';
+}
+```
+
+
+Remember to add the resolver when you're creating the instance of the parser
+
+```php
+<?php
+$parser->addResolvers([
+   new \App\SQ\Resolvers\CustomResolver(),
+});
+
+```
+
+If you have a more complicated node to resolve simply add the method resolve to the CustomResolver. 
+
+```php
+<?php
+namespace App\SQ\Resolvers;
+
+use Railken\SQ\Contracts\ResolverContract;
+use Railken\SQ\Contracts\NodeContract;
+
+class CustomResolver implements ResolverContract
+{
+
+   /**
+     * Resolve node
+     *
+     * @param NodeContract $node
+     *
+     * @return NodeContract
+     */
+    public function resolve(NodeContract $node)
+    {
+        return $node;
+    }
+
+}
+```
 
 ## License
 
