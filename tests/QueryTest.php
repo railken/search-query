@@ -255,6 +255,19 @@ class QueryTest extends TestCase
         $this->assertEquals('1', $result->getChild(1)->getFirstChildByClass(Nodes\ValueNode::class)->getValue());
     }
 
+    public function testAnd2()
+    {
+        $query = $this->parser;
+        $result = $query->parse('x and (y and z)');
+
+        // print_r($result);
+
+        $this->assertEquals(Nodes\AndNode::class, get_class($result));
+        $this->assertEquals('x', $result->getChild(0)->getValue());
+        $this->assertEquals('y', $result->getChild(1)->getValue());
+        $this->assertEquals('z', $result->getChild(2)->getValue());
+    }
+
     public function testOr1()
     {
         $query = $this->parser;

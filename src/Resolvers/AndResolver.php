@@ -87,10 +87,17 @@ class AndResolver extends ComparisonOperatorResolver implements ResolverContract
      */
     public function resolveGroupParent(NodeContract $node, NodeContract $new_node)
     {
+
+        foreach ($new_node->getChilds() as $child) {
+
+            if (get_class($child) === $this->node) {
+
+                $new_node->replaceChild($child->getPos(), $child->getChilds());
+            }
+        }
+
         if ($new_node->getParent() instanceof Nodes\GroupNode && $new_node->getParent()->countChilds() === 1) {
-
             $new_node->swapParentAndDelete($new_node->getParent(), $new_node->getParent()->getParent());
-
         }
     }
 }
