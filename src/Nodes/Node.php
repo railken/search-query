@@ -14,7 +14,7 @@ class Node implements NodeContract, \JsonSerializable
     public $value;
 
     /**
-     * Index node 
+     * Index node
      *
      * @var int
      */
@@ -86,7 +86,7 @@ class Node implements NodeContract, \JsonSerializable
     }
 
     /**
-     * Set index node 
+     * Set index node
      *
      * @param int $index
      *
@@ -401,7 +401,6 @@ class Node implements NodeContract, \JsonSerializable
         $n = 0;
         $childs = [];
         foreach ($this->childs as $k => $child) {
-            
             if ($child) {
                 $child->setIndex($n);
                 $child->setParent($this);

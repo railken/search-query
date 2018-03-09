@@ -9,12 +9,9 @@ trait SplitNodeTrait
         $position_node_from = $positions[$position_from];
         $position_node_to = $positions[$position_to-1];
 
-
         for ($i = $position_node_from; $i <= $position_node_to; $i++) {
             $node->removeChildByIndex($position_node_from);
         }
-
-
 
         $node->addChildAfterNodeByIndex($new_node, $position_node_from-1);
     }

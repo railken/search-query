@@ -36,7 +36,9 @@ class ComparisonOperatorResolver implements ResolverContract
                     $p = array_fill(0, strlen(" ".$child->getValue()), $child->getIndex());
                     $positions = array_merge($positions, $p);
                 }
-            }        
+            }
+
+
 
             foreach ($this->regex as $regex) {
                 preg_match($regex, $value, $match, PREG_OFFSET_CAPTURE);
