@@ -47,7 +47,7 @@ class TextResolver implements ResolverContract
     public function resolveTextNode($node)
     {
         if (empty(trim($node->getValue()))) {
-            $node->getParent()->replaceChild($node->getIndex(), []);
+            $node->getParent()->removeChild($node);
         } else {
             throw new Exceptions\QuerySyntaxException($node->getValue());
         }

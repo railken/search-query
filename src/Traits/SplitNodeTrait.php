@@ -11,12 +11,12 @@ trait SplitNodeTrait
 
 
         for ($i = $position_node_from; $i <= $position_node_to; $i++) {
-            $node->removeChild($position_node_from);
+            $node->removeChildByIndex($position_node_from);
         }
 
 
 
-        $node->insertChildAfter($new_node, $position_node_from-1);
+        $node->addChildAfterNodeByIndex($new_node, $position_node_from-1);
     }
 
 

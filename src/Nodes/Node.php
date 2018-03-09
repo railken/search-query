@@ -218,9 +218,16 @@ class Node implements NodeContract, \JsonSerializable
         return $this->getParent() ? $this->getParent()->getChildByIndex($this->getIndex()+1) : null;
     }
 
-    public function moveNodeAsChild($child)
+    /**
+     * Move the node from the old location to a new one as a child of $this
+     *
+     * @param Node $child
+     *
+     * @return $this
+     */
+    public function moveNodeAsChild(Node $child)
     {
-        $child->getParent()->removeChild($child->getIndex());
+        $child->getParent()->removeChild($child);
         $this->addChild($child);
     }
 
@@ -243,7 +250,15 @@ class Node implements NodeContract, \JsonSerializable
         return null;
     }
 
-    public function getChildsBetween($start, $end)
+    /**
+     * Retrieve childs between indexes
+     *
+     * @param int $start
+     * @param int $end
+     *
+     * @return array
+     */
+    public function getChildsBetweenIndexes($start, $end)
     {
         return array_slice($this->childs, $start, $end-$start+1);
     }
@@ -252,100 +267,169 @@ class Node implements NodeContract, \JsonSerializable
     /**
      * Replace a child by others
      *
-     * @param integer $key
+     * @param integer $index
      * @param array $subs
      *
      * @return $this
      */
-    public function replaceChild($key, $subs)
+    public function replaceChild($index, $subs)
     {
-        $first = array_slice($this->childs, 0, $key);
-        $second = $key+1 >= count($this->childs) ? [] : array_slice($this->childs, $key+1, count($this->childs)-($key+1));
+        $first = array_slice($this->childs, 0, $index);
+        $second = $index+1 >= count($this->childs) ? [] : array_slice($this->childs, $index+1, count($this->childs)-($index+1));
 
         $this->childs = [];
         
         foreach (array_merge($first, $subs, $second) as $child) {
             $child && $this->addChild($child);
         }
+        $this->flush();
         return $this;
     }
 
-    public function removeChild($key)
+    /**
+     * Remove a child by index
+     *
+     * @param int $index
+     *
+     * @return $this
+     */
+    public function removeChildByIndex($index)
     {
-        return $this->replaceChild($key, []);
-        $this->calculateIndexChilds();
+        $this->childs[$index] = null;
+        $this->flush();
+
+        return $this;
     }
 
+    /**
+     * Remove a child
+     *
+     * @param Node $child
+     *
+     * @return $this
+     */
+    public function removeChild(Node $child)
+    {
+        return $this->removeChildByIndex($child->getIndex());
+    }
+
+    /**
+     * Remove childs
+     *
+     * @param array $childs
+     *
+     * @return $this
+     */
     public function removeChilds($childs)
     {
         array_splice($this->childs, $childs[0]->getIndex(), count($childs));
-        $this->calculateIndexChilds();
+        $this->flush();
+
+        return $this;
     }
 
-    public function clearEmptyChilds()
+
+    /**
+     * Add childs before node
+     *
+     * @param array $childs
+     * @param node $node
+     *
+     * @return $this
+     */
+    public function addChildBeforeNodeByIndex($child, $index)
     {
+        return $this->replaceChild($index, [$child, $this->getChildByIndex($index)]);
     }
 
-    public function insertChildsAfter($childs, $key)
+    /**
+     * Add childs after node
+     *
+     * @param array $childs
+     * @param node $node
+     *
+     * @return $this
+     */
+    public function addChildAfterNodeByIndex($child, $index)
     {
-        return $this->replaceChild($key, array_merge([$this->getChildByIndex($key)], $childs));
+        return $this->replaceChild($index, [$this->getChildByIndex($index), $child]);
     }
 
-    public function insertChildBefore($child, $key)
-    {
-        return $this->replaceChild($key, [$child, $this->getChildByIndex($key)]);
-    }
-
-    public function insertChildAfter($child, $key)
-    {
-        return $this->replaceChild($key, [$this->getChildByIndex($key), $child]);
-    }
-
-    public function unsetChilds()
+    /**
+     * Remove all childs
+     *
+     * @return $this
+     */
+    public function removeAllChilds()
     {
         foreach ($this->childs as $child) {
             unset($child);
         }
 
         $this->childs = [];
+
+        return $this;
     }
 
 
-    public function removeChildByKey($key, $resort = true)
+    /**
+     * Remove child by index
+     *
+     * @param int $index
+     * @param bool $resort
+     *
+     * @return $this
+     */
+    public function removeChildByKey($index, $resort = true)
     {
-        array_splice($this->childs, $key, 1);
+        array_splice($this->childs, $index, 1);
 
         if ($resort) {
-            $this->calculateIndexChilds();
+            $this->flush();
         }
+
+        return $this;
     }
 
-    public function calculateIndexChilds()
+    /**
+     * Reset parent and index of each node
+     *
+     * @return $this
+     */
+    public function flush()
     {
         $n = 0;
-        foreach ($this->childs as $child) {
+        $childs = [];
+        foreach ($this->childs as $k => $child) {
+            
             if ($child) {
                 $child->setIndex($n);
                 $child->setParent($this);
+                $childs[] = $child;
                 $n++;
             }
         }
-    }
 
-    public function getChildsAfterKey($key)
-    {
-        return array_slice($this->childs, $key+1);
-    }
-    public function getChildsBeforeKey($key)
-    {
-        return array_slice($this->childs, 0, $key);
+        $this->childs = $childs;
+        
+        return $this;
     }
 
 
-    public function swapParentAndDelete($old_parent, $new_parent)
+    /**
+     * Swap parent and delete
+     *
+     * @param Node $old_parent
+     * @param Node $new_parent
+     *
+     * @return $this
+     */
+    public function swapParentAndDelete(Node $old_parent, Node $new_parent)
     {
         $new_parent->moveNodeAsChild($this);
-        $new_parent->removeChild($old_parent->getIndex());
+        $new_parent->removeChild($old_parent);
+
+        return $this;
     }
 
     /**

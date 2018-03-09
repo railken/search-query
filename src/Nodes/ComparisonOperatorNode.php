@@ -7,42 +7,11 @@ class ComparisonOperatorNode extends Node
 {
     
     /**
-     * Key/Attribute
-     *
-     * @param string
-     */
-    public $key;
-
-    /**
      * Filters applied
      *
      * @var mixed
      */
     public $filters = [];
-
-    /**
-     * Set key
-     *
-     * @param string $key
-     *
-     * @return $this
-     */
-    public function setKey($key)
-    {
-        $this->key = $key;
-
-        return $this;
-    }
-
-    /**
-     * Get key
-     *
-     * @return string
-     */
-    public function getKey()
-    {
-        return $this->key;
-    }
 
 
     /**
@@ -100,17 +69,5 @@ class ComparisonOperatorNode extends Node
         }
 
         return $this;
-    }
-
-
-    public function jsonSerialize()
-    {
-        return array_merge([
-            'type' => get_class($this),
-            'value' => $this->value,
-            'childs' => array_map(function ($node) {
-                return $node->jsonSerialize();
-            }, $this->getChilds()),
-        ]);
     }
 }
