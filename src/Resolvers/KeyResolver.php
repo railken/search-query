@@ -39,7 +39,7 @@ class KeyResolver implements ResolverContract
         $childs = $node->getChilds();
         
         if (count($childs) > 0) {
-            $this->resolve($node->getChild($i));
+            $this->resolve($node->getChildByIndex($i));
         }
         
         if ($node instanceof Nodes\TextNode) {

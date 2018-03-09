@@ -5,6 +5,7 @@ namespace Railken\SQ\Resolvers;
 use Railken\SQ\Contracts\ResolverContract;
 use Railken\SQ\Contracts\NodeContract;
 use Railken\SQ\Nodes as Nodes;
+use Railken\SQ\Exceptions as Exceptions;
 
 class AndResolver extends ComparisonOperatorResolver implements ResolverContract
 {

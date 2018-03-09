@@ -69,12 +69,12 @@ class QueryParser
         }
 
         // From Root to Logic
-        $node = $node->getChild(0);
+        $node = $node->getChildByIndex(0);
         $node->setParent(null);
 
         // If logic has only one child, skip to first key node
         if (count($node->getChilds()) === 1) {
-            $node = $node->getChild(0);
+            $node = $node->getChildByIndex(0);
             $node->setParent(null);
         }
 

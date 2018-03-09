@@ -44,6 +44,20 @@ class ComparisonOperatorNode extends Node
         return $this->key;
     }
 
+
+    /**
+     * Array representation of node
+     *
+     * @return array
+     */
+    public function toArray()
+    {
+        return [
+            'type' => get_class($this),
+            'value' => $this->getValue(),
+        ];
+    }
+
     /**
      * Set filters
      *

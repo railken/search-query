@@ -25,9 +25,9 @@ class ComparisonOperatorResolver implements ResolverContract
         $childs = $node->getChilds();
 
         if (count($childs) > 0) {
-            $this->resolve($node->getChild($i));
+            $this->resolve($node->getChildByIndex($i));
 
-            $value = $node->getValueChilds();
+            $value = $node->valueToString(false);
             
             $value = "";
             $positions = [];
