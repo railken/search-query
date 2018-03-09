@@ -30,8 +30,8 @@ class QueryTest extends TestCase
             new Resolvers\EwResolver(),
             new Resolvers\NotNullResolver(),
             new Resolvers\NullResolver(),
-            new Resolvers\OrResolver(),
             new Resolvers\AndResolver(),
+            new Resolvers\OrResolver(),
         ]);
     }
 
@@ -286,26 +286,17 @@ class QueryTest extends TestCase
         $this->assertEquals('y', $result->getChild(1)->getValue());
     }
 
-
-    public function testAndGrouping()
+    public function testAndOr1()
     {
         $query = $this->parser;
-        $result = $query->parse('(x (y) z)');
-       
-    }
+        $result = $query->parse('x || y && z');
 
-    public function testAndOr2()
-    {
-        $query = $this->parser;
-        $result = $query->parse('id eq 1 and id eq 2 or id eq 3');
+        $this->assertEquals(Nodes\OrNode::class, get_class($result));
+        $this->assertEquals('x', $result->getChild(0)->getValue());
+        $this->assertEquals(Nodes\AndNode::class, get_class($result->getChild(1)));
+        $this->assertEquals('y', $result->getChild(1)->getChild(0)->getValue());
+        $this->assertEquals('z', $result->getChild(1)->getChild(1)->getValue());
 
-    }
-
-
-    public function testAndOr3()
-    {
-        $query = $this->parser;
-        $result = $query->parse('x = 1 || y = 2 && z = 3');
 
     }
 
