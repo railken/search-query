@@ -86,7 +86,7 @@ class AndResolver extends ComparisonOperatorResolver implements ResolverContract
     {
         foreach ($new_node->getChilds() as $child) {
             if (get_class($child) === $this->node) {
-                $new_node->replaceChild($child->getPos(), $child->getChilds());
+                $new_node->replaceChild($child->getIndex(), $child->getChilds());
             }
         }
 

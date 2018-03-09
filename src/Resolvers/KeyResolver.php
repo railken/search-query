@@ -57,12 +57,12 @@ class KeyResolver implements ResolverContract
 
                     /*if ($new_node->prev() && $new_node->prev() instanceof Nodes\KeyNode) {
                         $new_node->setValue($new_node->prev()->getValue()." ".$new_node->getValue());
-                        $new_node->getParent()->removeChild($new_node->prev()->getPos());
+                        $new_node->getParent()->removeChild($new_node->prev()->getIndex());
                     }
 
                     if ($new_node->next() && $new_node->next() instanceof Nodes\KeyNode) {
                         $new_node->setValue($new_node->getValue()." ".$new_node->next()->getValue());
-                        $new_node->getParent()->removeChild($new_node->next()->getPos());
+                        $new_node->getParent()->removeChild($new_node->next()->getIndex());
                     }*/
 
                     // Search for another match in this node.

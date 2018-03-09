@@ -34,7 +34,7 @@ class ComparisonOperatorResolver implements ResolverContract
             foreach ($node->getChilds() as $child) {
                 if ($child instanceof Nodes\TextNode || $child instanceof Nodes\KeyNode) {
                     $value .= " ".$child->getValue();
-                    $p = array_fill(0, strlen(" ".$child->getValue()), $child->getPos());
+                    $p = array_fill(0, strlen(" ".$child->getValue()), $child->getIndex());
                     $positions = array_merge($positions, $p);
                 }
             }

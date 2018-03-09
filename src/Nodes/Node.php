@@ -20,7 +20,7 @@ class Node implements NodeContract, \JsonSerializable
      */
     public $value;
 
-    public $pos;
+    public $index;
 
     /**
      * Childs
@@ -111,16 +111,16 @@ class Node implements NodeContract, \JsonSerializable
         return $this;
     }
 
-    public function setPos($pos)
+    public function setIndex($index)
     {
-        $this->pos = $pos;
+        $this->index = $index;
 
         return $this;
     }
 
-    public function getPos()
+    public function getIndex()
     {
-        return $this->pos;
+        return $this->index;
     }
 
     /**
@@ -158,7 +158,7 @@ class Node implements NodeContract, \JsonSerializable
     {
         $this->childs[$key] = $child;
         $child->setParent($this);
-        $child->setPos($key);
+        $child->setIndex($key);
     
         return $this;
     }
@@ -176,7 +176,7 @@ class Node implements NodeContract, \JsonSerializable
         $this->childs[] = $child;
 
         $child->setParent($this);
-        $child->setPos(count($this->childs)-1);
+        $child->setIndex(count($this->childs)-1);
 
         return $this;
     }
@@ -224,17 +224,17 @@ class Node implements NodeContract, \JsonSerializable
 
     public function next()
     {
-        return $this->getParent() ? $this->getParent()->getChild($this->getPos()+1) : null;
+        return $this->getParent() ? $this->getParent()->getChild($this->getIndex()+1) : null;
     }
 
     public function prev()
     {
-        return $this->getParent() ? $this->getParent()->getChild($this->getPos()-1) : null;
+        return $this->getParent() ? $this->getParent()->getChild($this->getIndex()-1) : null;
     }
     
     public function moveNodeAsChild($child)
     {
-        $child->getParent()->removeChild($child->getPos());
+        $child->getParent()->removeChild($child->getIndex());
         $this->addChild($child);
     }
 
@@ -279,13 +279,13 @@ class Node implements NodeContract, \JsonSerializable
     public function removeChild($key)
     {
         return $this->replaceChild($key, []);
-        $this->calculatePosChilds();
+        $this->calculateIndexChilds();
     }
 
     public function removeChilds($childs)
     {
-        array_splice($this->childs, $childs[0]->getPos(), count($childs));
-        $this->calculatePosChilds();
+        array_splice($this->childs, $childs[0]->getIndex(), count($childs));
+        $this->calculateIndexChilds();
     }
 
     public function clearEmptyChilds()
@@ -322,16 +322,16 @@ class Node implements NodeContract, \JsonSerializable
         array_splice($this->childs, $key, 1);
 
         if ($resort) {
-            $this->calculatePosChilds();
+            $this->calculateIndexChilds();
         }
     }
 
-    public function calculatePosChilds()
+    public function calculateIndexChilds()
     {
         $n = 0;
         foreach ($this->childs as $child) {
             if ($child) {
-                $child->setPos($n);
+                $child->setIndex($n);
                 $child->setParent($this);
                 $n++;
             }
@@ -351,7 +351,7 @@ class Node implements NodeContract, \JsonSerializable
     public function swapParentAndDelete($old_parent, $new_parent)
     {
         $new_parent->moveNodeAsChild($this);
-        $new_parent->removeChild($old_parent->getPos());
+        $new_parent->removeChild($old_parent->getIndex());
     }
 
 

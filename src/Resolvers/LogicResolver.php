@@ -10,13 +10,13 @@ abstract class LogicResolver implements ResolverContract
 {
     public function swapNodeUndefinedOrGroup($node, $new_node)
     {
-        $node->getParent()->removeChild($node->getPos(), []);
+        $node->getParent()->removeChild($node->getIndex(), []);
 
         foreach ($node->getParent()->getChilds() as $child) {
             $new_node->addChild($child);
         }
 
 
-        $node->getParent()->getParent()->replaceChild($node->getParent()->getPos(), [$new_node]);
+        $node->getParent()->getParent()->replaceChild($node->getParent()->getIndex(), [$new_node]);
     }
 }

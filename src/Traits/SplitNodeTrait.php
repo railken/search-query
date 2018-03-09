@@ -40,7 +40,7 @@ trait SplitNodeTrait
             $push[] = $second;
         }
 
-        $node->getParent()->replaceChild($node->getPos(), $push);
+        $node->getParent()->replaceChild($node->getIndex(), $push);
 
         return $push;
     }
