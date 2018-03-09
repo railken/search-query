@@ -29,18 +29,25 @@ class GroupingResolver implements ResolverContract
     ];
     
     /**
-     * Resolve token eq node
+     * Resolve node
      *
-     * @param Node
+     * @param NodeContract $node
      *
-     * @return $this
+     * @return NodeContract
      */
-    public function resolve(NodeContract $node, $i = 0)
+    public function resolve(NodeContract $node)
     {
         $this->resolveParenthesis($node);
         $this->resolveGrouping($node);
     }
-
+    
+    /**
+     * Resolve node parenthesis
+     *
+     * @param NodeContract $node
+     *
+     * @return NodeContract
+     */
     public function resolveParenthesis(NodeContract $node)
     {
         foreach ($node->getChilds() as $child) {
@@ -72,6 +79,14 @@ class GroupingResolver implements ResolverContract
     }
 
 
+    
+    /**
+     * Resolve grouping
+     *
+     * @param NodeContract $node
+     *
+     * @return NodeContract
+     */
     public function resolveGrouping(NodeContract $node)
     {
         if ($node->countChilds() === 0) {

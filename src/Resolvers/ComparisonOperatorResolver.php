@@ -14,12 +14,13 @@ class ComparisonOperatorResolver implements ResolverContract
 
     
     /**
-    * Resolve token eq node
-    *
-    * @param Node
-    *
-    * @return $this
-    */
+     * Resolve token eq node
+     *
+     * @param NodeContract $node
+     * @param integer $i
+     *
+     * @return NodeContract
+     */
     public function resolve(NodeContract $node, $i = 0)
     {
         $childs = $node->getChilds();
@@ -27,8 +28,6 @@ class ComparisonOperatorResolver implements ResolverContract
         if (count($childs) > 0) {
             $this->resolve($node->getChildByIndex($i));
 
-            $value = $node->valueToString(false);
-            
             $value = "";
             $positions = [];
             foreach ($node->getChilds() as $child) {
@@ -37,9 +36,7 @@ class ComparisonOperatorResolver implements ResolverContract
                     $p = array_fill(0, strlen(" ".$child->getValue()), $child->getIndex());
                     $positions = array_merge($positions, $p);
                 }
-            }
-            // print_r($value."\n");
-
+            }        
 
             foreach ($this->regex as $regex) {
                 preg_match($regex, $value, $match, PREG_OFFSET_CAPTURE);
