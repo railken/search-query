@@ -34,11 +34,7 @@ class InResolver extends ComparisonOperatorResolver
      */
     public function resolveNextNode(NodeContract $node, NodeContract $new_node)
     {
-
         if ($new_node->next() && ($new_node->next() instanceof Nodes\GroupNode)) {
-                    
-
-
             $values = $new_node->next()->valueToString();
 
 
@@ -52,11 +48,8 @@ class InResolver extends ComparisonOperatorResolver
             }
 
             $new_node->moveNodeAsChild($new_node->next());
-
         } else {
-
             throw new Exceptions\QuerySyntaxException($node->getParent()->valueToString());
         }
     }
 }
-

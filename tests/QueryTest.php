@@ -228,7 +228,8 @@ class QueryTest extends TestCase
         $this->assertEquals(Nodes\InNode::class, get_class($result));
         $this->assertEquals('x', $result->getFirstChildByClass(Nodes\KeyNode::class)->getValue());
         $this->assertEquals('1', $result->getFirstChildByClass(Nodes\GroupNode::class)->getChild(0)->getValue());
-        $this->assertEquals('2', $result->getFirstChildByClass(Nodes\GroupNode::class)->getChild(1)->getValue());;
+        $this->assertEquals('2', $result->getFirstChildByClass(Nodes\GroupNode::class)->getChild(1)->getValue());
+        ;
     }
 
 
@@ -296,8 +297,6 @@ class QueryTest extends TestCase
         $this->assertEquals(Nodes\AndNode::class, get_class($result->getChild(1)));
         $this->assertEquals('y', $result->getChild(1)->getChild(0)->getValue());
         $this->assertEquals('z', $result->getChild(1)->getChild(1)->getValue());
-
-
     }
 
 

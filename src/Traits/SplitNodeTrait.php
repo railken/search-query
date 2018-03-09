@@ -4,8 +4,8 @@ namespace Railken\SQ\Traits;
 
 trait SplitNodeTrait
 {
-    public function groupNode($class, &$node, &$new_node, $position_from, $position_to, $positions = []) {
-
+    public function groupNode($class, &$node, &$new_node, $position_from, $position_to, $positions = [])
+    {
         $position_node_from = $positions[$position_from];
         $position_node_to = $positions[$position_to-1];
 
@@ -17,13 +17,11 @@ trait SplitNodeTrait
 
 
         $node->insertChildAfter($new_node, $position_node_from-1);
-        
-    
     }
 
 
-	public function splitNode($class, &$node, &$new_node, $position_from, $position_to) {
-
+    public function splitNode($class, &$node, &$new_node, $position_from, $position_to)
+    {
         $push = [];
 
         $first = new $class();
@@ -45,6 +43,5 @@ trait SplitNodeTrait
         $node->getParent()->replaceChild($node->getPos(), $push);
 
         return $push;
-
-	}
+    }
 }

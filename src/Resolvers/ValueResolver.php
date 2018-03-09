@@ -9,7 +9,6 @@ use Railken\SQ\Traits\SplitNodeTrait;
 
 class ValueResolver implements ResolverContract
 {
-
     use SplitNodeTrait;
 
     /**
@@ -39,7 +38,6 @@ class ValueResolver implements ResolverContract
      */
     public function resolve(NodeContract $node, $i = 0)
     {
-
         $childs = $node->getChilds();
         
         if (count($childs) > 0) {
@@ -47,12 +45,10 @@ class ValueResolver implements ResolverContract
         }
         
         if ($node instanceof Nodes\TextNode) {
-
-              foreach ($this->regex as $regex) {
+            foreach ($this->regex as $regex) {
                 preg_match($regex, $node->getValue(), $match, PREG_OFFSET_CAPTURE);
 
                 if ($match) {
-
                     $new_node = new $this->node;
                     $new_node->setValue($match[1][0]);
                     $start =  $match[0][1];

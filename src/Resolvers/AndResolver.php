@@ -39,7 +39,6 @@ class AndResolver extends ComparisonOperatorResolver implements ResolverContract
             $new_node->moveNodeAsChild($new_node->prev());
         } else {
             throw new Exceptions\QuerySyntaxException($node->getParent()->valueToString());
-
         }
     }
 
@@ -53,11 +52,9 @@ class AndResolver extends ComparisonOperatorResolver implements ResolverContract
      */
     public function resolveNextNode(NodeContract $node, NodeContract $new_node)
     {
-
         if ($new_node->next()) {
             $new_node->moveNodeAsChild($new_node->next());
         } else {
-
             throw new Exceptions\QuerySyntaxException($node->getParent()->valueToString());
         }
     }
@@ -87,11 +84,8 @@ class AndResolver extends ComparisonOperatorResolver implements ResolverContract
      */
     public function resolveGroupParent(NodeContract $node, NodeContract $new_node)
     {
-
         foreach ($new_node->getChilds() as $child) {
-
             if (get_class($child) === $this->node) {
-
                 $new_node->replaceChild($child->getPos(), $child->getChilds());
             }
         }

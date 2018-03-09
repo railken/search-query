@@ -10,20 +10,18 @@ use Railken\SQ\Exceptions;
 
 class ComparisonOperatorResolver implements ResolverContract
 {
-
     use SplitNodeTrait;
 
     
-     /**
-     * Resolve token eq node
-     *
-     * @param Node
-     *
-     * @return $this
-     */
+    /**
+    * Resolve token eq node
+    *
+    * @param Node
+    *
+    * @return $this
+    */
     public function resolve(NodeContract $node, $i = 0)
     {
-
         $childs = $node->getChilds();
 
         if (count($childs) > 0) {
@@ -34,9 +32,7 @@ class ComparisonOperatorResolver implements ResolverContract
             $value = "";
             $positions = [];
             foreach ($node->getChilds() as $child) {
-
                 if ($child instanceof Nodes\TextNode || $child instanceof Nodes\KeyNode) {
-
                     $value .= " ".$child->getValue();
                     $p = array_fill(0, strlen(" ".$child->getValue()), $child->getPos());
                     $positions = array_merge($positions, $p);
@@ -46,11 +42,9 @@ class ComparisonOperatorResolver implements ResolverContract
 
 
             foreach ($this->regex as $regex) {
-
                 preg_match($regex, $value, $match, PREG_OFFSET_CAPTURE);
 
                 if ($match) {
-
                     $new_node = new $this->node;
 
                     $start = $match[0][1];
@@ -84,7 +78,6 @@ class ComparisonOperatorResolver implements ResolverContract
             $new_node->moveNodeAsChild($new_node->prev());
         } else {
             throw new Exceptions\QuerySyntaxException($node->getParent()->valueToString());
-
         }
     }
 
@@ -98,11 +91,9 @@ class ComparisonOperatorResolver implements ResolverContract
      */
     public function resolveNextNode(NodeContract $node, NodeContract $new_node)
     {
-
         if ($new_node->next() && ($new_node->next() instanceof Nodes\ValueNode || $new_node->next() instanceof Nodes\KeyNode)) {
             $new_node->moveNodeAsChild($new_node->next());
         } else {
-
             throw new Exceptions\QuerySyntaxException($node->getParent()->valueToString());
         }
     }
@@ -121,5 +112,4 @@ class ComparisonOperatorResolver implements ResolverContract
         $this->resolvePreviousNode($node, $new_node);
         $this->resolveNextNode($node, $new_node);
     }
-
 }

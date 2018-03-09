@@ -24,7 +24,7 @@ class GroupingResolver implements ResolverContract
      * @var string
      */
     public $regex = [
-        Nodes\GroupOpeningNode::class => '/\(/i', 
+        Nodes\GroupOpeningNode::class => '/\(/i',
         Nodes\GroupClosingNode::class => '/\)/i'
     ];
     
@@ -37,15 +37,12 @@ class GroupingResolver implements ResolverContract
      */
     public function resolve(NodeContract $node, $i = 0)
     {
-
         $this->resolveParenthesis($node);
         $this->resolveGrouping($node);
-
-
     }
 
-    public function resolveParenthesis(NodeContract $node) {
-
+    public function resolveParenthesis(NodeContract $node)
+    {
         foreach ($node->getChilds() as $child) {
             $this->resolveParenthesis($child);
         }
@@ -61,7 +58,6 @@ class GroupingResolver implements ResolverContract
             preg_match($regex, $node->getValue(), $match, PREG_OFFSET_CAPTURE);
 
             if ($match) {
-
                 $new_node = new $class;
                 $new_node->setValue($match[0][0]);
 
@@ -71,15 +67,13 @@ class GroupingResolver implements ResolverContract
                 $nodes = $this->splitNode(Nodes\TextNode::class, $node, $new_node, $start, $start+$length);
 
                 $this->resolveParenthesis($nodes[count($nodes) - 1]);
-
             }
-
         }
     }
 
 
-    public function resolveGrouping(NodeContract $node) {
-
+    public function resolveGrouping(NodeContract $node)
+    {
         if ($node->countChilds() === 0) {
             return;
         }
@@ -93,7 +87,6 @@ class GroupingResolver implements ResolverContract
 
 
         foreach ($node->getChilds() as $n => $child) {
-            
             if ($child instanceof Nodes\GroupOpeningNode) {
                 $p++;
                 $last_opening = $n;
@@ -123,7 +116,8 @@ class GroupingResolver implements ResolverContract
             }
         }
 
-        if ($p > 0)
+        if ($p > 0) {
             throw new Exceptions\QuerySyntaxException("Expected closing bracket: ".$node->getParent()->valueToString());
+        }
     }
 }

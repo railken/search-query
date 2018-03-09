@@ -24,5 +24,4 @@ class OrResolver extends AndResolver implements ResolverContract
         '/(?<![^\s])or(?![^\s])/i',
         '/(?<![^\s])\|\|(?![^\s])/i',
     ];
-
 }
