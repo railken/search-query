@@ -13,9 +13,10 @@ use Railken\SQ\Resolvers as Resolvers;
 
 $parser = new QueryParser();
 $parser->addResolvers([
-    new Resolvers\GroupingResolver(),
     new Resolvers\ValueResolver(),
     new Resolvers\KeyResolver(),
+    
+    new Resolvers\GroupingResolver(),
     new Resolvers\NotEqResolver(),
     new Resolvers\EqResolver(),
     new Resolvers\LteResolver(),

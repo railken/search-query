@@ -14,9 +14,9 @@ class QueryTest extends TestCase
     {
         $this->parser = new QueryParser();
         $this->parser->addResolvers([
-            new Resolvers\GroupingResolver(),
             new Resolvers\ValueResolver(),
             new Resolvers\KeyResolver(),
+            new Resolvers\GroupingResolver(),
             new Resolvers\NotEqResolver(),
             new Resolvers\EqResolver(),
             new Resolvers\LteResolver(),
@@ -40,7 +40,6 @@ class QueryTest extends TestCase
         $query = $this->parser;
 
         $result = $query->parse('x eq 1');
-        print_r($result);
         $this->assertEquals(Nodes\EqNode::class, get_class($result));
         $this->assertEquals('x', $result->getFirstChildByClass(Nodes\KeyNode::class)->getValue());
         $this->assertEquals('1', $result->getFirstChildByClass(Nodes\ValueNode::class)->getValue());
@@ -232,20 +231,26 @@ class QueryTest extends TestCase
         $this->assertEquals('2', $result->getFirstChildByClass(Nodes\GroupNode::class)->getChild(1)->getValue());;
     }
 
+
     public function testAnd1()
     {
         $query = $this->parser;
-        $result = $query->parse('x = 1 and y = 1');
+        $result = $query->parse('x and y');
         $this->assertEquals(Nodes\AndNode::class, get_class($result));
-        $this->assertEquals(Nodes\EqNode::class, get_class($result->getChild(0)));
-        $this->assertEquals('x', $result->getChild(0)->getFirstChildByClass(Nodes\KeyNode::class)->getValue());
-        $this->assertEquals('1', $result->getChild(0)->getFirstChildByClass(Nodes\ValueNode::class)->getValue());
-        $this->assertEquals(Nodes\EqNode::class, get_class($result->getChild(1)));
-        $this->assertEquals('y', $result->getChild(1)->getFirstChildByClass(Nodes\KeyNode::class)->getValue());
-        $this->assertEquals('1', $result->getChild(1)->getFirstChildByClass(Nodes\ValueNode::class)->getValue());
+        $this->assertEquals('x', $result->getChild(0)->getValue());
+        $this->assertEquals('y', $result->getChild(1)->getValue());
 
 
-        $result = $query->parse('x = 1 && y = 1');
+        $result = $query->parse('x && y');
+        $this->assertEquals(Nodes\AndNode::class, get_class($result));
+        $this->assertEquals('x', $result->getChild(0)->getValue());
+        $this->assertEquals('y', $result->getChild(1)->getValue());
+    }
+
+    public function testAndEq()
+    {
+        $query = $this->parser;
+        $result = $query->parse('x = 1 and y = 1');
         $this->assertEquals(Nodes\AndNode::class, get_class($result));
         $this->assertEquals(Nodes\EqNode::class, get_class($result->getChild(0)));
         $this->assertEquals('x', $result->getChild(0)->getFirstChildByClass(Nodes\KeyNode::class)->getValue());
@@ -260,8 +265,6 @@ class QueryTest extends TestCase
         $query = $this->parser;
         $result = $query->parse('x and (y and z)');
 
-        // print_r($result);
-
         $this->assertEquals(Nodes\AndNode::class, get_class($result));
         $this->assertEquals('x', $result->getChild(0)->getValue());
         $this->assertEquals('y', $result->getChild(1)->getValue());
@@ -271,61 +274,24 @@ class QueryTest extends TestCase
     public function testOr1()
     {
         $query = $this->parser;
-        $result = $query->parse('x = 1 or y = 1');
+        $result = $query->parse('x or y');
         $this->assertEquals(Nodes\OrNode::class, get_class($result));
-        $this->assertEquals(Nodes\EqNode::class, get_class($result->getChild(0)));
-        $this->assertEquals('x', $result->getChild(0)->getFirstChildByClass(Nodes\KeyNode::class)->getValue());
-        $this->assertEquals('1', $result->getChild(0)->getFirstChildByClass(Nodes\ValueNode::class)->getValue());
-        $this->assertEquals(Nodes\EqNode::class, get_class($result->getChild(1)));
-        $this->assertEquals('y', $result->getChild(1)->getFirstChildByClass(Nodes\KeyNode::class)->getValue());
-        $this->assertEquals('1', $result->getChild(1)->getFirstChildByClass(Nodes\ValueNode::class)->getValue());
+        $this->assertEquals('x', $result->getChild(0)->getValue());
+        $this->assertEquals('y', $result->getChild(1)->getValue());
 
 
-        $result = $query->parse('x = 1 || y = 1');
+        $result = $query->parse('x || y');
         $this->assertEquals(Nodes\OrNode::class, get_class($result));
-        $this->assertEquals(Nodes\EqNode::class, get_class($result->getChild(0)));
-        $this->assertEquals('x', $result->getChild(0)->getFirstChildByClass(Nodes\KeyNode::class)->getValue());
-        $this->assertEquals('1', $result->getChild(0)->getFirstChildByClass(Nodes\ValueNode::class)->getValue());
-        $this->assertEquals(Nodes\EqNode::class, get_class($result->getChild(1)));
-        $this->assertEquals('y', $result->getChild(1)->getFirstChildByClass(Nodes\KeyNode::class)->getValue());
-        $this->assertEquals('1', $result->getChild(1)->getFirstChildByClass(Nodes\ValueNode::class)->getValue());
+        $this->assertEquals('x', $result->getChild(0)->getValue());
+        $this->assertEquals('y', $result->getChild(1)->getValue());
     }
 
 
-    public function testAndOr1()
+    public function testAndGrouping()
     {
         $query = $this->parser;
-        $result = $query->parse('(x = 1 and (y = 1 or x = 1)) or z = 1');
-     
-        // {{ x = 1 and (y = 1 or x = 1) or z = 1 }}
-        $this->assertEquals(Nodes\OrNode::class, get_class($result));
-
-        // {{ x = 1 and (y = 1 or x = 1) }} or z = 1
-        $this->assertEquals(Nodes\AndNode::class, get_class($result->getChild(0)));
-
-        // {{ x = 1 }} and (y = 1 or x = 1) or z = 1
-        $this->assertEquals(Nodes\EqNode::class, get_class($result->getChild(0)->getChild(0)));
-        $this->assertEquals('x', $result->getChild(0)->getChild(0)->getKey());
-        $this->assertEquals('1', $result->getChild(0)->getChild(0)->getValue());
-
-        // x = 1 and {{ (y = 1 or x = 1) }} or z = 1
-        $this->assertEquals(Nodes\OrNode::class, get_class($result->getChild(0)->getChild(1)));
-
-        // x = 1 and ({{ y = 1 }} or x = 1) or z = 1
-        $this->assertEquals(Nodes\EqNode::class, get_class($result->getChild(0)->getChild(1)->getChild(0)));
-        $this->assertEquals('y', $result->getChild(0)->getChild(1)->getChild(0)->getKey());
-        $this->assertEquals('1', $result->getChild(0)->getChild(1)->getChild(0)->getValue());
-
-        // x = 1 and ( y = 1 or  {{ x = 1 }}) or z = 1
-        $this->assertEquals(Nodes\EqNode::class, get_class($result->getChild(0)->getChild(1)->getChild(1)));
-        $this->assertEquals('x', $result->getChild(0)->getChild(1)->getChild(1)->getKey());
-        $this->assertEquals('1', $result->getChild(0)->getChild(1)->getChild(1)->getValue());
-
-
-        // x = 1 and ( y = 1 or  x = 1 ) or {{ z = 1 }}
-        $this->assertEquals(Nodes\EqNode::class, get_class($result->getChild(1)));
-        $this->assertEquals('z', $result->getChild(1)->getKey());
-        $this->assertEquals('1', $result->getChild(1)->getValue());
+        $result = $query->parse('(x (y) z)');
+       
     }
 
     public function testAndOr2()
@@ -333,24 +299,6 @@ class QueryTest extends TestCase
         $query = $this->parser;
         $result = $query->parse('id eq 1 and id eq 2 or id eq 3');
 
-        $this->assertEquals(Nodes\OrNode::class, get_class($result));
-        $this->assertEquals(2, $result->countChilds());
-
-        $this->assertEquals(Nodes\AndNode::class, get_class($result->getChild(0)));
-        $this->assertEquals(2, $result->getChild(0)->countChilds());
-
-        $this->assertEquals(Nodes\EqNode::class, get_class($result->getChild(0)->getChild(0)));
-        $this->assertEquals('id', $result->getChild(0)->getChild(0)->getKey());
-        $this->assertEquals('1', $result->getChild(0)->getChild(0)->getValue());
-
-        $this->assertEquals(Nodes\EqNode::class, get_class($result->getChild(0)->getChild(1)));
-        $this->assertEquals('id', $result->getChild(0)->getChild(1)->getKey());
-        $this->assertEquals('2', $result->getChild(0)->getChild(1)->getValue());
-
-
-        $this->assertEquals(Nodes\EqNode::class, get_class($result->getChild(1)));
-        $this->assertEquals('id', $result->getChild(1)->getKey());
-        $this->assertEquals('3', $result->getChild(1)->getValue());
     }
 
 
@@ -359,36 +307,18 @@ class QueryTest extends TestCase
         $query = $this->parser;
         $result = $query->parse('x = 1 || y = 2 && z = 3');
 
-        $this->assertEquals(Nodes\OrNode::class, get_class($result));
-        $this->assertEquals(2, $result->countChilds());
-
-
-        $this->assertEquals(Nodes\EqNode::class, get_class($result->getChild(0)));
-        $this->assertEquals('x', $result->getChild(0)->getKey());
-        $this->assertEquals('1', $result->getChild(0)->getValue());
-
-        $this->assertEquals(Nodes\AndNode::class, get_class($result->getChild(1)));
-        $this->assertEquals(2, $result->getChild(1)->countChilds());
-
-        $this->assertEquals(Nodes\EqNode::class, get_class($result->getChild(1)->getChild(0)));
-        $this->assertEquals('y', $result->getChild(1)->getChild(0)->getKey());
-        $this->assertEquals('2', $result->getChild(1)->getChild(0)->getValue());
-
-        $this->assertEquals(Nodes\EqNode::class, get_class($result->getChild(1)->getChild(1)));
-        $this->assertEquals('z', $result->getChild(1)->getChild(1)->getKey());
-        $this->assertEquals('3', $result->getChild(1)->getChild(1)->getValue());
     }
 
 
     public function testGrouping1()
     {
         $query = $this->parser;
-        $result = $query->parse('(x eq 1)');
-
+        $result = $query->parse('((x eq 1))');
 
         $this->assertEquals(Nodes\GroupNode::class, get_class($result));
-        $this->assertEquals(Nodes\EqNode::class, get_class($result->getChild(0)));
-        $this->assertEquals('x', $result->getChild(0)->getFirstChildByClass(Nodes\KeyNode::class)->getValue());
-        $this->assertEquals('1', $result->getChild(0)->getFirstChildByClass(Nodes\ValueNode::class)->getValue());
+        $this->assertEquals(Nodes\GroupNode::class, get_class($result->getChild(0)));
+        $this->assertEquals(Nodes\EqNode::class, get_class($result->getChild(0)->getChild(0)));
+        $this->assertEquals('x', $result->getChild(0)->getChild(0)->getFirstChildByClass(Nodes\KeyNode::class)->getValue());
+        $this->assertEquals('1', $result->getChild(0)->getChild(0)->getFirstChildByClass(Nodes\ValueNode::class)->getValue());
     }
 }

@@ -4,29 +4,21 @@ namespace Railken\SQ\Traits;
 
 trait SplitNodeTrait
 {
-    public function groupNode(&$node, &$new_node, $position_from, $position_to, $positions) {
+    public function groupNode($class, &$node, &$new_node, $position_from, $position_to, $positions = []) {
 
         $position_node_from = $positions[$position_from];
-        $position_node_to = $positions[$position_to];
+        $position_node_to = $positions[$position_to-1];
+
 
         for ($i = $position_node_from; $i <= $position_node_to; $i++) {
-
-            if ($i === $position_node_from) {
-
-            } else if ($i === $position_node_to) {
-
-            } else {
-
-            }
-
             $node->removeChild($position_node_from);
         }
 
-        // print_r($new_node);
-        // print_r($node);
-        $node->insertChildAfter($new_node, $position_node_from-1);
-        // print_r($node);
 
+
+        $node->insertChildAfter($new_node, $position_node_from-1);
+        
+    
     }
 
 
@@ -51,6 +43,8 @@ trait SplitNodeTrait
         }
 
         $node->getParent()->replaceChild($node->getPos(), $push);
+
+        return $push;
 
 	}
 }

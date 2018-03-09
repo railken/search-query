@@ -5,9 +5,12 @@ namespace Railken\SQ\Resolvers;
 use Railken\SQ\Contracts\ResolverContract;
 use Railken\SQ\Contracts\NodeContract;
 use Railken\SQ\Nodes as Nodes;
+use Railken\SQ\Traits\SplitNodeTrait;
+use Railken\SQ\Exceptions;
 
 class GroupingResolver implements ResolverContract
 {
+    use SplitNodeTrait;
     /**
      * Node resolved
      *
@@ -20,7 +23,10 @@ class GroupingResolver implements ResolverContract
      *
      * @var string
      */
-    public $regex = '/\([^()"]*(?:"[^"]*"[^()"]*)*\)/i';
+    public $regex = [
+        Nodes\GroupOpeningNode::class => '/\(/i', 
+        Nodes\GroupClosingNode::class => '/\)/i'
+    ];
     
     /**
      * Resolve token eq node
@@ -29,148 +35,95 @@ class GroupingResolver implements ResolverContract
      *
      * @return $this
      */
-    public function resolve(NodeContract $node)
+    public function resolve(NodeContract $node, $i = 0)
     {
-        if ($node instanceof Nodes\TextNode) {
+
+        $this->resolveParenthesis($node);
+        $this->resolveGrouping($node);
+
+
+    }
+
+    public function resolveParenthesis(NodeContract $node) {
+
+        foreach ($node->getChilds() as $child) {
+            $this->resolveParenthesis($child);
+        }
+
+        if (!$node instanceof Nodes\TextNode) {
             return;
         }
 
-        $childs = $node->getChilds();
-        
-        if (count($childs) > 0) {
-            foreach ($node->getChilds() as $child) {
-                $this->resolve($child);
-            }
-        }
-        
+        $value = "";
+        $positions = [];
 
-        $this->resolveTextNodes($node);
+        foreach ($this->regex as $class => $regex) {
+            preg_match($regex, $node->getValue(), $match, PREG_OFFSET_CAPTURE);
+
+            if ($match) {
+
+                $new_node = new $class;
+                $new_node->setValue($match[0][0]);
+
+                $start = $match[0][1];
+                $length = strlen($match[0][0]);
+
+                $nodes = $this->splitNode(Nodes\TextNode::class, $node, $new_node, $start, $start+$length);
+
+                $this->resolveParenthesis($nodes[count($nodes) - 1]);
+
+            }
+
+        }
     }
 
-  
-    public function resolveTextNodes($node)
-    {
-        $key = 0;
 
-        $texts = array_map(function ($child) {
-            return $child->getValue();
-        }, array_filter($node->getChilds(), function ($child) {
-            return $child instanceof Nodes\TextNode;
-        }));
+    public function resolveGrouping(NodeContract $node) {
 
-        $positions = [];
-        $i = 0;
+        if ($node->countChilds() === 0) {
+            return;
+        }
+
         foreach ($node->getChilds() as $child) {
-            $y = 0;
-            if ($child instanceof Nodes\TextNode) {
-                foreach (str_split($child->getValue()) as $char) {
-                    $positions[$i++] = [
-                        'char' => $y++,
-                        'node' => $child->getPos(),
-                    ];
+            $this->resolveGrouping($child);
+        }
+
+        $p = 0;
+        $last_opening = null;
+
+
+        foreach ($node->getChilds() as $n => $child) {
+            
+            if ($child instanceof Nodes\GroupOpeningNode) {
+                $p++;
+                $last_opening = $n;
+            }
+            
+            if ($child instanceof Nodes\GroupClosingNode) {
+                $p--;
+                // A group has found. Close and re-resolve
+
+                if ($last_opening === null) {
+                    throw new Exceptions\QuerySyntaxException("Unexpected closing bracket: ".$node->getParent()->valueToString());
                 }
 
-                foreach ($positions as $key => $pos) {
-                    if ($pos['node'] === $child->getPos()) {
-                        $positions[$key]['remaining_char'] = $y-1 - $pos['char'];
-                    }
-                }
+
+                $new_node = new $this->node;
+
+                $childs = $node->getChildsBetween($last_opening, $n);
+                $node->removeChilds($childs);
+                $new_node->addChilds($childs);
+
+                $new_node->removeChild(0);
+                $new_node->removeChild($new_node->countChilds()-1);
+                $node->insertChildAfter($new_node, $last_opening-1);
+        
+
+                return $this->resolveGrouping($node->getParent());
             }
         }
 
-        $text = implode("", $texts);
-
-
-        if (preg_match($this->regex, $text, $match, PREG_OFFSET_CAPTURE)) {
-            $start =  $match[0][1];
-            $length = strlen($match[0][0]);
-
-            // Key of first char
-            $key_first = $positions[$start];
-
-            // Key of last char
-            $key_last = $positions[$start+$length-1];
-
- 
-            $push = [];
-            $new_node = new $this->node;
-            $result = substr($match[0][0], 1, -1);
-            $text_node = new Nodes\TextNode();
-            $text_node->setValue($result);
-
-            if ($key_first['node'] !== $key_last['node']) {
-                // print_r($positions);
-            }
-
-            if ($key_first['node'] === $key_last['node']) {
-                $new_node->addChild($text_node);
-            }
-
-            if ($key_first['node'] !== $key_last['node']) {
-                for ($i = $key_first['node']; $i <= $key_last['node']; $i++) {
-                    $child = $node->getChild($i);
-
-                    if ($child instanceof Nodes\Textnode) {
-                        if ($i === $key_first['node']) {
-                            // print_r($texts[$key_first['node']]);
-                            $first = new Nodes\TextNode(substr($text, $start+1, $key_first['remaining_char']));
-                            // print_r($first->getValue());
-                            // $first = new Nodes\TextNode(substr($texts[$key_first['node']], 0, strlen($texts[$key_last['node']]) - $key_last['remaining_char'] - 1));
-                            if (trim($first->getValue())) {
-                                $new_node->addChild($first);
-                            }
-                        } elseif ($i === $key_last['node']) {
-
-                            // print_r($key_last);
-                            // print_r($texts);
-                            $last = new Nodes\TextNode(substr($texts[$key_last['node']], 0, strlen($texts[$key_last['node']]) - $key_last['remaining_char'] - 1));
-                            if (trim($last->getValue())) {
-                                $new_node->addChild($last);
-                            }
-                        } else {
-                            $new_node->addChild($child);
-                        }
-                    } else {
-                        $new_node->addChild($child);
-                    }
-
-                    $child->setParent($new_node);
-                }
-            }
-
-            $first = new Nodes\TextNode();
-            $first->setValue(substr($text, $start-$key_first['char'], $start));
-
-            if (trim($first->getValue())) {
-                $push[] = $first;
-            }
-            
-
-            $push[] = $new_node;
-            $second = new Nodes\TextNode();
-            $second->setValue(substr($text, $start+$length, $length+$key_last['remaining_char']));
-            
-            if (trim($second->getValue())) {
-                $push[] = $second;
-            }
-
-
-
-            if (count($push) === 1 && $push[0]->countChilds() === 1 && $push[0]->getChild(0) instanceof Nodes\GroupNode) {
-                $push = [$push[0]->getChild(0)];
-            }
-            
-            for ($i = $key_first['node']; $i <= $key_last['node']; $i++) {
-                $node->removeChild($i);
-            }
-
-            $node->replaceChild($key_first['node'], $push);
-
-            foreach ($new_node->getChilds() as $child) {
-                $child->setParent($new_node);
-            }
-            
-            $this->resolveTextNodes($node);
-        }
+        if ($p > 0)
+            throw new Exceptions\QuerySyntaxException("Expected closing bracket: ".$node->getParent()->valueToString());
     }
 }

@@ -179,6 +179,15 @@ class Node implements NodeContract, \JsonSerializable
         return $this;
     }
 
+    public function addChilds($childs) 
+    {
+        foreach ($childs as $child) {
+            $this->addChild($child);
+        }
+
+        return $this;
+    }
+
     /**
      * Get childs
      *
@@ -237,6 +246,11 @@ class Node implements NodeContract, \JsonSerializable
         return null;
     }
 
+    public function getChildsBetween($start, $end)
+    {
+       return array_slice($this->childs, $start, $end-$start+1);
+    }
+
 
     /**
      * Replace a child by others
@@ -254,7 +268,7 @@ class Node implements NodeContract, \JsonSerializable
         $this->childs = [];
         
         foreach (array_merge($first, $subs, $second) as $child) {
-            $this->addChild($child);
+            $child && $this->addChild($child);
         }
         return $this;
     }
@@ -262,12 +276,26 @@ class Node implements NodeContract, \JsonSerializable
     public function removeChild($key)
     {
         return $this->replaceChild($key, []);
+        $this->calculatePosChilds();
     }
 
-    public function removeChilds()
+    public function removeChilds($childs)
     {
-        
+        array_splice($this->childs, $childs[0]->getPos(), count($childs));
+        $this->calculatePosChilds();
     }
+
+    public function clearEmptyChilds()
+    {
+
+    }
+
+    public function insertChildsAfter($childs, $key)
+    {
+
+        return $this->replaceChild($key, array_merge([$this->getChild($key)], $childs));
+    }
+
     public function insertChildBefore($child, $key)
     {
 
@@ -301,8 +329,13 @@ class Node implements NodeContract, \JsonSerializable
 
     public function calculatePosChilds()
     {
-        foreach ($this->childs as $key => $child) {
-            $child->setPos($key);
+        $n = 0;
+        foreach ($this->childs as $child) {
+            if ($child) {
+                $child->setPos($n);
+                $child->setParent($this);
+                $n++;
+            }
         }
     }
 
@@ -343,6 +376,14 @@ class Node implements NodeContract, \JsonSerializable
         
         return implode(" ", array_map(function ($node) {
             return $node->valueToString();
+        }, $this->getChilds()));
+    }
+
+
+    public function getValueChilds()
+    {
+        return implode("", array_map(function($node) { 
+            return " ".$node->getValue(); 
         }, $this->getChilds()));
     }
 }

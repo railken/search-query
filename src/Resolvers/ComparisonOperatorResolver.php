@@ -25,11 +25,11 @@ class ComparisonOperatorResolver implements ResolverContract
     {
 
         $childs = $node->getChilds();
-        
+
         if (count($childs) > 0) {
             $this->resolve($node->getChild($i));
 
-            $value = array_map(function($node) { return $node->getValue(); }, $node->getChilds());
+            $value = $node->getValueChilds();
             
             $value = "";
             $positions = [];
@@ -42,6 +42,8 @@ class ComparisonOperatorResolver implements ResolverContract
                     $positions = array_merge($positions, $p);
                 }
             }
+            // print_r($value."\n");
+
 
             foreach ($this->regex as $regex) {
 
@@ -55,7 +57,7 @@ class ComparisonOperatorResolver implements ResolverContract
                     $length = strlen($match[0][0]);
 
 
-                    $this->groupNode($node, $new_node, $start, $start+$length-1, $positions);
+                    $this->groupNode(Nodes\KeyNode::class, $node, $new_node, $start, $start+$length, $positions);
                     $this->resolveRelationsNode($node, $new_node);
 
                     // Search for another match in this node.
