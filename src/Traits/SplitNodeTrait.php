@@ -4,7 +4,7 @@ namespace Railken\SQ\Traits;
 
 trait SplitNodeTrait
 {
-    public function groupNode($class, &$node, &$new_node, $position_from, $position_to, $positions = [])
+    public function groupNode(&$node, &$new_node, $position_from, $position_to, $positions = [])
     {
         $position_node_from = $positions[$position_from];
         $position_node_to = $positions[$position_to-1];

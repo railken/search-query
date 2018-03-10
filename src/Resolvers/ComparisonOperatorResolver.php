@@ -50,7 +50,7 @@ class ComparisonOperatorResolver implements ResolverContract
                     $length = strlen($match[0][0]);
 
 
-                    $this->groupNode(Nodes\KeyNode::class, $node, $new_node, $start, $start+$length, $positions);
+                    $this->groupNode($node, $new_node, $start, $start+$length, $positions);
                     $this->resolveRelationsNode($node, $new_node);
 
                     // Search for another match in this node.
