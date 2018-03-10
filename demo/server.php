@@ -15,8 +15,8 @@ $parser = new QueryParser();
 $parser->addResolvers([
     new Resolvers\ValueResolver(),
     new Resolvers\KeyResolver(),
-    
     new Resolvers\GroupingResolver(),
+    new Resolvers\FunctionResolver(['SUM', 'DATE_FORMAT']),
     new Resolvers\NotEqResolver(),
     new Resolvers\EqResolver(),
     new Resolvers\LteResolver(),
