@@ -474,4 +474,18 @@ class Node implements NodeContract, \JsonSerializable
             return $recursive ? $node->valueToString() : $node->getValue();
         }, $this->getChilds()));
     }
+
+    /**
+     * Get root
+     *
+     * @return Node
+     */
+    public function getRoot()
+    {
+        if ($this->getParent()) {
+            return $this->getParent()->getRoot();
+        }
+
+        return $this;
+    }
 }
