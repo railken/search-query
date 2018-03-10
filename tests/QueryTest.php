@@ -4,6 +4,7 @@ use PHPUnit\Framework\TestCase;
 use Railken\SQ\QueryParser;
 use Railken\SQ\Resolvers as Resolvers;
 use Railken\SQ\Nodes as Nodes;
+use Railken\SQ\Exceptions\QuerySyntaxException;
 
 class QueryTest extends TestCase
 {
@@ -47,6 +48,30 @@ class QueryTest extends TestCase
         $this->assertEquals('1', $result->getChildByIndex(0)->getChildByIndex(0)->getValue());
         $this->assertEquals('2', $result->getChildByIndex(0)->getChildByIndex(1)->getValue());
         $this->assertEquals('x', $result->getChildByIndex(1)->getValue());
+    }
+
+    public function testExceptionEq1()
+    {
+        $this->expectException(QuerySyntaxException::class);
+        $this->parser->parse('x eq');
+    }
+
+    public function testExceptionEq2()
+    {
+        $this->expectException(QuerySyntaxException::class);
+        $this->parser->parse('eq');
+    }
+
+    public function testExceptionEq3()
+    {
+        $this->expectException(QuerySyntaxException::class);
+        $this->parser->parse('eq 1');
+    }
+
+    public function testExceptionEq4()
+    {
+        $this->expectException(QuerySyntaxException::class);
+        $this->parser->parse('x eq (1)');
     }
 
     public function testEq()
