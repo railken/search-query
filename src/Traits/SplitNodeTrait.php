@@ -13,7 +13,12 @@ trait SplitNodeTrait
             $node->removeChildByIndex($position_node_from);
         }
 
-        $node->addChildAfterNodeByIndex($new_node, $position_node_from-1);
+        $index = $position_node_from-1;
+
+        $index === -1 
+            ? $node->addChildBeforeNodeByIndex($new_node, 0)
+            : $node->addChildAfterNodeByIndex($new_node, $index);
+
     }
 
 
