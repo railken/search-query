@@ -1,17 +1,17 @@
 <?php
 
-namespace Railken\SQ\Resolvers;
+namespace Railken\SQ\Language\Gt;
 
-use Railken\SQ\Nodes as Nodes;
+use Railken\SQ\Resolvers\ComparisonOperatorResolver;
 
-class GtResolver extends ComparisonOperatorResolver
+class Resolver extends ComparisonOperatorResolver
 {
     /**
      * Node resolved
      *
      * @var string
      */
-    public $node = Nodes\GtNode::class;
+    public $node = Node::class;
 
     /**
      * Regex token
