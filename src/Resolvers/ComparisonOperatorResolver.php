@@ -4,6 +4,7 @@ namespace Railken\SQ\Resolvers;
 
 use Railken\SQ\Contracts\ResolverContract;
 use Railken\SQ\Contracts\NodeContract;
+use Railken\SQ\Contracts\ComparableNodeContract;
 use Railken\SQ\Nodes as Nodes;
 use Railken\SQ\Traits\SplitNodeTrait;
 use Railken\SQ\Exceptions;
@@ -73,7 +74,8 @@ class ComparisonOperatorResolver implements ResolverContract
      */
     public function resolvePreviousNode(NodeContract $node, NodeContract $new_node)
     {
-        if ($new_node->prev() && ($new_node->prev() instanceof Nodes\ValueNode || $new_node->prev() instanceof Nodes\KeyNode)) {
+
+        if ($new_node->prev() && $new_node->prev() instanceof ComparableNodeContract) {
             $new_node->moveNodeAsChild($new_node->prev());
         } else {
             throw new Exceptions\QuerySyntaxException($node->getParent()->valueToString());
@@ -90,7 +92,7 @@ class ComparisonOperatorResolver implements ResolverContract
      */
     public function resolveNextNode(NodeContract $node, NodeContract $new_node)
     {
-        if ($new_node->next() && ($new_node->next() instanceof Nodes\ValueNode || $new_node->next() instanceof Nodes\KeyNode)) {
+        if ($new_node->next() && $new_node->next() instanceof ComparableNodeContract) {
             $new_node->moveNodeAsChild($new_node->next());
         } else {
             throw new Exceptions\QuerySyntaxException($node->getParent()->valueToString());

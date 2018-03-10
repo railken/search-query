@@ -2,8 +2,9 @@
 namespace Railken\SQ\Nodes;
 
 use Railken\SQ\StringHelper;
+use Railken\SQ\Contracts\ComparableNodeContract;
 
-class KeyNode extends Node
+class KeyNode extends Node implements ComparableNodeContract
 {
 
     /**
