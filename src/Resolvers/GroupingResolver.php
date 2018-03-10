@@ -112,7 +112,7 @@ class GroupingResolver implements ResolverContract
                 // A group has found. Close and re-resolve
 
                 if ($last_opening === null) {
-                    throw new Exceptions\QuerySyntaxException("Unexpected closing bracket: ".$node->getParent()->valueToString());
+                    throw new Exceptions\QuerySyntaxException("Unexpected closing bracket: ".$node->getRoot()->getValue());
                 }
 
 
@@ -132,7 +132,7 @@ class GroupingResolver implements ResolverContract
         }
 
         if ($p > 0) {
-            throw new Exceptions\QuerySyntaxException("Expected closing bracket: ".$node->getParent()->valueToString());
+            throw new Exceptions\QuerySyntaxException("Expected closing bracket: ".$node->getRoot()->getValue());
         }
     }
 }

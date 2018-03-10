@@ -49,7 +49,7 @@ class InResolver extends ComparisonOperatorResolver
 
             $new_node->moveNodeAsChild($new_node->next());
         } else {
-            throw new Exceptions\QuerySyntaxException($node->getParent()->valueToString());
+            throw new Exceptions\QuerySyntaxException($node->getRoot()->getValue());
         }
     }
 }

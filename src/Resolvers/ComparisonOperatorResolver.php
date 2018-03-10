@@ -78,7 +78,7 @@ class ComparisonOperatorResolver implements ResolverContract
         if ($new_node->prev() && $new_node->prev() instanceof ComparableNodeContract) {
             $new_node->moveNodeAsChild($new_node->prev());
         } else {
-            throw new Exceptions\QuerySyntaxException($node->getParent()->valueToString());
+            throw new Exceptions\QuerySyntaxException($node->getRoot()->getValue());
         }
     }
 
@@ -95,7 +95,7 @@ class ComparisonOperatorResolver implements ResolverContract
         if ($new_node->next() && $new_node->next() instanceof ComparableNodeContract) {
             $new_node->moveNodeAsChild($new_node->next());
         } else {
-            throw new Exceptions\QuerySyntaxException($node->getParent()->valueToString());
+            throw new Exceptions\QuerySyntaxException($node->getRoot()->getValue());
         }
     }
 

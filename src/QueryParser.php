@@ -54,6 +54,7 @@ class QueryParser
     public function parse($query)
     {
         $node = new Nodes\RootNode();
+        $node->setValue($query);
 
         $l = new Nodes\UndefinedLogicNode();
         $node->addChild($l);

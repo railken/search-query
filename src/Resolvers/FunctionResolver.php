@@ -72,7 +72,7 @@ class FunctionResolver extends ComparisonOperatorResolver implements ResolverCon
             $new_node->setChilds($childs);
             $new_node->getParent()->removeChild($new_node->next());
         } else {
-            throw new Exceptions\QuerySyntaxException($node->getParent()->valueToString());
+            throw new Exceptions\QuerySyntaxException($node->getRoot()->getValue());
         }
     }
 
