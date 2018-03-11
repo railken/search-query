@@ -5,7 +5,8 @@ namespace Railken\SQ;
 use Railken\SQ\Exceptions as Exceptions;
 
 use Railken\SQ\Contracts\ResolverContract;
-use Railken\SQ\Resolvers as Resolvers;
+use Railken\SQ\Languages\BoomTree\Resolvers as Resolvers;
+use Railken\SQ\Languages\BoomTree\Nodes as Nodes;
 
 class QueryParser
 {

@@ -2,10 +2,9 @@
 
 use PHPUnit\Framework\TestCase;
 use Railken\SQ\QueryParser;
-use Railken\SQ\Resolvers as Resolvers;
-use Railken\SQ\Nodes as Nodes;
+use Railken\SQ\Languages\BoomTree\Resolvers as Resolvers;
+use Railken\SQ\Languages\BoomTree\Nodes as Nodes;
 use Railken\SQ\Exceptions\QuerySyntaxException;
-use Railken\SQ\Language as Language;
 
 class QueryTest extends TestCase
 {
@@ -25,7 +24,7 @@ class QueryTest extends TestCase
             new Resolvers\LteResolver(),
             new Resolvers\LtResolver(),
             new Resolvers\GteResolver(),
-            new Language\Gt\Resolver(),
+            new Resolvers\GtResolver(),
             new Resolvers\CtResolver(),
             new Resolvers\SwResolver(),
             new Resolvers\NotInResolver(),
@@ -115,12 +114,12 @@ class QueryTest extends TestCase
         $query = $this->parser;
 
         $result = $query->parse('x gt 1');
-        $this->assertEquals(Language\Gt\Node::class, get_class($result));
+        $this->assertEquals(Nodes\GtNode::class, get_class($result));
         $this->assertEquals('x', $result->getFirstChildByClass(Nodes\KeyNode::class)->getValue());
         $this->assertEquals('1', $result->getFirstChildByClass(Nodes\ValueNode::class)->getValue());
 
         $result = $query->parse('x > 1');
-        $this->assertEquals(Language\Gt\Node::class, get_class($result));
+        $this->assertEquals(Nodes\GtNode::class, get_class($result));
         $this->assertEquals('x', $result->getFirstChildByClass(Nodes\KeyNode::class)->getValue());
         $this->assertEquals('1', $result->getFirstChildByClass(Nodes\ValueNode::class)->getValue());
     }

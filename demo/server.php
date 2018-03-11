@@ -9,7 +9,7 @@ if (!file_exists($autoload)) {
 require_once $autoload;
 
 use Railken\SQ\QueryParser;
-use Railken\SQ\Resolvers as Resolvers;
+use Railken\SQ\Languages\BoomTree\Resolvers as Resolvers;
 
 $parser = new QueryParser();
 $parser->addResolvers([
