@@ -23,17 +23,6 @@ class FunctionResolver extends ComparisonOperatorResolver implements ResolverCon
      */
     public $regex = [];
 
-    /**
-     * Construct
-     *
-     * @param array $functions
-     */
-    public function __construct(array $functions)
-    {
-        foreach ($functions as $function) {
-            $this->regex[] = '/(?<![^\s])' . $function . '(?![^\s])/i';
-        }
-    }
 
     /**
      * Resolve previous node match

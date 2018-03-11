@@ -18,7 +18,8 @@ class QueryTest extends TestCase
             new Resolvers\ValueResolver(),
             new Resolvers\KeyResolver(),
             new Resolvers\GroupingResolver(),
-            new Resolvers\FunctionResolver(['SUM', 'DATE_FORMAT']),
+            new Resolvers\SumFunctionResolver(),
+            new Resolvers\DateFormatFunctionResolver(),
             new Resolvers\NotEqResolver(),
             new Resolvers\EqResolver(),
             new Resolvers\LteResolver(),
@@ -44,7 +45,7 @@ class QueryTest extends TestCase
         $result = $query->parse('sum(1, 2) eq x');
 
         $this->assertEquals(Nodes\EqNode::class, get_class($result));
-        $this->assertEquals(Nodes\FunctionNode::class, get_class($result->getChildByIndex(0)));
+        $this->assertEquals(Nodes\SumFunctionNode::class, get_class($result->getChildByIndex(0)));
         $this->assertEquals('1', $result->getChildByIndex(0)->getChildByIndex(0)->getValue());
         $this->assertEquals('2', $result->getChildByIndex(0)->getChildByIndex(1)->getValue());
         $this->assertEquals('x', $result->getChildByIndex(1)->getValue());
