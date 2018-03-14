@@ -62,4 +62,5 @@ jobs:
       install:
         - phpenv config-rm xdebug.ini
       script:
-        - ./build/tools/php-cs-fixer --diff --dry-run -v fix
+        - ./vendor/bin/php-cs-fixer --diff --dry-run -v fix src
+        - ./vendor/bin/php-cs-fixer --diff --dry-run -v fix tests
