@@ -4,6 +4,7 @@ namespace Railken\SQ\Languages\BoomTree\Resolvers;
 
 use Railken\SQ\Languages\BoomTree\Nodes as Nodes;
 use Railken\SQ\Contracts\NodeContract;
+use Railken\SQ\Exceptions as Exceptions;
 
 class InResolver extends ComparisonOperatorResolver
 {

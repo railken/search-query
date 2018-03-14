@@ -19,6 +19,13 @@ abstract class BaseResolver implements ResolverContract
     public $node = Nodes\ValueNode::class;
 
     /**
+     * Regex
+     *
+     * @var array
+     */
+    public $regex = [];
+
+    /**
      * Resolve node
      *
      * @param NodeContract $node

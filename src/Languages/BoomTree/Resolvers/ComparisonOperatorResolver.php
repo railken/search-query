@@ -13,7 +13,20 @@ class ComparisonOperatorResolver implements ResolverContract
 {
     use SplitNodeTrait;
 
-    
+    /**
+     * Node resolved
+     *
+     * @var string
+     */
+    public $node;
+
+    /**
+     * Regex
+     *
+     * @var array
+     */
+    public $regex = [];
+
     /**
      * Resolve token eq node
      *

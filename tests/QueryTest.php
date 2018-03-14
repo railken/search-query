@@ -1,5 +1,7 @@
 <?php
 
+namespace Railken\SQ\Tests;
+
 use PHPUnit\Framework\TestCase;
 use Railken\SQ\QueryParser;
 use Railken\SQ\Languages\BoomTree\Resolvers as Resolvers;
@@ -8,6 +10,11 @@ use Railken\SQ\Exceptions\QuerySyntaxException;
 
 class QueryTest extends TestCase
 {
+    /**
+     * @var QueryParser
+     */
+    protected $parser;
+
     /**
      * Setup the test environment.
      */
