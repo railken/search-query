@@ -42,6 +42,7 @@ class QueryTest extends TestCase
             new Resolvers\NullResolver(),
             new Resolvers\AndResolver(),
             new Resolvers\OrResolver(),
+            new Resolvers\TextResolver(),
         ]);
     }
 

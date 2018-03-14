@@ -53,6 +53,7 @@ A simple usage looks like this:
       new Resolvers\NullResolver(),
       new Resolvers\AndResolver(),
       new Resolvers\OrResolver(),
+      new Resolvers\TextResolver(),
    ]);
    $result = $query->parse('x eq 1 or y > 1');
 ```
