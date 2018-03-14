@@ -10,18 +10,4 @@ class InNode extends ComparisonOperatorNode
      * @var string
      */
     public $value = 'IN';
-
-    /**
-     * set value
-     *
-     * @param string $value
-     *
-     * @return $this
-     */
-    public function setValue($value)
-    {
-        $value = explode(",", $value);
-
-        return parent::setValue($value);
-    }
 }

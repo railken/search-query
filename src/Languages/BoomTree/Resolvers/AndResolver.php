@@ -7,7 +7,7 @@ use Railken\SQ\Contracts\NodeContract;
 use Railken\SQ\Languages\BoomTree\Nodes as Nodes;
 use Railken\SQ\Exceptions as Exceptions;
 
-class AndResolver extends ComparisonOperatorResolver implements ResolverContract
+class AndResolver extends LogicResolver
 {
     /**
      * Node resolved

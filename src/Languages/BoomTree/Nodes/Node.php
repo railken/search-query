@@ -52,9 +52,6 @@ class Node implements NodeContract, \JsonSerializable
     public function setValue($value)
     {
         is_string($value) && $value = trim($value);
-        is_array($value) && $value = array_map(function ($v) {
-            return trim($v);
-        }, $value);
 
         $this->value = $value;
 

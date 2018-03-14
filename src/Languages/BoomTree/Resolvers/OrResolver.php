@@ -6,7 +6,7 @@ use Railken\SQ\Contracts\ResolverContract;
 use Railken\SQ\Contracts\NodeContract;
 use Railken\SQ\Languages\BoomTree\Nodes as Nodes;
 
-class OrResolver extends AndResolver implements ResolverContract
+class OrResolver extends AndResolver
 {
     /**
      * Node resolved
