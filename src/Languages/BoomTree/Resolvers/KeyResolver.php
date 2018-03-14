@@ -15,9 +15,9 @@ class KeyResolver extends BaseResolver implements ResolverContract
     public $node = Nodes\KeyNode::class;
 
     /**
-     * Regex token.
+     * Regex
      *
-     * @var string
+     * @var array
      */
     public $regex = [
         '/([a-z_][a-z0-9_]*)/i',

@@ -14,9 +14,9 @@ class GtResolver extends ComparisonOperatorResolver
     public $node = Nodes\GtNode::class;
 
     /**
-     * Regex token.
+     * Regex
      *
-     * @var string
+     * @var array
      */
     public $regex = [
         '/(?<![^\s])gt(?![^\s])/i',

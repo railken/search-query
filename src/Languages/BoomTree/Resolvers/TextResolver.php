@@ -12,13 +12,12 @@ class TextResolver implements ResolverContract
     /**
      * Resolve node.
      *
-     * @param Node
+     * @param NodeContract $node
      *
-     * @return $this
+     * @return void
      */
     public function resolve(NodeContract $node)
     {
-        // $node->content = "";
 
         $childs = $node->getChilds();
 
@@ -38,9 +37,9 @@ class TextResolver implements ResolverContract
     /**
      * Resolve text nodes.
      *
-     * @param Node
+     * @param NodeContract $node
      *
-     * @return $this
+     * @return void
      */
     public function resolveTextNode($node)
     {

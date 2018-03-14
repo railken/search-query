@@ -19,9 +19,9 @@ class GroupingResolver implements ResolverContract
     public $node = Nodes\GroupNode::class;
 
     /**
-     * Regex token.
+     * Regex
      *
-     * @var string
+     * @var array
      */
     public $regex = [
         Nodes\GroupOpeningNode::class => '/\(/i',
@@ -39,6 +39,8 @@ class GroupingResolver implements ResolverContract
     {
         $this->resolveParenthesis($node);
         $this->resolveGrouping($node);
+
+        return $node;
     }
 
     /**
@@ -46,7 +48,7 @@ class GroupingResolver implements ResolverContract
      *
      * @param NodeContract $node
      *
-     * @return NodeContract
+     * @return void
      */
     public function resolveParenthesis(NodeContract $node)
     {
@@ -83,12 +85,12 @@ class GroupingResolver implements ResolverContract
      *
      * @param NodeContract $node
      *
-     * @return NodeContract
+     * @return NodeContract|null
      */
     public function resolveGrouping(NodeContract $node)
     {
         if ($node->countChilds() === 0) {
-            return;
+            return null;
         }
 
         foreach ($node->getChilds() as $child) {

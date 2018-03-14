@@ -16,9 +16,9 @@ class AndResolver extends LogicResolver
     public $node = Nodes\AndNode::class;
 
     /**
-     * Regex token.
+     * Regex
      *
-     * @var string
+     * @var array
      */
     public $regex = [
         '/(?<![^\s])and(?![^\s])/i',

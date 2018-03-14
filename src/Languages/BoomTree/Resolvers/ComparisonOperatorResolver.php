@@ -31,16 +31,15 @@ class ComparisonOperatorResolver implements ResolverContract
      * Resolve token eq node.
      *
      * @param NodeContract $node
-     * @param int          $i
      *
-     * @return NodeContract
+     * @return NodeContract|null
      */
-    public function resolve(NodeContract $node, $i = 0)
+    public function resolve(NodeContract $node)
     {
         $childs = $node->getChilds();
 
         if (count($childs) > 0) {
-            $this->resolve($node->getChildByIndex($i));
+            $this->resolve($node->getChildByIndex(0));
 
             $value = '';
             $positions = [];
@@ -65,7 +64,7 @@ class ComparisonOperatorResolver implements ResolverContract
                     $this->resolveRelationsNode($node, $new_node);
 
                     // Search for another match in this node.
-                    return $this->resolve($node->getParent(), $i);
+                    return $this->resolve($node->getParent());
                 }
             }
         }

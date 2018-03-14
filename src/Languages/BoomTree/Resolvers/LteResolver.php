@@ -14,9 +14,9 @@ class LteResolver extends ComparisonOperatorResolver
     public $node = Nodes\LteNode::class;
 
     /**
-     * Regex token.
+     * Regex
      *
-     * @var string
+     * @var array
      */
     public $regex = [
         '/lte/i',

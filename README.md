@@ -2,6 +2,7 @@
 
 [![Build Status](https://img.shields.io/travis/railken/search-query/master.svg)](https://travis-ci.org/railken/search-query)
 [![Code Coverage](https://img.shields.io/codecov/c/github/railken/search-query.svg)](https://codecov.io/gh/railken/search-query)
+[![Style CI](https://styleci.io/repos/107004461/shield?branch=master)](https://styleci.io/repos/107004461)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Latest stable](https://img.shields.io/packagist/v/railken/search-query.svg?style=flat-square)](https://packagist.org/packages/railken/search-query)
 [![PHP](https://img.shields.io/travis/php-v/railken/search-query.svg)](https://secure.php.net/)
@@ -52,6 +53,7 @@ A simple usage looks like this:
       new Resolvers\NullResolver(),
       new Resolvers\AndResolver(),
       new Resolvers\OrResolver(),
+      new Resolvers\TextResolver(),
    ]);
    $result = $query->parse('x eq 1 or y > 1');
 ```
