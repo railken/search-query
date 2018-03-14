@@ -5,7 +5,7 @@ namespace Railken\SQ\Languages\BoomTree\Nodes;
 class EwNode extends ComparisonOperatorNode
 {
     /**
-     * Operator
+     * Operator.
      *
      * @var string
      */

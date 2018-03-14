@@ -7,35 +7,35 @@ use Railken\SQ\Contracts\NodeContract;
 class Node implements NodeContract, \JsonSerializable
 {
     /**
-     * Value/Values of node
+     * Value/Values of node.
      *
      * @var mixed
      */
     public $value;
 
     /**
-     * Index node
+     * Index node.
      *
      * @var int
      */
     public $index;
 
     /**
-     * Childs
+     * Childs.
      *
      * @var array
      */
     public $childs = [];
 
     /**
-     * Parent node
+     * Parent node.
      *
      * @var Node
      */
     public $parent;
 
     /**
-     * Construct
+     * Construct.
      */
     public function __construct()
     {
@@ -43,7 +43,7 @@ class Node implements NodeContract, \JsonSerializable
     }
 
     /**
-     * Set value
+     * Set value.
      *
      * @param mixed $value
      *
@@ -59,7 +59,7 @@ class Node implements NodeContract, \JsonSerializable
     }
 
     /**
-     * Get value
+     * Get value.
      *
      * @return mixed
      */
@@ -69,9 +69,9 @@ class Node implements NodeContract, \JsonSerializable
     }
 
     /**
-     * Set parent
+     * Set parent.
      *
-     * @var Node $parent
+     * @var Node
      *
      * @return $this
      */
@@ -83,7 +83,7 @@ class Node implements NodeContract, \JsonSerializable
     }
 
     /**
-     * Set index node
+     * Set index node.
      *
      * @param int $index
      *
@@ -97,7 +97,7 @@ class Node implements NodeContract, \JsonSerializable
     }
 
     /**
-     * Retrieve index node
+     * Retrieve index node.
      *
      * @return int
      */
@@ -107,7 +107,7 @@ class Node implements NodeContract, \JsonSerializable
     }
 
     /**
-     * Get parent
+     * Get parent.
      *
      * @return Node
      */
@@ -117,38 +117,38 @@ class Node implements NodeContract, \JsonSerializable
     }
 
     /**
-     * Set childs
+     * Set childs.
      *
-     * @var array $childs
+     * @var array
      *
      * @return $this
      */
     public function setChilds($childs)
     {
         $this->childs = $childs;
-    
+
         return $this;
     }
 
     /**
-     * Add a child
+     * Add a child.
      *
      * @param Node $child
      *
      * @return $this
      */
-    public function addChild(Node $child)
+    public function addChild(self $child)
     {
         $this->childs[] = $child;
 
         $child->setParent($this);
-        $child->setIndex(count($this->childs)-1);
+        $child->setIndex(count($this->childs) - 1);
 
         return $this;
     }
 
     /**
-     * Add childs
+     * Add childs.
      *
      * @param array $childs
      *
@@ -164,7 +164,7 @@ class Node implements NodeContract, \JsonSerializable
     }
 
     /**
-     * Get childs
+     * Get childs.
      *
      * @return array
      */
@@ -174,9 +174,9 @@ class Node implements NodeContract, \JsonSerializable
     }
 
     /**
-     * Get a child by index
+     * Get a child by index.
      *
-     * @param integer $index
+     * @param int $index
      *
      * @return Node
      */
@@ -186,9 +186,9 @@ class Node implements NodeContract, \JsonSerializable
     }
 
     /**
-     * Count childs
+     * Count childs.
      *
-     * @return integer
+     * @return int
      */
     public function countChilds()
     {
@@ -196,41 +196,40 @@ class Node implements NodeContract, \JsonSerializable
     }
 
     /**
-     * Retrieve prev node
+     * Retrieve prev node.
      *
      * @return Node
      */
     public function prev()
     {
-        return $this->getParent() ? $this->getParent()->getChildByIndex($this->getIndex()-1) : null;
+        return $this->getParent() ? $this->getParent()->getChildByIndex($this->getIndex() - 1) : null;
     }
-    
+
     /**
-     * Retrieve next node
+     * Retrieve next node.
      *
      * @return Node
      */
     public function next()
     {
-        return $this->getParent() ? $this->getParent()->getChildByIndex($this->getIndex()+1) : null;
+        return $this->getParent() ? $this->getParent()->getChildByIndex($this->getIndex() + 1) : null;
     }
 
     /**
-     * Move the node from the old location to a new one as a child of $this
+     * Move the node from the old location to a new one as a child of $this.
      *
      * @param Node $child
      *
      * @return $this
      */
-    public function moveNodeAsChild(Node $child)
+    public function moveNodeAsChild(self $child)
     {
         $child->getParent()->removeChild($child);
         $this->addChild($child);
     }
 
-
     /**
-     * Retrieve first child by class name
+     * Retrieve first child by class name.
      *
      * @param string $class
      *
@@ -243,12 +242,10 @@ class Node implements NodeContract, \JsonSerializable
                 return $child;
             }
         }
-
-        return null;
     }
 
     /**
-     * Retrieve childs between indexes
+     * Retrieve childs between indexes.
      *
      * @param int $start
      * @param int $end
@@ -257,14 +254,13 @@ class Node implements NodeContract, \JsonSerializable
      */
     public function getChildsBetweenIndexes($start, $end)
     {
-        return array_slice($this->childs, $start, $end-$start+1);
+        return array_slice($this->childs, $start, $end - $start + 1);
     }
 
-
     /**
-     * Replace a child by others
+     * Replace a child by others.
      *
-     * @param integer $index
+     * @param int   $index
      * @param array $subs
      *
      * @return $this
@@ -272,19 +268,20 @@ class Node implements NodeContract, \JsonSerializable
     public function replaceChild($index, $subs)
     {
         $first = array_slice($this->childs, 0, $index);
-        $second = $index+1 >= count($this->childs) ? [] : array_slice($this->childs, $index+1, count($this->childs)-($index+1));
+        $second = $index + 1 >= count($this->childs) ? [] : array_slice($this->childs, $index + 1, count($this->childs) - ($index + 1));
 
         $this->childs = [];
-        
+
         foreach (array_merge($first, $subs, $second) as $child) {
             $child && $this->addChild($child);
         }
         $this->flush();
+
         return $this;
     }
 
     /**
-     * Remove a child by index
+     * Remove a child by index.
      *
      * @param int $index
      *
@@ -299,19 +296,19 @@ class Node implements NodeContract, \JsonSerializable
     }
 
     /**
-     * Remove a child
+     * Remove a child.
      *
      * @param Node $child
      *
      * @return $this
      */
-    public function removeChild(Node $child)
+    public function removeChild(self $child)
     {
         return $this->removeChildByIndex($child->getIndex());
     }
 
     /**
-     * Remove childs
+     * Remove childs.
      *
      * @param array $childs
      *
@@ -325,12 +322,11 @@ class Node implements NodeContract, \JsonSerializable
         return $this;
     }
 
-
     /**
-     * Add childs before node
+     * Add childs before node.
      *
      * @param array $childs
-     * @param node $node
+     * @param node  $node
      *
      * @return $this
      */
@@ -340,10 +336,10 @@ class Node implements NodeContract, \JsonSerializable
     }
 
     /**
-     * Add childs after node
+     * Add childs after node.
      *
      * @param array $childs
-     * @param node $node
+     * @param node  $node
      *
      * @return $this
      */
@@ -353,7 +349,7 @@ class Node implements NodeContract, \JsonSerializable
     }
 
     /**
-     * Remove all childs
+     * Remove all childs.
      *
      * @return $this
      */
@@ -368,11 +364,10 @@ class Node implements NodeContract, \JsonSerializable
         return $this;
     }
 
-
     /**
-     * Remove child by index
+     * Remove child by index.
      *
-     * @param int $index
+     * @param int  $index
      * @param bool $resort
      *
      * @return $this
@@ -389,7 +384,7 @@ class Node implements NodeContract, \JsonSerializable
     }
 
     /**
-     * Reset parent and index of each node
+     * Reset parent and index of each node.
      *
      * @return $this
      */
@@ -407,20 +402,19 @@ class Node implements NodeContract, \JsonSerializable
         }
 
         $this->childs = $childs;
-        
+
         return $this;
     }
 
-
     /**
-     * Swap parent and delete
+     * Swap parent and delete.
      *
      * @param Node $old_parent
      * @param Node $new_parent
      *
      * @return $this
      */
-    public function swapParentAndDelete(Node $old_parent, Node $new_parent)
+    public function swapParentAndDelete(self $old_parent, self $new_parent)
     {
         $new_parent->moveNodeAsChild($this);
         $new_parent->removeChild($old_parent);
@@ -429,7 +423,7 @@ class Node implements NodeContract, \JsonSerializable
     }
 
     /**
-     * Serialize to json
+     * Serialize to json.
      *
      * @return array
      */
@@ -439,15 +433,15 @@ class Node implements NodeContract, \JsonSerializable
     }
 
     /**
-     * Array representation of node
+     * Array representation of node.
      *
      * @return array
      */
     public function toArray()
     {
         return [
-            'type' => get_class($this),
-            'value' => $this->getValue(),
+            'type'   => get_class($this),
+            'value'  => $this->getValue(),
             'childs' => array_map(function ($node) {
                 return $node->jsonSerialize();
             }, $this->getChilds()),
@@ -455,9 +449,9 @@ class Node implements NodeContract, \JsonSerializable
     }
 
     /**
-     * To string
+     * To string.
      *
-     * @param boolean $recursive
+     * @param bool $recursive
      *
      * @return string
      */
@@ -466,14 +460,14 @@ class Node implements NodeContract, \JsonSerializable
         if ($this->countChilds() === 0) {
             return $this->getValue();
         }
-        
-        return implode(" ", array_map(function ($node) use ($recursive) {
+
+        return implode(' ', array_map(function ($node) use ($recursive) {
             return $recursive ? $node->valueToString() : $node->getValue();
         }, $this->getChilds()));
     }
 
     /**
-     * Get root
+     * Get root.
      *
      * @return Node
      */

@@ -2,17 +2,15 @@
 
 namespace Railken\SQ\Languages\BoomTree\Resolvers;
 
-use Railken\SQ\Contracts\ResolverContract;
 use Railken\SQ\Contracts\NodeContract;
-use Railken\SQ\Languages\BoomTree\Nodes as Nodes;
+use Railken\SQ\Contracts\ResolverContract;
 use Railken\SQ\Exceptions as Exceptions;
+use Railken\SQ\Languages\BoomTree\Nodes as Nodes;
 
 class TextResolver implements ResolverContract
 {
-
-
     /**
-     * Resolve node
+     * Resolve node.
      *
      * @param Node
      *
@@ -23,7 +21,7 @@ class TextResolver implements ResolverContract
         // $node->content = "";
 
         $childs = $node->getChilds();
-        
+
         if (count($childs) > 0) {
             foreach ($node->getChilds() as $child) {
                 $this->resolve($child);
@@ -31,14 +29,14 @@ class TextResolver implements ResolverContract
 
             return;
         }
-        
+
         if ($node instanceof Nodes\TextNode) {
             $this->resolveTextNode($node);
         }
     }
 
     /**
-     * Resolve text nodes
+     * Resolve text nodes.
      *
      * @param Node
      *
