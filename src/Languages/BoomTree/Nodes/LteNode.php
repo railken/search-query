@@ -5,7 +5,7 @@ namespace Railken\SQ\Languages\BoomTree\Nodes;
 class LteNode extends ComparisonOperatorNode
 {
     /**
-     * Operator
+     * Operator.
      *
      * @var string
      */

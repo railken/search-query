@@ -3,10 +3,10 @@
 namespace Railken\SQ\Tests;
 
 use PHPUnit\Framework\TestCase;
-use Railken\SQ\QueryParser;
-use Railken\SQ\Languages\BoomTree\Resolvers as Resolvers;
-use Railken\SQ\Languages\BoomTree\Nodes as Nodes;
 use Railken\SQ\Exceptions\QuerySyntaxException;
+use Railken\SQ\Languages\BoomTree\Nodes as Nodes;
+use Railken\SQ\Languages\BoomTree\Resolvers as Resolvers;
+use Railken\SQ\QueryParser;
 
 class QueryTest extends TestCase
 {
@@ -173,7 +173,6 @@ class QueryTest extends TestCase
         $this->assertEquals('1', $result->getFirstChildByClass(Nodes\ValueNode::class)->getValue());
     }
 
-
     public function testLt()
     {
         $query = $this->parser;
@@ -203,7 +202,6 @@ class QueryTest extends TestCase
         $this->assertEquals('x', $result->getFirstChildByClass(Nodes\KeyNode::class)->getValue());
         $this->assertEquals('1', $result->getFirstChildByClass(Nodes\ValueNode::class)->getValue());
     }
-
 
     public function testNull()
     {
@@ -274,7 +272,6 @@ class QueryTest extends TestCase
 
         $result = $query->parse('x not in (1, 2)');
 
-
         $this->assertEquals(Nodes\NotInNode::class, get_class($result));
         $this->assertEquals('x', $result->getFirstChildByClass(Nodes\KeyNode::class)->getValue());
         $this->assertEquals('1', $result->getFirstChildByClass(Nodes\GroupNode::class)->getChildByIndex(0)->getValue());
@@ -302,7 +299,6 @@ class QueryTest extends TestCase
         $this->assertEquals('x', $result->getFirstChildByClass(Nodes\KeyNode::class)->getValue());
         $this->assertEquals('1', $result->getFirstChildByClass(Nodes\GroupNode::class)->getChildByIndex(0)->getValue());
         $this->assertEquals('2', $result->getFirstChildByClass(Nodes\GroupNode::class)->getChildByIndex(1)->getValue());
-        ;
     }
 
     public function testExceptionIn()
@@ -318,7 +314,6 @@ class QueryTest extends TestCase
         $this->assertEquals(Nodes\AndNode::class, get_class($result));
         $this->assertEquals('x', $result->getChildByIndex(0)->getValue());
         $this->assertEquals('y', $result->getChildByIndex(1)->getValue());
-
 
         $result = $query->parse('x && y');
         $this->assertEquals(Nodes\AndNode::class, get_class($result));
@@ -337,7 +332,6 @@ class QueryTest extends TestCase
         $this->expectException(QuerySyntaxException::class);
         $this->parser->parse('and x');
     }
-
 
     public function testAndEq()
     {
@@ -371,7 +365,6 @@ class QueryTest extends TestCase
         $this->assertEquals('x', $result->getChildByIndex(0)->getValue());
         $this->assertEquals('y', $result->getChildByIndex(1)->getValue());
 
-
         $result = $query->parse('x || y');
         $this->assertEquals(Nodes\OrNode::class, get_class($result));
         $this->assertEquals('x', $result->getChildByIndex(0)->getValue());
@@ -389,7 +382,6 @@ class QueryTest extends TestCase
         $this->assertEquals('y', $result->getChildByIndex(1)->getChildByIndex(0)->getValue());
         $this->assertEquals('z', $result->getChildByIndex(1)->getChildByIndex(1)->getValue());
     }
-
 
     public function testGrouping1()
     {

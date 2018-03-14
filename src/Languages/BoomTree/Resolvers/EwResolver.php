@@ -7,14 +7,14 @@ use Railken\SQ\Languages\BoomTree\Nodes as Nodes;
 class EwResolver extends ComparisonOperatorResolver
 {
     /**
-     * Node resolved
+     * Node resolved.
      *
      * @var string
      */
     public $node = Nodes\EwNode::class;
 
     /**
-     * Regex token
+     * Regex token.
      *
      * @var string
      */

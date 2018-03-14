@@ -2,30 +2,27 @@
 
 namespace Railken\SQ;
 
-use Railken\SQ\Exceptions as Exceptions;
-
 use Railken\SQ\Contracts\ResolverContract;
-use Railken\SQ\Languages\BoomTree\Resolvers as Resolvers;
 use Railken\SQ\Languages\BoomTree\Nodes as Nodes;
+use Railken\SQ\Languages\BoomTree\Resolvers as Resolvers;
 
 class QueryParser
 {
-
     /**
      * @var ResolverContract[]
      */
     protected $resolvers;
 
     /**
-     * Construct
+     * Construct.
      */
     public function __construct()
     {
         $this->resolvers = [];
     }
-    
+
     /**
-     * Add resolvers to resolve query
+     * Add resolvers to resolve query.
      *
      * @param array $resolvers
      *
@@ -46,11 +43,11 @@ class QueryParser
     }
 
     /**
-     * Convert the string query into an object (e.g.)
+     * Convert the string query into an object (e.g.).
      *
      * @param string $query (e.g.) title eq 'something'
      *
-     * @return Object
+     * @return object
      */
     public function parse($query)
     {

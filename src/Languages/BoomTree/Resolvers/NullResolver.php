@@ -2,20 +2,20 @@
 
 namespace Railken\SQ\Languages\BoomTree\Resolvers;
 
-use Railken\SQ\Languages\BoomTree\Nodes as Nodes;
 use Railken\SQ\Contracts\NodeContract;
+use Railken\SQ\Languages\BoomTree\Nodes as Nodes;
 
 class NullResolver extends ComparisonOperatorResolver
 {
     /**
-     * Node resolved
+     * Node resolved.
      *
      * @var string
      */
     public $node = Nodes\NullNode::class;
 
     /**
-     * Regex token
+     * Regex token.
      *
      * @var string
      */
@@ -24,7 +24,7 @@ class NullResolver extends ComparisonOperatorResolver
     ];
 
     /**
-     * Resolve previous node match
+     * Resolve previous node match.
      *
      * @param NodeContract $node
      * @param NodeContract $new_node

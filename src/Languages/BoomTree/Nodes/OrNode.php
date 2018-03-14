@@ -5,7 +5,7 @@ namespace Railken\SQ\Languages\BoomTree\Nodes;
 class OrNode extends LogicNode
 {
     /**
-     * Operator
+     * Operator.
      *
      * @var string
      */
