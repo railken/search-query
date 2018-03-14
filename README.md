@@ -1,5 +1,11 @@
 # Search Query
 
+[![Build Status](https://img.shields.io/travis/railken/search-query/master.svg)](https://travis-ci.org/railken/search-query)
+[![Code Coverage](https://img.shields.io/codecov/c/github/railken/search-query.svg)](https://codecov.io/gh/railken/search-query)
+[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Latest stable](https://img.shields.io/packagist/v/railken/search-query.svg?style=flat-square)](https://packagist.org/packages/railken/search-query)
+[![PHP](https://img.shields.io/travis/php-v/railken/search-query.svg)](https://secure.php.net/)
+
 Converts a simple expression (e.g. 'x eq 1 or y gt 2') into a tree object.
 This can be pretty usefull when building the API endpoint for a search.
 
