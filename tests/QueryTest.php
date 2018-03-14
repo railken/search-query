@@ -58,6 +58,12 @@ class QueryTest extends TestCase
         $this->assertEquals('x', $result->getChildByIndex(1)->getValue());
     }
 
+    public function testExceptionFunction()
+    {
+        $this->expectException(QuerySyntaxException::class);
+        $this->parser->parse('sum');
+    }
+
     public function testExceptionEq1()
     {
         $this->expectException(QuerySyntaxException::class);
@@ -80,6 +86,26 @@ class QueryTest extends TestCase
     {
         $this->expectException(QuerySyntaxException::class);
         $this->parser->parse('x eq (1)');
+    }
+
+    public function testKeyNode()
+    {
+        $query = $this->parser;
+
+        $result = $query->parse('x');
+        $this->assertEquals(Nodes\KeyNode::class, get_class($result));
+        $this->assertEquals('x', $result->getValue());
+        $this->assertEquals(['type', 'value'], array_keys($result->toArray()));
+    }
+
+    public function testValueNode()
+    {
+        $query = $this->parser;
+
+        $result = $query->parse('1');
+        $this->assertEquals(Nodes\ValueNode::class, get_class($result));
+        $this->assertEquals('1', $result->getValue());
+        $this->assertEquals(['type', 'value'], array_keys($result->toArray()));
     }
 
     public function testEq()
@@ -279,6 +305,11 @@ class QueryTest extends TestCase
         ;
     }
 
+    public function testExceptionIn()
+    {
+        $this->expectException(QuerySyntaxException::class);
+        $this->parser->parse('x in');
+    }
 
     public function testAnd1()
     {
@@ -294,6 +325,19 @@ class QueryTest extends TestCase
         $this->assertEquals('x', $result->getChildByIndex(0)->getValue());
         $this->assertEquals('y', $result->getChildByIndex(1)->getValue());
     }
+
+    public function testExceptionAnd()
+    {
+        $this->expectException(QuerySyntaxException::class);
+        $this->parser->parse('x and');
+    }
+
+    public function testExceptionAnd1()
+    {
+        $this->expectException(QuerySyntaxException::class);
+        $this->parser->parse('and x');
+    }
+
 
     public function testAndEq()
     {
@@ -357,5 +401,23 @@ class QueryTest extends TestCase
         $this->assertEquals(Nodes\EqNode::class, get_class($result->getChildByIndex(0)->getChildByIndex(0)));
         $this->assertEquals('x', $result->getChildByIndex(0)->getChildByIndex(0)->getFirstChildByClass(Nodes\KeyNode::class)->getValue());
         $this->assertEquals('1', $result->getChildByIndex(0)->getChildByIndex(0)->getFirstChildByClass(Nodes\ValueNode::class)->getValue());
+    }
+
+    public function testExceptionGrouping1()
+    {
+        $this->expectException(QuerySyntaxException::class);
+        $this->parser->parse('(x');
+    }
+
+    public function testExceptionGrouping2()
+    {
+        $this->expectException(QuerySyntaxException::class);
+        $this->parser->parse('x)');
+    }
+
+    public function testExceptionGrouping3()
+    {
+        $this->expectException(QuerySyntaxException::class);
+        $this->parser->parse('(x eq ")"');
     }
 }
