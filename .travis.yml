@@ -8,9 +8,9 @@ addons:
       - libxml2-utils
 
 php:
+  - 7.0
   - 7.1
   - 7.2
-  - master
 
 matrix:
   allow_failures:
@@ -61,6 +61,7 @@ jobs:
       env: php-cs-fixer
       install:
         - phpenv config-rm xdebug.ini
+        - travis_retry composer update --prefer-dist --prefer-stable
       script:
         - ./vendor/bin/php-cs-fixer --diff --dry-run -v fix src
         - ./vendor/bin/php-cs-fixer --diff --dry-run -v fix tests
