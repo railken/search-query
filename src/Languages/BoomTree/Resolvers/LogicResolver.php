@@ -8,5 +8,4 @@ use Railken\SQ\Languages\BoomTree\Nodes as Nodes;
 
 abstract class LogicResolver extends ComparisonOperatorResolver
 {
-
 }
