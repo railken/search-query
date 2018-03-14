@@ -14,9 +14,9 @@ class CtResolver extends ComparisonOperatorResolver
     public $node = Nodes\CtNode::class;
 
     /**
-     * Regex token
+     * Regex
      *
-     * @var string
+     * @var array
      */
     public $regex = [
         '/(?<![^\s])ct(?![^\s])/i',

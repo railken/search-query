@@ -14,9 +14,9 @@ class NotEqResolver extends ComparisonOperatorResolver
     public $node = Nodes\NotEqNode::class;
 
     /**
-     * Regex token
+     * Regex
      *
-     * @var string
+     * @var array
      */
     public $regex = [
         '/(?<![^\s])not eq(?![^\s])/i',

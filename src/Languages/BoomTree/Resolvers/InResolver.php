@@ -16,9 +16,9 @@ class InResolver extends ComparisonOperatorResolver
     public $node = Nodes\InNode::class;
 
     /**
-     * Regex token
+     * Regex
      *
-     * @var string
+     * @var array
      */
     public $regex = [
         '/(?<![^\s])in(?![^\s])/i',

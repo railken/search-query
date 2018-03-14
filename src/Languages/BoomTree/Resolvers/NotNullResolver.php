@@ -14,9 +14,9 @@ class NotNullResolver extends NullResolver
     public $node = Nodes\NotNullNode::class;
 
     /**
-     * Regex token
+     * Regex
      *
-     * @var string
+     * @var array
      */
     public $regex = [
         '/(?<![^\s])is not null(?![^\s])/i',

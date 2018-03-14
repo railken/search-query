@@ -15,9 +15,9 @@ class SumFunctionResolver extends FunctionResolver
     public $node = Nodes\SumFunctionNode::class;
 
     /**
-     * Regex token
+     * Regex
      *
-     * @var string
+     * @var array
      */
     public $regex = [
         '/(?<![^\s])sum(?![^\s])/i'

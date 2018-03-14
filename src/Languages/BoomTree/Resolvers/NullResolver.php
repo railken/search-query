@@ -15,9 +15,9 @@ class NullResolver extends ComparisonOperatorResolver
     public $node = Nodes\NullNode::class;
 
     /**
-     * Regex token
+     * Regex
      *
-     * @var string
+     * @var array
      */
     public $regex = [
         '/(?<![^\s])is null(?![^\s])/i',

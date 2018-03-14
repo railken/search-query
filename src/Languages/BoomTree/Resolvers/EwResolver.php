@@ -14,9 +14,9 @@ class EwResolver extends ComparisonOperatorResolver
     public $node = Nodes\EwNode::class;
 
     /**
-     * Regex token
+     * Regex
      *
-     * @var string
+     * @var array
      */
     public $regex = [
         '/(?<![^\s])ew(?![^\s])/i',

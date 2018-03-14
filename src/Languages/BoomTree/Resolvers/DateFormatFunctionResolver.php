@@ -15,9 +15,9 @@ class DateFormatFunctionResolver extends FunctionResolver
     public $node = Nodes\DateFormatFunctionNode::class;
 
     /**
-     * Regex token
+     * Regex
      *
-     * @var string
+     * @var array
      */
     public $regex = [
         '/(?<![^\s])date_format(?![^\s])/i',

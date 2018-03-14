@@ -16,9 +16,9 @@ class OrResolver extends AndResolver
     public $node = Nodes\OrNode::class;
 
     /**
-     * Regex token
+     * Regex
      *
-     * @var string
+     * @var array
      */
     public $regex = [
         '/(?<![^\s])or(?![^\s])/i',

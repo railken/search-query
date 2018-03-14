@@ -16,7 +16,7 @@ class GteResolver extends ComparisonOperatorResolver
     /**
      * Regex token
      *
-     * @var string
+     * @var array
      */
     public $regex = [
         '/(?<![^\s])gte(?![^\s])/i',

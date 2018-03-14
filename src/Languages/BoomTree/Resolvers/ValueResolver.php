@@ -17,9 +17,9 @@ class ValueResolver extends BaseResolver implements ResolverContract
     public $node = Nodes\ValueNode::class;
 
     /**
-     * Regex token
+     * Regex
      *
-     * @var string
+     * @var array
      */
     public $regex = [
         '/\'([^\']+)\'/i',

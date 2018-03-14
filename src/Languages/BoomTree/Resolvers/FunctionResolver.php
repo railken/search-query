@@ -17,9 +17,9 @@ class FunctionResolver extends ComparisonOperatorResolver implements ResolverCon
     public $node = Nodes\FunctionNode::class;
 
     /**
-     * Regex token
+     * Regex
      *
-     * @var string
+     * @var array
      */
     public $regex = [];
 
@@ -48,7 +48,7 @@ class FunctionResolver extends ComparisonOperatorResolver implements ResolverCon
     public function resolveNextNode(NodeContract $node, NodeContract $new_node)
     {
         // Nothing ...
-        if ($new_node->next() && $new_node->next() instanceof Nodes\GroupNode) {
+        if (!$new_node->getParent() || ($new_node->next() && $new_node->next() instanceof Nodes\GroupNode)) {
             $childs = [];
 
             foreach ($new_node->next()->getChilds() as $child) {

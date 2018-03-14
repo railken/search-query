@@ -14,9 +14,9 @@ class NotInResolver extends InResolver
     public $node = Nodes\NotInNode::class;
 
     /**
-     * Regex token
+     * Regex
      *
-     * @var string
+     * @var array
      */
     public $regex = [
         '/(?<![^\s])not in(?![^\s])/i',
