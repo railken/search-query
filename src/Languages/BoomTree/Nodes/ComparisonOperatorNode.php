@@ -5,5 +5,4 @@ use Railken\SQ\StringHelper;
 
 class ComparisonOperatorNode extends Node
 {
-    
 }

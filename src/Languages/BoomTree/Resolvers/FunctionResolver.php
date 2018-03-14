@@ -49,7 +49,6 @@ class FunctionResolver extends ComparisonOperatorResolver implements ResolverCon
     {
         // Nothing ...
         if ($new_node->next() && $new_node->next() instanceof Nodes\GroupNode) {
-
             $childs = [];
 
             foreach ($new_node->next()->getChilds() as $child) {

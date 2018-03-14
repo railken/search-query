@@ -87,7 +87,6 @@ class ComparisonOperatorResolver implements ResolverContract
      */
     public function resolvePreviousNode(NodeContract $node, NodeContract $new_node)
     {
-
         if ($new_node->prev() && $new_node->prev() instanceof ComparableNodeContract) {
             $new_node->moveNodeAsChild($new_node->prev());
         } else {

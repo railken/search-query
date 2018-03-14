@@ -4,5 +4,4 @@ namespace Railken\SQ\Contracts;
 
 interface ComparableNodeContract
 {
-	
 }

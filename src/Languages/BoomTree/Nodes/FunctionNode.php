@@ -6,5 +6,4 @@ use Railken\SQ\Contracts\ComparableNodeContract;
 
 class FunctionNode extends Node implements ComparableNodeContract
 {
-
 }
