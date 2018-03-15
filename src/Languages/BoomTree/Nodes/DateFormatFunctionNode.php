@@ -5,7 +5,7 @@ namespace Railken\SQ\Languages\BoomTree\Nodes;
 class DateFormatFunctionNode extends FunctionNode
 {
     /**
-     * value
+     * value.
      *
      * @var string
      */

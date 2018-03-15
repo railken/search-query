@@ -2,21 +2,19 @@
 
 namespace Railken\SQ\Languages\BoomTree\Resolvers;
 
-use Railken\SQ\Contracts\ResolverContract;
-use Railken\SQ\Contracts\NodeContract;
 use Railken\SQ\Languages\BoomTree\Nodes as Nodes;
 
 class OrResolver extends AndResolver
 {
     /**
-     * Node resolved
+     * Node resolved.
      *
      * @var string
      */
     public $node = Nodes\OrNode::class;
 
     /**
-     * Regex
+     * Regex.
      *
      * @var array
      */

@@ -2,33 +2,33 @@
 
 namespace Railken\SQ\Languages\BoomTree\Resolvers;
 
-use Railken\SQ\Contracts\ResolverContract;
-use Railken\SQ\Contracts\NodeContract;
 use Railken\SQ\Contracts\ComparableNodeContract;
+use Railken\SQ\Contracts\NodeContract;
+use Railken\SQ\Contracts\ResolverContract;
+use Railken\SQ\Exceptions;
 use Railken\SQ\Languages\BoomTree\Nodes as Nodes;
 use Railken\SQ\Traits\SplitNodeTrait;
-use Railken\SQ\Exceptions;
 
 class ComparisonOperatorResolver implements ResolverContract
 {
     use SplitNodeTrait;
 
     /**
-     * Node resolved
+     * Node resolved.
      *
      * @var string
      */
     public $node;
 
     /**
-     * Regex
+     * Regex.
      *
      * @var array
      */
     public $regex = [];
 
     /**
-     * Resolve token eq node
+     * Resolve token eq node.
      *
      * @param NodeContract $node
      *
@@ -41,29 +41,26 @@ class ComparisonOperatorResolver implements ResolverContract
         if (count($childs) > 0) {
             $this->resolve($node->getChildByIndex(0));
 
-            $value = "";
+            $value = '';
             $positions = [];
             foreach ($node->getChilds() as $child) {
                 if ($child instanceof Nodes\TextNode || $child instanceof Nodes\KeyNode) {
-                    $value .= " ".$child->getValue();
-                    $p = array_fill(0, strlen(" ".$child->getValue()), $child->getIndex());
+                    $value .= ' '.$child->getValue();
+                    $p = array_fill(0, strlen(' '.$child->getValue()), $child->getIndex());
                     $positions = array_merge($positions, $p);
                 }
             }
-
-
 
             foreach ($this->regex as $regex) {
                 preg_match($regex, $value, $match, PREG_OFFSET_CAPTURE);
 
                 if ($match) {
-                    $new_node = new $this->node;
+                    $new_node = new $this->node();
 
                     $start = $match[0][1];
                     $length = strlen($match[0][0]);
 
-
-                    $this->groupNode($node, $new_node, $start, $start+$length, $positions);
+                    $this->groupNode($node, $new_node, $start, $start + $length, $positions);
                     $this->resolveRelationsNode($node, $new_node);
 
                     // Search for another match in this node.
@@ -72,12 +69,11 @@ class ComparisonOperatorResolver implements ResolverContract
             }
         }
 
-
         return $node->next() ? $this->resolve($node->next()) : null;
     }
 
     /**
-     * Resolve previous node match
+     * Resolve previous node match.
      *
      * @param NodeContract $node
      * @param NodeContract $new_node
@@ -94,7 +90,7 @@ class ComparisonOperatorResolver implements ResolverContract
     }
 
     /**
-     * Resolve next node match
+     * Resolve next node match.
      *
      * @param NodeContract $node
      * @param NodeContract $new_node
@@ -110,9 +106,8 @@ class ComparisonOperatorResolver implements ResolverContract
         }
     }
 
-
     /**
-     * Resolve node relations with other nodes
+     * Resolve node relations with other nodes.
      *
      * @param NodeContract $node
      * @param NodeContract $new_node

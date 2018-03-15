@@ -7,14 +7,14 @@ use Railken\SQ\Languages\BoomTree\Nodes as Nodes;
 class GtResolver extends ComparisonOperatorResolver
 {
     /**
-     * Node resolved
+     * Node resolved.
      *
      * @var string
      */
     public $node = Nodes\GtNode::class;
 
     /**
-     * Regex
+     * Regex.
      *
      * @var array
      */

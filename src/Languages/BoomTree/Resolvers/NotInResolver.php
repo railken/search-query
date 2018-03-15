@@ -7,14 +7,14 @@ use Railken\SQ\Languages\BoomTree\Nodes as Nodes;
 class NotInResolver extends InResolver
 {
     /**
-     * Node resolved
+     * Node resolved.
      *
      * @var string
      */
     public $node = Nodes\NotInNode::class;
 
     /**
-     * Regex
+     * Regex.
      *
      * @var array
      */

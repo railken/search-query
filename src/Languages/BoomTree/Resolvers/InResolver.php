@@ -2,21 +2,21 @@
 
 namespace Railken\SQ\Languages\BoomTree\Resolvers;
 
-use Railken\SQ\Languages\BoomTree\Nodes as Nodes;
 use Railken\SQ\Contracts\NodeContract;
 use Railken\SQ\Exceptions as Exceptions;
+use Railken\SQ\Languages\BoomTree\Nodes as Nodes;
 
 class InResolver extends ComparisonOperatorResolver
 {
     /**
-     * Node resolved
+     * Node resolved.
      *
      * @var string
      */
     public $node = Nodes\InNode::class;
 
     /**
-     * Regex
+     * Regex.
      *
      * @var array
      */
@@ -26,7 +26,7 @@ class InResolver extends ComparisonOperatorResolver
     ];
 
     /**
-     * Resolve previous node match
+     * Resolve previous node match.
      *
      * @param NodeContract $node
      * @param NodeContract $new_node
@@ -38,10 +38,9 @@ class InResolver extends ComparisonOperatorResolver
         if ($new_node->next() && ($new_node->next() instanceof Nodes\GroupNode)) {
             $values = $new_node->next()->valueToString();
 
-
             $new_node->next()->removeAllChilds();
 
-            foreach (explode(",", $values) as $value) {
+            foreach (explode(',', $values) as $value) {
                 $vn = new Nodes\ValueNode();
                 $vn->setValue($value);
 
