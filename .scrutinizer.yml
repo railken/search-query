@@ -28,4 +28,3 @@ build:
                 coverage:
                     file: 'coverage.xml'
                     format: 'clover'
-=======
