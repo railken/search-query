@@ -2,25 +2,24 @@
 
 namespace Railken\SQ\Languages\BoomTree\Resolvers;
 
-use Railken\SQ\Contracts\NodeContract;
 use Railken\SQ\Languages\BoomTree\Nodes as Nodes;
 
 class DateFormatFunctionResolver extends FunctionResolver
 {
     /**
-     * Node resolved
+     * Node resolved.
      *
      * @var string
      */
     public $node = Nodes\DateFormatFunctionNode::class;
 
     /**
-     * Regex
+     * Regex.
      *
      * @var array
      */
     public $regex = [
         '/(?<![^\s])date_format(?![^\s])/i',
-        '/(?<![^\s])dateformat(?![^\s])/i'
+        '/(?<![^\s])dateformat(?![^\s])/i',
     ];
 }

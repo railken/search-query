@@ -7,19 +7,19 @@ use Railken\SQ\Languages\BoomTree\Nodes as Nodes;
 class LtResolver extends ComparisonOperatorResolver
 {
     /**
-     * Node resolved
+     * Node resolved.
      *
      * @var string
      */
     public $node = Nodes\LtNode::class;
 
     /**
-     * Regex
+     * Regex.
      *
      * @var array
      */
     public $regex = [
         '/lt/i',
-        '/</i'
+        '/</i',
     ];
 }

@@ -2,30 +2,29 @@
 
 namespace Railken\SQ\Languages\BoomTree\Resolvers;
 
-use Railken\SQ\Contracts\ResolverContract;
 use Railken\SQ\Contracts\NodeContract;
-use Railken\SQ\Languages\BoomTree\Nodes as Nodes;
+use Railken\SQ\Contracts\ResolverContract;
 use Railken\SQ\Exceptions as Exceptions;
+use Railken\SQ\Languages\BoomTree\Nodes as Nodes;
 
 class FunctionResolver extends ComparisonOperatorResolver implements ResolverContract
 {
     /**
-     * Node resolved
+     * Node resolved.
      *
      * @var string
      */
     public $node = Nodes\FunctionNode::class;
 
     /**
-     * Regex
+     * Regex.
      *
      * @var array
      */
     public $regex = [];
 
-
     /**
-     * Resolve previous node match
+     * Resolve previous node match.
      *
      * @param NodeContract $node
      * @param NodeContract $new_node
@@ -38,7 +37,7 @@ class FunctionResolver extends ComparisonOperatorResolver implements ResolverCon
     }
 
     /**
-     * Resolve next node match
+     * Resolve next node match.
      *
      * @param NodeContract $node
      * @param NodeContract $new_node
@@ -52,7 +51,7 @@ class FunctionResolver extends ComparisonOperatorResolver implements ResolverCon
             $childs = [];
 
             foreach ($new_node->next()->getChilds() as $child) {
-                if (trim($child->getValue()) !== ",") {
+                if (trim($child->getValue()) !== ',') {
                     $childs[] = $child;
                 }
             }
@@ -64,9 +63,8 @@ class FunctionResolver extends ComparisonOperatorResolver implements ResolverCon
         }
     }
 
-
     /**
-     * Resolve node relations with other nodes
+     * Resolve node relations with other nodes.
      *
      * @param NodeContract $node
      * @param NodeContract $new_node

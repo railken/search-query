@@ -2,22 +2,21 @@
 
 namespace Railken\SQ\Languages\BoomTree\Resolvers;
 
-use Railken\SQ\Contracts\ResolverContract;
 use Railken\SQ\Contracts\NodeContract;
-use Railken\SQ\Languages\BoomTree\Nodes as Nodes;
 use Railken\SQ\Exceptions as Exceptions;
+use Railken\SQ\Languages\BoomTree\Nodes as Nodes;
 
 class AndResolver extends LogicResolver
 {
     /**
-     * Node resolved
+     * Node resolved.
      *
      * @var string
      */
     public $node = Nodes\AndNode::class;
 
     /**
-     * Regex
+     * Regex.
      *
      * @var array
      */
@@ -27,7 +26,7 @@ class AndResolver extends LogicResolver
     ];
 
     /**
-     * Resolve previous node match
+     * Resolve previous node match.
      *
      * @param NodeContract $node
      * @param NodeContract $new_node
@@ -44,7 +43,7 @@ class AndResolver extends LogicResolver
     }
 
     /**
-     * Resolve next node match
+     * Resolve next node match.
      *
      * @param NodeContract $node
      * @param NodeContract $new_node
@@ -61,7 +60,7 @@ class AndResolver extends LogicResolver
     }
 
     /**
-     * Resolve node relations with other nodes
+     * Resolve node relations with other nodes.
      *
      * @param NodeContract $node
      * @param NodeContract $new_node
@@ -76,7 +75,7 @@ class AndResolver extends LogicResolver
     }
 
     /**
-     * Resolve node relations with other nodes
+     * Resolve node relations with other nodes.
      *
      * @param NodeContract $node
      * @param NodeContract $new_node
