@@ -14,7 +14,7 @@ class LteResolver extends ComparisonOperatorResolver
     public $node = Nodes\LteNode::class;
 
     /**
-     * Regex
+     * Regex.
      *
      * @var array
      */

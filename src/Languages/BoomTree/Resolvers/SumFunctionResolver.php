@@ -14,7 +14,7 @@ class SumFunctionResolver extends FunctionResolver
     public $node = Nodes\SumFunctionNode::class;
 
     /**
-     * Regex
+     * Regex.
      *
      * @var array
      */

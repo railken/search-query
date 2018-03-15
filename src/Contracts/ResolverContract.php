@@ -5,7 +5,7 @@ namespace Railken\SQ\Contracts;
 interface ResolverContract
 {
     /**
-     * Resolve node
+     * Resolve node.
      *
      * @param NodeContract $node
      *

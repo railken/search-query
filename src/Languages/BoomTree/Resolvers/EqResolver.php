@@ -14,7 +14,7 @@ class EqResolver extends ComparisonOperatorResolver
     public $node = Nodes\EqNode::class;
 
     /**
-     * Regex
+     * Regex.
      *
      * @var array
      */

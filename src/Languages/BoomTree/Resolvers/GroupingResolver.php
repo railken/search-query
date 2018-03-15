@@ -19,7 +19,7 @@ class GroupingResolver implements ResolverContract
     public $node = Nodes\GroupNode::class;
 
     /**
-     * Regex
+     * Regex.
      *
      * @var array
      */
@@ -90,7 +90,7 @@ class GroupingResolver implements ResolverContract
     public function resolveGrouping(NodeContract $node)
     {
         if ($node->countChilds() === 0) {
-            return null;
+            return;
         }
 
         foreach ($node->getChilds() as $child) {

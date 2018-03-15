@@ -15,7 +15,7 @@ class KeyResolver extends BaseResolver implements ResolverContract
     public $node = Nodes\KeyNode::class;
 
     /**
-     * Regex
+     * Regex.
      *
      * @var array
      */

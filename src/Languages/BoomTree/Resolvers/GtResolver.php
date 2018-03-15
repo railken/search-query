@@ -14,7 +14,7 @@ class GtResolver extends ComparisonOperatorResolver
     public $node = Nodes\GtNode::class;
 
     /**
-     * Regex
+     * Regex.
      *
      * @var array
      */

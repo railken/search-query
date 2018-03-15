@@ -14,7 +14,7 @@ class NotNullResolver extends NullResolver
     public $node = Nodes\NotNullNode::class;
 
     /**
-     * Regex
+     * Regex.
      *
      * @var array
      */

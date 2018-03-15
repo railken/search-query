@@ -15,7 +15,7 @@ class ValueResolver extends BaseResolver implements ResolverContract
     public $node = Nodes\ValueNode::class;
 
     /**
-     * Regex
+     * Regex.
      *
      * @var array
      */

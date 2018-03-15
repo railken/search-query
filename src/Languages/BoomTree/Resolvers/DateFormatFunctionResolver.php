@@ -14,7 +14,7 @@ class DateFormatFunctionResolver extends FunctionResolver
     public $node = Nodes\DateFormatFunctionNode::class;
 
     /**
-     * Regex
+     * Regex.
      *
      * @var array
      */

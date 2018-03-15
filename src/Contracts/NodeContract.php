@@ -4,9 +4,8 @@ namespace Railken\SQ\Contracts;
 
 interface NodeContract
 {
-
     /**
-     * Set value
+     * Set value.
      *
      * @param mixed $value
      *
@@ -15,30 +14,30 @@ interface NodeContract
     public function setValue($value);
 
     /**
-     * Get value
+     * Get value.
      *
      * @return mixed
      */
     public function getValue();
 
     /**
-     * Set parent
+     * Set parent.
      *
-     * @var NodeContract|null $parent
+     * @var NodeContract|null
      *
      * @return $this
      */
-    public function setParent(NodeContract $parent = null);
+    public function setParent(self $parent = null);
 
     /**
-     * Get parent
+     * Get parent.
      *
      * @return NodeContract|null
      */
     public function getParent();
 
     /**
-     * Set index node
+     * Set index node.
      *
      * @param int $index
      *
@@ -47,32 +46,32 @@ interface NodeContract
     public function setIndex($index);
 
     /**
-     * Retrieve index node
+     * Retrieve index node.
      *
      * @return int
      */
     public function getIndex();
 
     /**
-     * Set childs
+     * Set childs.
      *
-     * @var array $childs
+     * @var array
      *
      * @return $this
      */
     public function setChilds($childs);
 
     /**
-     * Add a child
+     * Add a child.
      *
      * @param NodeContract $child
      *
      * @return $this
      */
-    public function addChild(NodeContract $child);
+    public function addChild(self $child);
 
     /**
-     * Add childs
+     * Add childs.
      *
      * @param array $childs
      *
@@ -81,53 +80,53 @@ interface NodeContract
     public function addChilds($childs);
 
     /**
-     * Get childs
+     * Get childs.
      *
      * @return array
      */
     public function getChilds();
 
     /**
-     * Get a child by index
+     * Get a child by index.
      *
-     * @param integer $index
+     * @param int $index
      *
      * @return NodeContract
      */
     public function getChildByIndex($index);
 
     /**
-     * Count childs
+     * Count childs.
      *
-     * @return integer
+     * @return int
      */
     public function countChilds();
 
     /**
-     * Retrieve prev node
+     * Retrieve prev node.
      *
      * @return NodeContract|null
      */
     public function prev();
-    
+
     /**
-     * Retrieve next node
+     * Retrieve next node.
      *
      * @return NodeContract|null
      */
     public function next();
 
     /**
-     * Move the node from the old location to a new one as a child of $this
+     * Move the node from the old location to a new one as a child of $this.
      *
      * @param NodeContract $child
      *
      * @return $this
      */
-    public function moveNodeAsChild(NodeContract $child);
+    public function moveNodeAsChild(self $child);
 
     /**
-     * Retrieve first child by class name
+     * Retrieve first child by class name.
      *
      * @param string $class
      *
@@ -136,7 +135,7 @@ interface NodeContract
     public function getFirstChildByClass(string $class);
 
     /**
-     * Retrieve childs between indexes
+     * Retrieve childs between indexes.
      *
      * @param int $start
      * @param int $end
@@ -145,11 +144,10 @@ interface NodeContract
      */
     public function getChildsBetweenIndexes(int $start, int $end);
 
-
     /**
-     * Replace a child by others
+     * Replace a child by others.
      *
-     * @param integer $index
+     * @param int   $index
      * @param array $subs
      *
      * @return $this
@@ -157,7 +155,7 @@ interface NodeContract
     public function replaceChild($index, $subs);
 
     /**
-     * Remove a child by index
+     * Remove a child by index.
      *
      * @param int $index
      *
@@ -166,16 +164,16 @@ interface NodeContract
     public function removeChildByIndex($index);
 
     /**
-     * Remove a child
+     * Remove a child.
      *
      * @param NodeContract $child
      *
      * @return $this
      */
-    public function removeChild(NodeContract $child);
+    public function removeChild(self $child);
 
     /**
-     * Remove childs
+     * Remove childs.
      *
      * @param array $childs
      *
@@ -184,36 +182,36 @@ interface NodeContract
     public function removeChilds($childs);
 
     /**
-     * Add childs before node
+     * Add childs before node.
      *
      * @param NodeContract $child
-     * @param int $index
+     * @param int          $index
      *
      * @return $this
      */
-    public function addChildBeforeNodeByIndex(NodeContract $child, int $index);
+    public function addChildBeforeNodeByIndex(self $child, int $index);
 
     /**
-     * Add childs after node
+     * Add childs after node.
      *
      * @param NodeContract $child
-     * @param int $index
+     * @param int          $index
      *
      * @return $this
      */
-    public function addChildAfterNodeByIndex(NodeContract $child, int $index);
+    public function addChildAfterNodeByIndex(self $child, int $index);
 
     /**
-     * Remove all childs
+     * Remove all childs.
      *
      * @return $this
      */
     public function removeAllChilds();
 
     /**
-     * Remove child by index
+     * Remove child by index.
      *
-     * @param int $index
+     * @param int  $index
      * @param bool $resort
      *
      * @return $this
@@ -221,40 +219,40 @@ interface NodeContract
     public function removeChildByKey($index, $resort = true);
 
     /**
-     * Reset parent and index of each node
+     * Reset parent and index of each node.
      *
      * @return $this
      */
     public function flush();
 
     /**
-     * Swap parent and delete
+     * Swap parent and delete.
      *
      * @param NodeContract $old_parent
      * @param NodeContract $new_parent
      *
      * @return $this
      */
-    public function swapParentAndDelete(NodeContract $old_parent, NodeContract $new_parent);
+    public function swapParentAndDelete(self $old_parent, self $new_parent);
 
     /**
-     * Array representation of node
+     * Array representation of node.
      *
      * @return array
      */
     public function toArray();
 
     /**
-     * To string
+     * To string.
      *
-     * @param boolean $recursive
+     * @param bool $recursive
      *
      * @return string
      */
     public function valueToString($recursive = true);
 
     /**
-     * Get root
+     * Get root.
      *
      * @return NodeContract
      */

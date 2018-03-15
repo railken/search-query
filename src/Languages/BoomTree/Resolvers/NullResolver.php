@@ -15,7 +15,7 @@ class NullResolver extends ComparisonOperatorResolver
     public $node = Nodes\NullNode::class;
 
     /**
-     * Regex
+     * Regex.
      *
      * @var array
      */

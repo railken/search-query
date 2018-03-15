@@ -18,7 +18,6 @@ class TextResolver implements ResolverContract
      */
     public function resolve(NodeContract $node)
     {
-
         $childs = $node->getChilds();
 
         if (count($childs) > 0) {

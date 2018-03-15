@@ -14,7 +14,7 @@ class SwResolver extends ComparisonOperatorResolver
     public $node = Nodes\SwNode::class;
 
     /**
-     * Regex
+     * Regex.
      *
      * @var array
      */

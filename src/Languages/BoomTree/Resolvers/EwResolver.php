@@ -14,7 +14,7 @@ class EwResolver extends ComparisonOperatorResolver
     public $node = Nodes\EwNode::class;
 
     /**
-     * Regex
+     * Regex.
      *
      * @var array
      */

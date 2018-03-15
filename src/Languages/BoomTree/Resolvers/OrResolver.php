@@ -14,7 +14,7 @@ class OrResolver extends AndResolver
     public $node = Nodes\OrNode::class;
 
     /**
-     * Regex
+     * Regex.
      *
      * @var array
      */

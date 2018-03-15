@@ -71,7 +71,7 @@ class Node implements NodeContract, \JsonSerializable
     /**
      * Set parent.
      *
-     * @var NodeContract|null $parent
+     * @var NodeContract|null
      *
      * @return $this
      */
@@ -83,7 +83,7 @@ class Node implements NodeContract, \JsonSerializable
     }
 
     /**
-     * Get parent
+     * Get parent.
      *
      * @return NodeContract|null
      */
@@ -93,7 +93,7 @@ class Node implements NodeContract, \JsonSerializable
     }
 
     /**
-     * Set index node
+     * Set index node.
      *
      * @param int $index
      *
@@ -117,7 +117,7 @@ class Node implements NodeContract, \JsonSerializable
     }
 
     /**
-     * Set childs
+     * Set childs.
      *
      * @var array
      *
@@ -326,7 +326,7 @@ class Node implements NodeContract, \JsonSerializable
      * Add childs before node.
      *
      * @param NodeContract $child
-     * @param int $index
+     * @param int          $index
      *
      * @return $this
      */
@@ -339,7 +339,7 @@ class Node implements NodeContract, \JsonSerializable
      * Add childs after node.
      *
      * @param NodeContract $child
-     * @param int $index
+     * @param int          $index
      *
      * @return $this
      */

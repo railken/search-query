@@ -14,7 +14,7 @@ class NotEqResolver extends ComparisonOperatorResolver
     public $node = Nodes\NotEqNode::class;
 
     /**
-     * Regex
+     * Regex.
      *
      * @var array
      */

@@ -17,7 +17,7 @@ class FunctionResolver extends ComparisonOperatorResolver implements ResolverCon
     public $node = Nodes\FunctionNode::class;
 
     /**
-     * Regex
+     * Regex.
      *
      * @var array
      */

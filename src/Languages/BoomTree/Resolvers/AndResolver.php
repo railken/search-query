@@ -16,7 +16,7 @@ class AndResolver extends LogicResolver
     public $node = Nodes\AndNode::class;
 
     /**
-     * Regex
+     * Regex.
      *
      * @var array
      */

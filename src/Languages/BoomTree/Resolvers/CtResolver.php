@@ -14,7 +14,7 @@ class CtResolver extends ComparisonOperatorResolver
     public $node = Nodes\CtNode::class;
 
     /**
-     * Regex
+     * Regex.
      *
      * @var array
      */

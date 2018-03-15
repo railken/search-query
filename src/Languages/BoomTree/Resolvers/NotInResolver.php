@@ -14,7 +14,7 @@ class NotInResolver extends InResolver
     public $node = Nodes\NotInNode::class;
 
     /**
-     * Regex
+     * Regex.
      *
      * @var array
      */

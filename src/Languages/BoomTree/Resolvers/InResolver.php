@@ -16,7 +16,7 @@ class InResolver extends ComparisonOperatorResolver
     public $node = Nodes\InNode::class;
 
     /**
-     * Regex
+     * Regex.
      *
      * @var array
      */
