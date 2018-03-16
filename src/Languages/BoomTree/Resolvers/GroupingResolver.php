@@ -85,7 +85,7 @@ class GroupingResolver implements ResolverContract
      *
      * @param NodeContract $node
      *
-     * @return NodeContract|null
+     * @return void
      */
     public function resolveGrouping(NodeContract $node)
     {
@@ -124,7 +124,9 @@ class GroupingResolver implements ResolverContract
                 $new_node->removeChildByIndex($new_node->countChilds() - 1);
                 $node->addChildAfterNodeByIndex($new_node, $last_opening - 1);
 
-                return $this->resolveGrouping($node->getParent());
+                $this->resolveGrouping($node->getParent());
+
+                return;
             }
         }
 
