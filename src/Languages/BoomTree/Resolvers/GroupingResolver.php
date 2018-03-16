@@ -125,6 +125,7 @@ class GroupingResolver implements ResolverContract
                 $node->addChildAfterNodeByIndex($new_node, $last_opening - 1);
 
                 $this->resolveGrouping($node->getParent());
+
                 return;
             }
         }
@@ -132,7 +133,5 @@ class GroupingResolver implements ResolverContract
         if ($p > 0) {
             throw new Exceptions\QuerySyntaxException('Expected closing bracket: '.$node->getRoot()->getValue());
         }
-
-        return;
     }
 }
