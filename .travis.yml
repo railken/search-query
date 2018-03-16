@@ -47,10 +47,9 @@ before_script:
 script:
   - ./vendor/bin/phpunit --coverage-text --coverage-clover=build/logs/clover.xml
   - ./vendor/bin/phpunit --configuration ./build/travis-ci-fail.xml > /dev/null; if [ $? -eq 0 ]; then echo "SHOULD FAIL"; false; else echo "fail checked"; fi;
+  
+after_script:
   - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
-
-after_success:
-  - bash <(curl -s https://codecov.io/bash)
 
 notifications:
   email: false
