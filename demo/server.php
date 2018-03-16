@@ -33,7 +33,6 @@ $parser->addResolvers([
     new Resolvers\NullResolver(),
     new Resolvers\AndResolver(),
     new Resolvers\OrResolver(),
-    new Resolvers\TextResolver(),
 ]);
 
 try {
