@@ -1,11 +1,12 @@
 # Search Query
 
-[![Build Status](https://img.shields.io/travis/railken/search-query/master.svg)](https://travis-ci.org/railken/search-query)
-[![Code Coverage](https://img.shields.io/codecov/c/github/railken/search-query.svg)](https://codecov.io/gh/railken/search-query)
+[![Build Status](https://travis-ci.org/railken/search-query.svg?branch=master)](https://travis-ci.org/railken/search-query)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/railken/search-query/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/railken/search-query/?branch=master)
+[![Code Coverage](https://scrutinizer-ci.com/g/railken/search-query/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/railken/search-query/?branch=master)
 [![Style CI](https://styleci.io/repos/107004461/shield?branch=master)](https://styleci.io/repos/107004461)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Latest stable](https://img.shields.io/packagist/v/railken/search-query.svg?style=flat-square)](https://packagist.org/packages/railken/search-query)
-[![PHP](https://img.shields.io/travis/php-v/railken/search-query.svg)](https://secure.php.net/)
+[![Latest stable](https://img.shields.io/packagist/v/railken/bag.svg?style=flat-square)](https://packagist.org/packages/railken/bag)
+[![PHP](https://img.shields.io/travis/php-v/railken/bag.svg)](https://secure.php.net/)
 
 Converts a simple expression (e.g. 'x eq 1 or y gt 2') into a tree object.
 This can be pretty usefull when building the API endpoint for a search.
