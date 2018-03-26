@@ -20,6 +20,6 @@ class KeyResolver extends BaseResolver implements ResolverContract
      * @var array
      */
     public $regex = [
-        '/([a-z_][a-z0-9_]*)/i',
+        '/([a-z_][\.a-z0-9_]*)/i',
     ];
 }
