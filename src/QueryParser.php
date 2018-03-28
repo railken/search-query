@@ -77,6 +77,10 @@ class QueryParser
             $node->setParent(null);
         }
 
+        if ($node instanceof Nodes\UndefinedLogicNode) {
+            throw new Exceptions\QuerySyntaxException($query);
+        }
+
         return $node;
     }
 }
