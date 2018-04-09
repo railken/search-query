@@ -412,4 +412,12 @@ class QueryTest extends TestCase
         $this->expectException(QuerySyntaxException::class);
         $this->parser->parse('(x eq ")"');
     }
+
+    public function testVeryLong()
+    {
+        $query = $this->parser;
+        $result = $query->parse('x eq 1 or y eq 2 and x eq 4 or d eq 5 and y eq 3 or t eq 9 and h eq 4 or c eq 4');
+
+        $this->assertEquals(Nodes\OrNode::class, get_class($result));
+    }
 }

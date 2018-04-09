@@ -53,7 +53,7 @@ abstract class BaseResolver implements ResolverContract
                     $this->splitNode(Nodes\TextNode::class, $node, $new_node, $start, $start + $length);
 
                     // Search for another match in this node.
-                    return $this->resolve($node->getParent());
+                    return $this->resolve($new_node);
                 }
             }
         }
