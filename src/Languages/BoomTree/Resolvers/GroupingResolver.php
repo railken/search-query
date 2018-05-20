@@ -122,7 +122,7 @@ class GroupingResolver implements ResolverContract
 
                 $new_node->removeChildByIndex(0);
                 $new_node->removeChildByIndex($new_node->countChilds() - 1);
-                $node->addChildAfterNodeByIndex($new_node, $last_opening - 1);
+                $node->addChildBeforeNodeByIndex($new_node, $last_opening);
 
                 $this->resolveGrouping($node->getParent());
 

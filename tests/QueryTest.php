@@ -395,6 +395,20 @@ class QueryTest extends TestCase
         $this->assertEquals('1', $result->getChildByIndex(0)->getChildByIndex(0)->getFirstChildByClass(Nodes\ValueNode::class)->getValue());
     }
 
+    public function testGrouping2()
+    {
+        $query = $this->parser;
+        $result = $query->parse('( x = 1 ) and y = 2');
+        $this->assertEquals(Nodes\AndNode::class, get_class($result));
+        $this->assertEquals(Nodes\GroupNode::class, get_class($result->getChildByIndex(0)));
+        $this->assertEquals(Nodes\EqNode::class, get_class($result->getChildByIndex(0)->getChildByIndex(0)));
+        $this->assertEquals('x', $result->getChildByIndex(0)->getChildByIndex(0)->getFirstChildByClass(Nodes\KeyNode::class)->getValue());
+        $this->assertEquals('1', $result->getChildByIndex(0)->getChildByIndex(0)->getFirstChildByClass(Nodes\ValueNode::class)->getValue());
+        $this->assertEquals(Nodes\EqNode::class, get_class($result->getChildByIndex(1)));
+        $this->assertEquals('y', $result->getChildByIndex(1)->getFirstChildByClass(Nodes\KeyNode::class)->getValue());
+        $this->assertEquals('2', $result->getChildByIndex(1)->getFirstChildByClass(Nodes\ValueNode::class)->getValue());
+    }
+
     public function testExceptionGrouping1()
     {
         $this->expectException(QuerySyntaxException::class);
