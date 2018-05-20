@@ -27,6 +27,7 @@ class QueryTest extends TestCase
             new Resolvers\GroupingResolver(),
             new Resolvers\SumFunctionResolver(),
             new Resolvers\DateFormatFunctionResolver(),
+            new Resolvers\ConcatFunctionResolver(),
             new Resolvers\NotEqResolver(),
             new Resolvers\EqResolver(),
             new Resolvers\LteResolver(),
@@ -56,6 +57,20 @@ class QueryTest extends TestCase
         $this->assertEquals('1', $result->getChildByIndex(0)->getChildByIndex(0)->getValue());
         $this->assertEquals('2', $result->getChildByIndex(0)->getChildByIndex(1)->getValue());
         $this->assertEquals('x', $result->getChildByIndex(1)->getValue());
+    }
+
+
+    public function testFunctionConcat()
+    {
+        $query = $this->parser;
+
+        $result = $query->parse('y eq concat(x, 2)');
+
+        $this->assertEquals(Nodes\EqNode::class, get_class($result));
+        $this->assertEquals('y', $result->getChildByIndex(0)->getValue());
+        $this->assertEquals(Nodes\ConcatFunctionNode::class, get_class($result->getChildByIndex(1)));
+        $this->assertEquals('x', $result->getChildByIndex(1)->getChildByIndex(0)->getValue());
+        $this->assertEquals('2', $result->getChildByIndex(1)->getChildByIndex(1)->getValue());
     }
 
     public function testExceptionFunction()

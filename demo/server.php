@@ -18,6 +18,7 @@ $parser->addResolvers([
     new Resolvers\GroupingResolver(),
     new Resolvers\SumFunctionResolver(),
     new Resolvers\DateFormatFunctionResolver(),
+    new Resolvers\ConcatFunctionResolver(),
     new Resolvers\NotEqResolver(),
     new Resolvers\EqResolver(),
     new Resolvers\LteResolver(),
