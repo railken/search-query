@@ -46,8 +46,12 @@ class FunctionResolver extends ComparisonOperatorResolver implements ResolverCon
      */
     public function resolveNextNode(NodeContract $node, NodeContract $new_node)
     {
+        if ($new_node->next() === null) {
+            throw new Exceptions\QuerySyntaxException($node->getRoot()->getValue());
+        }
+
         // Nothing ...
-        if (!$new_node->getParent() || ($new_node->next() && $new_node->next() instanceof Nodes\GroupNode)) {
+        if (!$new_node->getParent() || ($new_node->next() instanceof Nodes\GroupNode)) {
             $childs = [];
 
             foreach ($new_node->next()->getChilds() as $child) {
@@ -57,7 +61,10 @@ class FunctionResolver extends ComparisonOperatorResolver implements ResolverCon
             }
 
             $new_node->setChilds($childs);
-            $new_node->getParent()->removeChild($new_node->next());
+
+            if ($new_node->getParent() !== null) {
+                $new_node->getParent()->removeChild($new_node->next());
+            }
         } else {
             throw new Exceptions\QuerySyntaxException($node->getRoot()->getValue());
         }

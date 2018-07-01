@@ -35,7 +35,7 @@ class AndResolver extends LogicResolver
      */
     public function resolvePreviousNode(NodeContract $node, NodeContract $new_node)
     {
-        if ($new_node->prev()) {
+        if ($new_node->prev() !== null) {
             $new_node->moveNodeAsChild($new_node->prev());
         } else {
             throw new Exceptions\QuerySyntaxException($node->getRoot()->getValue());
@@ -52,7 +52,7 @@ class AndResolver extends LogicResolver
      */
     public function resolveNextNode(NodeContract $node, NodeContract $new_node)
     {
-        if ($new_node->next()) {
+        if ($new_node->next() !== null) {
             $new_node->moveNodeAsChild($new_node->next());
         } else {
             throw new Exceptions\QuerySyntaxException($node->getRoot()->getValue());
@@ -90,7 +90,7 @@ class AndResolver extends LogicResolver
             }
         }
 
-        if ($new_node->getParent() instanceof Nodes\GroupNode && $new_node->getParent()->countChilds() === 1) {
+        if ($new_node->getParent() instanceof Nodes\GroupNode && $new_node->getParent()->countChilds() === 1 && $new_node->getParent()->getParent() !== null) {
             $new_node->swapParentAndDelete($new_node->getParent(), $new_node->getParent()->getParent());
         }
     }

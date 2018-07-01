@@ -116,15 +116,17 @@ class GroupingResolver implements ResolverContract
 
                 $new_node = new $this->node();
 
-                $childs = $node->getChildsBetweenIndexes($last_opening, $n);
+                $childs = $node->getChildsBetweenIndexes((int)$last_opening, $n);
                 $node->removeChilds($childs);
                 $new_node->addChilds($childs);
 
                 $new_node->removeChildByIndex(0);
                 $new_node->removeChildByIndex($new_node->countChilds() - 1);
-                $node->addChildBeforeNodeByIndex($new_node, $last_opening);
+                $node->addChildBeforeNodeByIndex($new_node, (int)$last_opening);
 
-                $this->resolveGrouping($node->getParent());
+                if ($node->getParent() !== null) {
+                    $this->resolveGrouping($node->getParent());
+                }
 
                 return;
             }

@@ -69,7 +69,7 @@ class ComparisonOperatorResolver implements ResolverContract
             }
         }
 
-        return $node->next() ? $this->resolve($node->next()) : null;
+        return $node->next() !== null ? $this->resolve($node->next()) : null;
     }
 
     /**

@@ -178,7 +178,7 @@ class Node implements NodeContract, \JsonSerializable
      *
      * @param int $index
      *
-     * @return NodeContract
+     * @return NodeContract|null
      */
     public function getChildByIndex($index)
     {
@@ -202,7 +202,7 @@ class Node implements NodeContract, \JsonSerializable
      */
     public function prev()
     {
-        return $this->getParent() ? $this->getParent()->getChildByIndex($this->getIndex() - 1) : null;
+        return $this->getParent() !== null ? $this->getParent()->getChildByIndex($this->getIndex() - 1) : null;
     }
 
     /**
@@ -212,7 +212,7 @@ class Node implements NodeContract, \JsonSerializable
      */
     public function next()
     {
-        return $this->getParent() ? $this->getParent()->getChildByIndex($this->getIndex() + 1) : null;
+        return $this->getParent() !== null ? $this->getParent()->getChildByIndex($this->getIndex() + 1) : null;
     }
 
     /**
@@ -224,8 +224,10 @@ class Node implements NodeContract, \JsonSerializable
      */
     public function moveNodeAsChild(NodeContract $child)
     {
-        $child->getParent()->removeChild($child);
-        $this->addChild($child);
+        if ($child->getParent() !== null) {
+            $child->getParent()->removeChild($child);
+            $this->addChild($child);
+        }
     }
 
     /**
@@ -273,7 +275,9 @@ class Node implements NodeContract, \JsonSerializable
         $this->childs = [];
 
         foreach (array_merge($first, $subs, $second) as $child) {
-            $child && $this->addChild($child);
+            if ($child) {
+                $this->addChild($child);
+            }
         }
         $this->flush();
 
@@ -393,7 +397,7 @@ class Node implements NodeContract, \JsonSerializable
         $n = 0;
         $childs = [];
         foreach ($this->childs as $k => $child) {
-            if ($child) {
+            if ($child !== null) {
                 $child->setIndex($n);
                 $child->setParent($this);
                 $childs[] = $child;
@@ -473,7 +477,7 @@ class Node implements NodeContract, \JsonSerializable
      */
     public function getRoot()
     {
-        if ($this->getParent()) {
+        if ($this->getParent() !== null) {
             return $this->getParent()->getRoot();
         }
 

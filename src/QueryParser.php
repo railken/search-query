@@ -47,7 +47,7 @@ class QueryParser
      *
      * @param string $query (e.g.) title eq 'something'
      *
-     * @return object
+     * @return \Railken\SQ\Contracts\NodeContract
      */
     public function parse($query)
     {
@@ -69,6 +69,11 @@ class QueryParser
 
         // From Root to Logic
         $node = $node->getChildByIndex(0);
+
+        if ($node === null) {
+            throw new Exceptions\QuerySyntaxException($query);
+        }
+
         $node->setParent(null);
 
         // If logic has only one child, skip to first key node
