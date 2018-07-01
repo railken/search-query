@@ -2,7 +2,6 @@
 
 [![Build Status](https://travis-ci.org/railken/search-query.svg?branch=master)](https://travis-ci.org/railken/search-query)
 [![Maintainability](https://api.codeclimate.com/v1/badges/0411365a1db4c0fbfe37/maintainability)](https://codeclimate.com/github/railken/search-query/maintainability)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/0411365a1db4c0fbfe37/test_coverage)](https://codeclimate.com/github/railken/search-query/test_coverage)
 [![Style CI](https://styleci.io/repos/107004461/shield?branch=master)](https://styleci.io/repos/107004461)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Latest stable](https://img.shields.io/packagist/v/railken/bag.svg?style=flat-square)](https://packagist.org/packages/railken/bag)

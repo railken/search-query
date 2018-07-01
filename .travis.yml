@@ -6,10 +6,6 @@ addons:
   apt:
     packages:
       - libxml2-utils
-  code_climate:
-    repo_token:
-      secure: "cFyqoBYHJ9DoOw79yugDJ1W4CLxmhEnA/UbjYsggrBhDdkvYey0R9hqKmhs2fgZ11xdzsU604NvjZlWVi3i/TtuMkocDxq7gIC3f9S38ZHA2YA9GTAfuMIQpYtqVKdoDzLOSLGA4AKQS0MCRfMPN/8LpG1B+KCM75ObKgSxFwSFaJj0Ut1as5p7v7aKRhspO9crC3SijEGBZ7c0x6auhHv8XOoDk3X5PlBAgiEKIixogVbi2ukeRZW0whg2ESgl0G6teakjiOGhFIXIceACE9OsuB7xZAjZakG5iF/480XxSqOlyCJu0aWpwEqHR10Zds+0TgcKhNXlQtx5lW2bTXUK+3uLu8eoATBn2KOq/UFgVx8gDNCaqwyTqV57t83Zad0XtQGkpvc4us8b0d1XBg7G9xBA0NMm4J9+PRMsZKBCTk3j38nuodqsaYmWKTUvVHN3W1tgbSab6uJqXg5p7KdEAmh12fjW1sobFW8L6x/GHG1gLrh200lRTZ8BW4RvopJ0GTCACIyMN6qJ69NgkRKwiezZk1ab8/zcmPq68ZIyrAVJ3Rz96Q0TVbtWKWBUvJ2/t6xbeUKDREUpqxPCsUczsE8DHy17jIh+s2HjQt2UnBqN3d0eiedJRR4iCx2aCWOuGiSFZtvcm0/dj106y2NG0UJ+yDszX6rLL2FHNE8M="
-
 php:
   - 7.1
   - 7.2
