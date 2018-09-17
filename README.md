@@ -1,11 +1,6 @@
 # Search Query
 
 [![Build Status](https://travis-ci.org/railken/search-query.svg?branch=master)](https://travis-ci.org/railken/search-query)
-[![Maintainability](https://api.codeclimate.com/v1/badges/0411365a1db4c0fbfe37/maintainability)](https://codeclimate.com/github/railken/search-query/maintainability)
-[![Style CI](https://styleci.io/repos/107004461/shield?branch=master)](https://styleci.io/repos/107004461)
-[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Latest stable](https://img.shields.io/packagist/v/railken/bag.svg?style=flat-square)](https://packagist.org/packages/railken/bag)
-[![PHP](https://img.shields.io/travis/php-v/railken/bag.svg)](https://secure.php.net/)
 
 Converts a simple expression (e.g. 'x eq 1 or y gt 2') into a tree object.
 This can be pretty usefull when building the API endpoint for a search.
@@ -186,7 +181,7 @@ description ew "the text must end with this"
 
 
 ### NULL, NOT NULL
-These operators doesn't require a node after the operator.
+These operators don't require a node after the operator.
 ```
 deleted_at is null
 deleted_at is not null
@@ -196,7 +191,7 @@ deleted_at is not null
 ## Custom resolver
 
 As you already saw, in order to parse the query you have to add the resolvers. 
-So are free to add any resolvers you want, but pay attention to the order: KeyValue and NodeValue are the foundation for all the resolvers, so be carefull.
+So you are free to add any resolvers you want, but pay attention to the order: KeyValue and NodeValue are the foundation for all the resolvers, so be carefull.
 
 Here's an example of custom resolver and node
 
