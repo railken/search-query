@@ -34,9 +34,9 @@ abstract class BaseResolver implements ResolverContract
      */
     public function resolve(NodeContract $node)
     {
-        $childs = $node->getChilds();
+        $children = $node->getChildren();
 
-        if (count($childs) > 0) {
+        if (count($children) > 0) {
             $this->resolve($node->getChildByIndex(0));
         }
 

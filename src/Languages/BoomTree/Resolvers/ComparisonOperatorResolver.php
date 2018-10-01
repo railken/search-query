@@ -36,14 +36,14 @@ class ComparisonOperatorResolver implements ResolverContract
      */
     public function resolve(NodeContract $node)
     {
-        $childs = $node->getChilds();
+        $children = $node->getChildren();
 
-        if (count($childs) > 0) {
+        if (count($children) > 0) {
             $this->resolve($node->getChildByIndex(0));
 
             $value = '';
             $positions = [];
-            foreach ($node->getChilds() as $child) {
+            foreach ($node->getChildren() as $child) {
                 if ($child instanceof Nodes\TextNode || $child instanceof Nodes\KeyNode) {
                     $value .= ' '.$child->getValue();
                     $p = array_fill(0, strlen(' '.$child->getValue()), $child->getIndex());

@@ -84,13 +84,13 @@ class AndResolver extends LogicResolver
      */
     public function resolveGroupParent(NodeContract $node, NodeContract $new_node)
     {
-        foreach ($new_node->getChilds() as $child) {
+        foreach ($new_node->getChildren() as $child) {
             if (get_class($child) === $this->node) {
-                $new_node->replaceChild($child->getIndex(), $child->getChilds());
+                $new_node->replaceChild($child->getIndex(), $child->getChildren());
             }
         }
 
-        if ($new_node->getParent() instanceof Nodes\GroupNode && $new_node->getParent()->countChilds() === 1 && $new_node->getParent()->getParent() !== null) {
+        if ($new_node->getParent() instanceof Nodes\GroupNode && $new_node->getParent()->countChildren() === 1 && $new_node->getParent()->getParent() !== null) {
             $new_node->swapParentAndDelete($new_node->getParent(), $new_node->getParent()->getParent());
         }
     }

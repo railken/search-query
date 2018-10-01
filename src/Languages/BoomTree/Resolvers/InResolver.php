@@ -38,7 +38,7 @@ class InResolver extends ComparisonOperatorResolver
         if ($new_node->next() && ($new_node->next() instanceof Nodes\GroupNode)) {
             $values = $new_node->next()->valueToString();
 
-            $new_node->next()->removeAllChilds();
+            $new_node->next()->removeAllChildren();
 
             foreach (explode(',', $values) as $value) {
                 $vn = new Nodes\ValueNode();

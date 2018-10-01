@@ -53,13 +53,13 @@ interface NodeContract
     public function getIndex();
 
     /**
-     * Set childs.
+     * Set children.
      *
      * @var array
      *
      * @return $this
      */
-    public function setChilds($childs);
+    public function setChildren($children);
 
     /**
      * Add a child.
@@ -71,20 +71,20 @@ interface NodeContract
     public function addChild(self $child);
 
     /**
-     * Add childs.
+     * Add children.
      *
-     * @param array $childs
+     * @param array $children
      *
      * @return $this
      */
-    public function addChilds($childs);
+    public function addChildren($children);
 
     /**
-     * Get childs.
+     * Get children.
      *
      * @return array
      */
-    public function getChilds();
+    public function getChildren();
 
     /**
      * Get a child by index.
@@ -96,11 +96,11 @@ interface NodeContract
     public function getChildByIndex($index);
 
     /**
-     * Count childs.
+     * Count children.
      *
      * @return int
      */
-    public function countChilds();
+    public function countChildren();
 
     /**
      * Retrieve prev node.
@@ -135,14 +135,14 @@ interface NodeContract
     public function getFirstChildByClass(string $class);
 
     /**
-     * Retrieve childs between indexes.
+     * Retrieve children between indexes.
      *
      * @param int $start
      * @param int $end
      *
      * @return array
      */
-    public function getChildsBetweenIndexes(int $start, int $end);
+    public function getChildrenBetweenIndexes(int $start, int $end);
 
     /**
      * Replace a child by others.
@@ -173,16 +173,16 @@ interface NodeContract
     public function removeChild(self $child);
 
     /**
-     * Remove childs.
+     * Remove children.
      *
-     * @param array $childs
+     * @param array $children
      *
      * @return $this
      */
-    public function removeChilds($childs);
+    public function removeChildren($children);
 
     /**
-     * Add childs before node.
+     * Add children before node.
      *
      * @param NodeContract $child
      * @param int          $index
@@ -192,7 +192,7 @@ interface NodeContract
     public function addChildBeforeNodeByIndex(self $child, int $index);
 
     /**
-     * Add childs after node.
+     * Add children after node.
      *
      * @param NodeContract $child
      * @param int          $index
@@ -202,11 +202,11 @@ interface NodeContract
     public function addChildAfterNodeByIndex(self $child, int $index);
 
     /**
-     * Remove all childs.
+     * Remove all children.
      *
      * @return $this
      */
-    public function removeAllChilds();
+    public function removeAllChildren();
 
     /**
      * Remove child by index.

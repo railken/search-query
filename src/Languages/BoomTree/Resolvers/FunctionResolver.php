@@ -52,15 +52,15 @@ class FunctionResolver extends ComparisonOperatorResolver implements ResolverCon
 
         // Nothing ...
         if (!$new_node->getParent() || ($new_node->next() instanceof Nodes\GroupNode)) {
-            $childs = [];
+            $children = [];
 
-            foreach ($new_node->next()->getChilds() as $child) {
+            foreach ($new_node->next()->getChildren() as $child) {
                 if (trim($child->getValue()) !== ',') {
-                    $childs[] = $child;
+                    $children[] = $child;
                 }
             }
 
-            $new_node->setChilds($childs);
+            $new_node->setChildren($children);
 
             if ($new_node->getParent() !== null) {
                 $new_node->getParent()->removeChild($new_node->next());

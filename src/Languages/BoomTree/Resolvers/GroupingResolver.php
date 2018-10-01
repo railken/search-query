@@ -52,7 +52,7 @@ class GroupingResolver implements ResolverContract
      */
     public function resolveParenthesis(NodeContract $node)
     {
-        foreach ($node->getChilds() as $child) {
+        foreach ($node->getChildren() as $child) {
             $this->resolveParenthesis($child);
         }
 
@@ -89,18 +89,18 @@ class GroupingResolver implements ResolverContract
      */
     public function resolveGrouping(NodeContract $node)
     {
-        if ($node->countChilds() === 0) {
+        if ($node->countChildren() === 0) {
             return;
         }
 
-        foreach ($node->getChilds() as $child) {
+        foreach ($node->getChildren() as $child) {
             $this->resolveGrouping($child);
         }
 
         $p = 0;
         $last_opening = null;
 
-        foreach ($node->getChilds() as $n => $child) {
+        foreach ($node->getChildren() as $n => $child) {
             if ($child instanceof Nodes\GroupOpeningNode) {
                 $p++;
                 $last_opening = $n;
@@ -116,12 +116,12 @@ class GroupingResolver implements ResolverContract
 
                 $new_node = new $this->node();
 
-                $childs = $node->getChildsBetweenIndexes((int)$last_opening, $n);
-                $node->removeChilds($childs);
-                $new_node->addChilds($childs);
+                $children = $node->getChildrenBetweenIndexes((int)$last_opening, $n);
+                $node->removeChildren($children);
+                $new_node->addChildren($children);
 
                 $new_node->removeChildByIndex(0);
-                $new_node->removeChildByIndex($new_node->countChilds() - 1);
+                $new_node->removeChildByIndex($new_node->countChildren() - 1);
                 $node->addChildBeforeNodeByIndex($new_node, (int)$last_opening);
 
                 if ($node->getParent() !== null) {
