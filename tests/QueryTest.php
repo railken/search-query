@@ -59,7 +59,6 @@ class QueryTest extends TestCase
         $this->assertEquals('x', $result->getChildByIndex(1)->getValue());
     }
 
-
     public function testFunctionConcat()
     {
         $query = $this->parser;

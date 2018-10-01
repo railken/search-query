@@ -102,12 +102,12 @@ class GroupingResolver implements ResolverContract
 
         foreach ($node->getChildren() as $n => $child) {
             if ($child instanceof Nodes\GroupOpeningNode) {
-                $p++;
+                ++$p;
                 $last_opening = $n;
             }
 
             if ($child instanceof Nodes\GroupClosingNode) {
-                $p--;
+                --$p;
                 // A group has found. Close and re-resolve
 
                 if ($last_opening === null) {
@@ -116,13 +116,13 @@ class GroupingResolver implements ResolverContract
 
                 $new_node = new $this->node();
 
-                $children = $node->getChildrenBetweenIndexes((int)$last_opening, $n);
+                $children = $node->getChildrenBetweenIndexes((int) $last_opening, $n);
                 $node->removeChildren($children);
                 $new_node->addChildren($children);
 
                 $new_node->removeChildByIndex(0);
                 $new_node->removeChildByIndex($new_node->countChildren() - 1);
-                $node->addChildBeforeNodeByIndex($new_node, (int)$last_opening);
+                $node->addChildBeforeNodeByIndex($new_node, (int) $last_opening);
 
                 if ($node->getParent() !== null) {
                     $this->resolveGrouping($node->getParent());

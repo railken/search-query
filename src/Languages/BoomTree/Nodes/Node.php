@@ -401,7 +401,7 @@ class Node implements NodeContract, \JsonSerializable
                 $child->setIndex($n);
                 $child->setParent($this);
                 $children[] = $child;
-                $n++;
+                ++$n;
             }
         }
 
@@ -444,8 +444,8 @@ class Node implements NodeContract, \JsonSerializable
     public function toArray()
     {
         return [
-            'type'   => get_class($this),
-            'value'  => $this->getValue(),
+            'type'     => get_class($this),
+            'value'    => $this->getValue(),
             'children' => array_map(function ($node) {
                 return $node->jsonSerialize();
             }, $this->getChildren()),
