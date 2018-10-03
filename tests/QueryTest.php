@@ -141,6 +141,7 @@ class QueryTest extends TestCase
         $this->assertEquals('1"', $result->getValue());
         $this->assertEquals(['type', 'value'], array_keys($result->toArray()));
     }
+    
     public function testEq()
     {
         $query = $this->parser;
