@@ -42,18 +42,30 @@ abstract class BaseResolver implements ResolverContract
 
         if ($node instanceof Nodes\TextNode) {
             foreach ($this->regex as $regex) {
-                preg_match($regex, $node->getValue(), $match, PREG_OFFSET_CAPTURE);
+                $margin = 0;
 
-                if ($match) {
+                preg_match_all($regex, $node->getValue(), $matches, PREG_OFFSET_CAPTURE);
+
+                $positions = [];
+
+                foreach ($matches[0] as $match) {
+                    $value = $match[0]; // Value
+                    $start = $match[1]; // Offset
+                    $length = strlen($value);
                     $new_node = new $this->node();
-                    $new_node->setValue($match[1][0]);
-                    $start = $match[0][1];
-                    $length = strlen($match[0][0]);
+                    $new_node->setValue($value);
 
-                    $this->splitNode(Nodes\TextNode::class, $node, $new_node, $start, $start + $length);
+                    $positions[] = [
+                        'from' => $start,
+                        'to'   => $start + $length,
+                        'node' => $new_node,
+                    ];
+                }
 
-                    // Search for another match in this node.
-                    return $this->resolve($new_node);
+                if (count($positions) > 0) {
+                    $nodes = $this->splitMultipleNode(Nodes\TextNode::class, $node, $positions);
+
+                    return $this->resolve($nodes[0]->getParent());
                 }
             }
         }

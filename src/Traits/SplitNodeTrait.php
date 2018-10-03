@@ -44,4 +44,40 @@ trait SplitNodeTrait
 
         return $push;
     }
+
+    public function splitMultipleNode($class, &$node, $positions)
+    {
+        $push = [];
+
+        // We assume that positions won't overlap beetween eachother and they're in order (sort asc by from)
+        $last_position_index = 0;
+
+        $string = $node->getValue();
+        $last_i = 0;
+
+        for ($i = 0; $i <= strlen($string); ++$i) {
+            $position = isset($positions[$last_position_index]) ? $positions[$last_position_index] : null;
+
+            if ((($position !== null && $position['from'] === $i) || strlen($string) === $i) && ($i - $last_i > 0)) {
+                $value = substr($node->getValue(), $last_i, $i - $last_i);
+
+                if (!empty(rtrim($value))) {
+                    $filler = new $class();
+                    $filler->setValue($value);
+                    $push[] = $filler;
+                }
+            }
+
+            if (($position !== null && $position['from'] === $i)) {
+                $push[] = $position['node'];
+                ++$last_position_index;
+                $i = $position['to'];
+                $last_i = $i;
+            }
+        }
+
+        $node->getParent()->replaceChild($node->getIndex(), $push);
+
+        return $push;
+    }
 }

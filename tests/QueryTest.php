@@ -448,4 +448,17 @@ class QueryTest extends TestCase
 
         $this->assertEquals(Nodes\OrNode::class, get_class($result));
     }
+
+    public function testComplex()
+    {
+        $query = $this->parser;
+        $result = $query->parse('x = 27 and y = "83"');
+        $this->assertEquals(Nodes\AndNode::class, get_class($result));
+        $this->assertEquals(Nodes\EqNode::class, get_class($result->getChildByIndex(0)));
+        $this->assertEquals('x', $result->getChildByIndex(0)->getFirstChildByClass(Nodes\KeyNode::class)->getValue());
+        $this->assertEquals('27', $result->getChildByIndex(0)->getFirstChildByClass(Nodes\ValueNode::class)->getValue());
+        $this->assertEquals(Nodes\EqNode::class, get_class($result->getChildByIndex(1)));
+        $this->assertEquals('y', $result->getChildByIndex(1)->getFirstChildByClass(Nodes\KeyNode::class)->getValue());
+        $this->assertEquals('"83"', $result->getChildByIndex(1)->getFirstChildByClass(Nodes\ValueNode::class)->getValue());
+    }
 }
