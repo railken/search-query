@@ -51,9 +51,10 @@ abstract class BaseResolver implements ResolverContract
                 foreach ($matches[0] as $match) {
                     $value = $match[0]; // Value
                     $start = $match[1]; // Offset
+
                     $length = strlen($value);
                     $new_node = new $this->node();
-                    $new_node->setValue($value);
+                    $new_node->setValue($this->parseValue($value));
 
                     $positions[] = [
                         'from' => $start,
@@ -71,5 +72,17 @@ abstract class BaseResolver implements ResolverContract
         }
 
         return $node->next() !== null ? $this->resolve($node->next()) : null;
+    }
+
+    /**
+     * Parse the value before adding to the node
+     *
+     * @param mixed $value
+     *
+     * @return mixed
+     */
+    public function parseValue($value)
+    {
+        return $value;
     }
 }

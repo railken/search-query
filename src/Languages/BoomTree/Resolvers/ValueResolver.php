@@ -20,8 +20,26 @@ class ValueResolver extends BaseResolver implements ResolverContract
      * @var array
      */
     public $regex = [
-        '/\'([^\']+)\'/i',
-        '/"([^"]+)"/i',
+        "/'[^'\\\\]*(?:\\\\.[^'\\\\]*)*'/s",
+        '/"[^"\\\\]*(?:\\\\.[^"\\\\]*)*"/s',
         '/(0|[1-9][\.\d]*)/',
     ];
+
+    /**
+     * Parse the value before adding to the node
+     *
+     * @param mixed $value
+     *
+     * @return mixed
+     */
+    public function parseValue($value)
+    {
+        if ($value[0] === '"' || $value[0] === "'") {
+            $value = substr($value, 1, -1);
+        }
+
+        $value = stripslashes($value);
+
+        return $value;
+    }
 }

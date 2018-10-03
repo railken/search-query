@@ -122,6 +122,25 @@ class QueryTest extends TestCase
         $this->assertEquals(['type', 'value'], array_keys($result->toArray()));
     }
 
+    public function testValueTextNormalNode()
+    {
+        $query = $this->parser;
+
+        $result = $query->parse('"1"');
+        $this->assertEquals(Nodes\ValueNode::class, get_class($result));
+        $this->assertEquals('1', $result->getValue());
+        $this->assertEquals(['type', 'value'], array_keys($result->toArray()));
+    }
+
+    public function testValueTextEsapedNode()
+    {
+        $query = $this->parser;
+
+        $result = $query->parse('"1\\""');
+        $this->assertEquals(Nodes\ValueNode::class, get_class($result));
+        $this->assertEquals('1"', $result->getValue());
+        $this->assertEquals(['type', 'value'], array_keys($result->toArray()));
+    }
     public function testEq()
     {
         $query = $this->parser;
@@ -459,6 +478,6 @@ class QueryTest extends TestCase
         $this->assertEquals('27', $result->getChildByIndex(0)->getFirstChildByClass(Nodes\ValueNode::class)->getValue());
         $this->assertEquals(Nodes\EqNode::class, get_class($result->getChildByIndex(1)));
         $this->assertEquals('y', $result->getChildByIndex(1)->getFirstChildByClass(Nodes\KeyNode::class)->getValue());
-        $this->assertEquals('"83"', $result->getChildByIndex(1)->getFirstChildByClass(Nodes\ValueNode::class)->getValue());
+        $this->assertEquals('83', $result->getChildByIndex(1)->getFirstChildByClass(Nodes\ValueNode::class)->getValue());
     }
 }
