@@ -141,7 +141,91 @@ class QueryTest extends TestCase
         $this->assertEquals('1"', $result->getValue());
         $this->assertEquals(['type', 'value'], array_keys($result->toArray()));
     }
-    
+
+    public function testValueIntegerNode()
+    {
+        $query = $this->parser;
+
+        $result = $query->parse('832');
+        $this->assertEquals(Nodes\ValueNode::class, get_class($result));
+        $this->assertEquals('832', $result->getValue());
+    }
+
+    public function testValueIntegerNegativeNode()
+    {
+        $query = $this->parser;
+
+        $result = $query->parse('-832');
+        $this->assertEquals(Nodes\ValueNode::class, get_class($result));
+        $this->assertEquals('-832', $result->getValue());
+    }
+
+    public function testValueDecimalNode()
+    {
+        $query = $this->parser;
+
+        $result = $query->parse('0.832');
+        $this->assertEquals(Nodes\ValueNode::class, get_class($result));
+        $this->assertEquals('0.832', $result->getValue());
+    }
+
+    public function testValueDecimalNegativeNode()
+    {
+        $query = $this->parser;
+
+        $result = $query->parse('-0.832');
+        $this->assertEquals(Nodes\ValueNode::class, get_class($result));
+        $this->assertEquals('-0.832', $result->getValue());
+    }
+
+
+    public function testValueENotationNode()
+    {
+        $query = $this->parser;
+
+        $result = $query->parse('1e3');
+        $this->assertEquals(Nodes\ValueNode::class, get_class($result));
+        $this->assertEquals('1e3', $result->getValue());
+    }
+
+    public function testValueENotationNegativeNode()
+    {
+        $query = $this->parser;
+
+        $result = $query->parse('-1e3');
+        $this->assertEquals(Nodes\ValueNode::class, get_class($result));
+        $this->assertEquals('-1e3', $result->getValue());
+    }
+
+
+    public function testInvalidNumber1Node()
+    {
+        $this->expectException(QuerySyntaxException::class);
+
+        $result = $this->parser->parse('3.4.3');
+    }
+
+    public function testInvalidNumber2Node()
+    {
+        $this->expectException(QuerySyntaxException::class);
+
+        $result = $this->parser->parse('3,3.3');
+    }
+
+    public function testInvalidNumber3Node()
+    {
+        $this->expectException(QuerySyntaxException::class);
+
+        $result = $this->parser->parse('+3');
+    }
+
+    public function testInvalidNumber4Node()
+    {
+        $this->expectException(QuerySyntaxException::class);
+
+        $result = $this->parser->parse('3/9');
+    }
+
     public function testEq()
     {
         $query = $this->parser;

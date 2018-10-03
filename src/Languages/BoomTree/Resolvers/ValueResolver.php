@@ -22,7 +22,7 @@ class ValueResolver extends BaseResolver implements ResolverContract
     public $regex = [
         "/'[^'\\\\]*(?:\\\\.[^'\\\\]*)*'/s",
         '/"[^"\\\\]*(?:\\\\.[^"\\\\]*)*"/s',
-        '/(0|[1-9][\.\d]*)/',
+        '/(-?(0|[1-9]\d*)?(\.\d+)?(?<=\d)(e-?(0|[1-9]\d*))?|0x[0-9a-f]+)/',
     ];
 
     /**
@@ -34,6 +34,10 @@ class ValueResolver extends BaseResolver implements ResolverContract
      */
     public function parseValue($value)
     {
+        if (strlen($value) === 0) {
+            return $value;
+        }
+
         if ($value[0] === '"' || $value[0] === "'") {
             $value = substr($value, 1, -1);
         }
