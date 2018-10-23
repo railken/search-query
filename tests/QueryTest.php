@@ -178,7 +178,6 @@ class QueryTest extends TestCase
         $this->assertEquals('-0.832', $result->getValue());
     }
 
-
     public function testValueENotationNode()
     {
         $query = $this->parser;
@@ -196,7 +195,6 @@ class QueryTest extends TestCase
         $this->assertEquals(Nodes\ValueNode::class, get_class($result));
         $this->assertEquals('-1e3', $result->getValue());
     }
-
 
     public function testInvalidNumber1Node()
     {
@@ -564,5 +562,19 @@ class QueryTest extends TestCase
         $this->assertEquals(Nodes\EqNode::class, get_class($result->getChildByIndex(1)));
         $this->assertEquals('y', $result->getChildByIndex(1)->getFirstChildByClass(Nodes\KeyNode::class)->getValue());
         $this->assertEquals('83', $result->getChildByIndex(1)->getFirstChildByClass(Nodes\ValueNode::class)->getValue());
+    }
+
+    public function testComplex1()
+    {
+        $query = $this->parser;
+        $result = $query->parse('(y or (z)) or x');
+
+        $this->assertEquals(Nodes\OrNode::class, get_class($result));
+
+        $this->assertEquals(Nodes\KeyNode::class, get_class($result->getChildByIndex(0)));
+        $this->assertEquals('y', $result->getChildByIndex(0)->getValue());
+        $this->assertEquals(Nodes\GroupNode::class, get_class($result->getChildByIndex(1)));
+        $this->assertEquals('z', $result->getChildByIndex(1)->getChildByIndex(0)->getValue());
+        $this->assertEquals('x', $result->getChildByIndex(2)->getValue());
     }
 }

@@ -420,8 +420,7 @@ class Node implements NodeContract, \JsonSerializable
      */
     public function swapParentAndDelete(NodeContract $old_parent, NodeContract $new_parent)
     {
-        $new_parent->moveNodeAsChild($this);
-        $new_parent->removeChild($old_parent);
+        $new_parent->replaceChild($old_parent->getIndex(), [$this]);
 
         return $this;
     }
