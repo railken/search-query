@@ -75,7 +75,7 @@ abstract class BaseResolver implements ResolverContract
     }
 
     /**
-     * Parse the value before adding to the node
+     * Parse the value before adding to the node.
      *
      * @param mixed $value
      *
