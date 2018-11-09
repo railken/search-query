@@ -106,9 +106,9 @@ class QueryTest extends TestCase
     {
         $query = $this->parser;
 
-        $result = $query->parse('x');
+        $result = $query->parse('x2');
         $this->assertEquals(Nodes\KeyNode::class, get_class($result));
-        $this->assertEquals('x', $result->getValue());
+        $this->assertEquals('x2', $result->getValue());
         $this->assertEquals(['type', 'value'], array_keys($result->toArray()));
     }
 
