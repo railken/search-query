@@ -52,15 +52,17 @@ abstract class BaseResolver implements ResolverContract
                     $value = $match[0]; // Value
                     $start = $match[1]; // Offset
 
-                    $length = strlen($value);
-                    $new_node = new $this->node();
-                    $new_node->setValue($this->parseValue($value));
+                    if ($value !== '') {
+                        $length = strlen($value);
+                        $new_node = new $this->node();
+                        $new_node->setValue($this->parseValue($value));
 
-                    $positions[] = [
-                        'from' => $start,
-                        'to'   => $start + $length,
-                        'node' => $new_node,
-                    ];
+                        $positions[] = [
+                            'from' => $start,
+                            'to'   => $start + $length,
+                            'node' => $new_node,
+                        ];
+                    }
                 }
 
                 if (count($positions) > 0) {
