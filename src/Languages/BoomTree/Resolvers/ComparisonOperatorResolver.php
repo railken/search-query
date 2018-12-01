@@ -77,8 +77,6 @@ class ComparisonOperatorResolver implements ResolverContract
      *
      * @param NodeContract $node
      * @param NodeContract $new_node
-     *
-     * @return void
      */
     public function resolvePreviousNode(NodeContract $node, NodeContract $new_node)
     {
@@ -94,8 +92,6 @@ class ComparisonOperatorResolver implements ResolverContract
      *
      * @param NodeContract $node
      * @param NodeContract $new_node
-     *
-     * @return void
      */
     public function resolveNextNode(NodeContract $node, NodeContract $new_node)
     {
@@ -111,8 +107,6 @@ class ComparisonOperatorResolver implements ResolverContract
      *
      * @param NodeContract $node
      * @param NodeContract $new_node
-     *
-     * @return void
      */
     public function resolveRelationsNode(NodeContract $node, NodeContract $new_node)
     {

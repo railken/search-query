@@ -47,8 +47,6 @@ class GroupingResolver implements ResolverContract
      * Resolve node parenthesis.
      *
      * @param NodeContract $node
-     *
-     * @return void
      */
     public function resolveParenthesis(NodeContract $node)
     {
@@ -84,8 +82,6 @@ class GroupingResolver implements ResolverContract
      * Resolve grouping.
      *
      * @param NodeContract $node
-     *
-     * @return void
      */
     public function resolveGrouping(NodeContract $node)
     {

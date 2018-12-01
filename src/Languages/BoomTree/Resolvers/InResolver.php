@@ -30,8 +30,6 @@ class InResolver extends ComparisonOperatorResolver
      *
      * @param NodeContract $node
      * @param NodeContract $new_node
-     *
-     * @return void
      */
     public function resolveNextNode(NodeContract $node, NodeContract $new_node)
     {
