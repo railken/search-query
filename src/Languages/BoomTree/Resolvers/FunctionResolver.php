@@ -55,7 +55,7 @@ class FunctionResolver extends ComparisonOperatorResolver implements ResolverCon
             $children = [];
 
             foreach ($new_node->next()->getChildren() as $child) {
-                if (trim($child->getValue()) !== ',') {
+                if (!(trim($child->getValue()) === ',' && $child instanceof Nodes\TextNode)) {
                     $children[] = $child;
                 }
             }
