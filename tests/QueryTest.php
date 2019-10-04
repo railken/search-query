@@ -584,7 +584,7 @@ class QueryTest extends TestCase
 
         $this->parser->addResolvers([
             new Resolvers\CustomResolver(function ($node) {
-                if($node instanceof Nodes\KeyNode) {
+                if ($node instanceof Nodes\KeyNode) {
                     $node->setValue("myCustomPrefix.".$node->getValue());
                 }
             }),
