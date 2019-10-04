@@ -577,4 +577,27 @@ class QueryTest extends TestCase
         $this->assertEquals('z', $result->getChildByIndex(1)->getChildByIndex(0)->getValue());
         $this->assertEquals('x', $result->getChildByIndex(2)->getValue());
     }
+
+    public function testPrefixKeyVisitorWithCustomResolver()
+    {
+        $query = $this->parser;
+
+        $this->parser->addResolvers([
+            new Resolvers\CustomResolver(function ($node) {
+                if($node instanceof Nodes\KeyNode) {
+                    $node->setValue("myCustomPrefix.".$node->getValue());
+                }
+            }),
+        ]);
+
+        $result = $query->parse('(y or (z)) or x');
+
+        $this->assertEquals(Nodes\OrNode::class, get_class($result));
+
+        $this->assertEquals(Nodes\KeyNode::class, get_class($result->getChildByIndex(0)));
+        $this->assertEquals('myCustomPrefix.y', $result->getChildByIndex(0)->getValue());
+        $this->assertEquals(Nodes\GroupNode::class, get_class($result->getChildByIndex(1)));
+        $this->assertEquals('myCustomPrefix.z', $result->getChildByIndex(1)->getChildByIndex(0)->getValue());
+        $this->assertEquals('myCustomPrefix.x', $result->getChildByIndex(2)->getValue());
+    }
 }
