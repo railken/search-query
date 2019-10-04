@@ -280,6 +280,23 @@ class CustomResolver implements ResolverContract
 }
 ```
 
+### Railken\SQ\Languages\BoomTree\Resolvers\CustomResolver
+
+There is also a CustomResolver that works and cycle with all children and it's configurabile through a Closure, it's `Railken\SQ\Languages\BoomTree\Resolvers\CustomResolver`. For istance you could attach a prefix to all KeyNode doing this:
+
+```php
+use Railken\SQ\Languages\BoomTree\Resolvers;
+use Railken\SQ\Languages\BoomTree\Nodes;
+
+$parser->addResolvers([
+    new Resolvers\CustomResolver(function ($node) {
+        if($node instanceof Nodes\KeyNode) {
+            $node->setValue("myCustomPrefix.".$node->getValue());
+        }
+    }),
+]);
+```
+
 ## License
 
 Open-source software licensed under the [MIT license](https://opensource.org/licenses/MIT).
