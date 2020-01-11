@@ -7,7 +7,7 @@ This can be pretty usefull when building the API endpoint for a search.
 
 ## Requirements
 
-PHP 7.0.0 or later.
+PHP 7.1 or later.
 
 ## Composer
 
