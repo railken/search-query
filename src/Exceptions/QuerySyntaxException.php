@@ -6,8 +6,8 @@ use Exception;
 
 class QuerySyntaxException extends Exception
 {
-    public function __construct($query = '')
+    public function __construct(string $error)
     {
-        parent::__construct($query);
+        parent::__construct($error);
     }
 }
