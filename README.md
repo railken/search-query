@@ -1,6 +1,6 @@
 # Search Query
 
-[![Build Status](https://travis-ci.org/railken/search-query.svg?branch=master)](https://travis-ci.org/railken/search-query)
+[![Actions Status](https://github.com/railken/search-query/workflows/Test/badge.svg)](https://github.com/railken/search-query/actions)
 
 Converts a simple expression (e.g. 'x eq 1 or y gt 2') into a tree object.
 This can be pretty usefull when building the API endpoint for a search.
