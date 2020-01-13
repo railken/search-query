@@ -18,7 +18,7 @@ class QueryTest extends TestCase
     /**
      * Setup the test environment.
      */
-    public function setUp()
+    public function setUp(): void
     {
         $this->parser = new QueryParser();
         $this->parser->addResolvers([
