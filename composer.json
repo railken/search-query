@@ -4,7 +4,7 @@
     "license": "MIT",
     "require": {
         "php": ">=7.1",
-        "railken/bag": "^1.2"
+        "railken/bag": "*"
     },
     "require-dev": {
         "phpunit/phpunit": "*",
